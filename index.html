@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ATMNO.1 · 全球首选的WEB3预测平台</title>
+<meta name="description" content="ATMNO.1 — 全球首选的WEB3预测平台。覆盖体育、加密货币、时事、文娱等多个领域的去中心化预测市场。" />
+<meta name="keywords" content="ATMNO.1,Web3,预测市场,prediction market,区块链,blockchain,加密货币,体育预测" />
+<meta property="og:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta property="og:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。链上透明，钱包直连。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://atmno1.world" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=38" />
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<header></header>
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<!-- 实时交易动态 -->
+<div class="activity-ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<!-- 主内容 -->
+<div class="wrap wrap-single">
+  <div id="homeContent" class="page-section active">
+
+    <!-- ★★★ 2026 FIFA 世界杯 — 核心英雄展示区 -->
+    <div class="wc-hero">
+      <!-- 装饰：浮动足球粒子 -->
+      <div class="wc-balls" aria-hidden="true">
+        <span class="wc-ball b1">⚽</span>
+        <span class="wc-ball b2">⚽</span>
+        <span class="wc-ball b3">⚽</span>
+        <span class="wc-ball b4">⚽</span>
+      </div>
+
+      <!-- 右侧：抽象球员剪影 SVG -->
+      <div class="wc-silhouettes" aria-hidden="true">
+        <!-- 球员1：冲刺姿态（向前冲锋） -->
+        <svg class="wc-sil wc-sil-1" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="50" cy="18" rx="13" ry="14" fill="currentColor"/>
+          <path d="M50 32 C46 50 42 65 38 85 L48 88 L52 65 L60 88 L70 82 C65 65 58 50 50 32Z" fill="currentColor"/>
+          <path d="M42 55 C30 60 20 68 16 78 L24 82 C28 74 36 68 44 65Z" fill="currentColor"/>
+          <path d="M58 52 C68 55 76 62 82 70 L74 75 C70 68 64 63 56 60Z" fill="currentColor"/>
+          <path d="M38 85 C32 105 22 125 14 145 L24 148 C30 130 40 112 48 92Z" fill="currentColor"/>
+          <path d="M60 88 C66 108 74 128 80 148 L70 150 C64 132 56 112 52 90Z" fill="currentColor"/>
+          <ellipse cx="12" cy="148" rx="8" ry="5" fill="currentColor" opacity=".7"/>
+          <ellipse cx="81" cy="152" rx="7" ry="5" fill="currentColor" opacity=".7"/>
+        </svg>
+        <!-- 球员2：庆祝举臂（中央最高） -->
+        <svg class="wc-sil wc-sil-2" viewBox="0 0 100 220" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="50" cy="18" rx="14" ry="15" fill="currentColor"/>
+          <path d="M50 33 C46 52 44 70 42 90 L58 90 C56 70 54 52 50 33Z" fill="currentColor"/>
+          <!-- 举起的手臂 -->
+          <path d="M46 48 C38 36 28 24 18 15 L14 22 C22 30 32 42 40 54Z" fill="currentColor"/>
+          <path d="M54 48 C62 36 72 24 82 15 L86 22 C78 30 68 42 60 54Z" fill="currentColor"/>
+          <path d="M42 90 C36 112 30 134 26 158 L36 160 C40 138 46 116 50 94Z" fill="currentColor"/>
+          <path d="M58 90 C64 112 70 134 74 158 L64 160 C60 138 54 116 50 94Z" fill="currentColor"/>
+          <ellipse cx="25" cy="162" rx="9" ry="6" fill="currentColor" opacity=".7"/>
+          <ellipse cx="75" cy="162" rx="9" ry="6" fill="currentColor" opacity=".7"/>
+        </svg>
+        <!-- 球员3：射门姿态 -->
+        <svg class="wc-sil wc-sil-3" viewBox="0 0 100 200" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="48" cy="18" rx="13" ry="14" fill="currentColor"/>
+          <path d="M48 32 C44 50 40 68 38 86 L52 88 L54 68 L62 88 L72 82 C66 64 56 48 48 32Z" fill="currentColor"/>
+          <path d="M44 52 C34 58 24 66 18 76 L26 82 C30 74 38 67 46 62Z" fill="currentColor"/>
+          <path d="M56 50 C66 53 74 60 80 68 L72 73 C68 66 62 61 54 58Z" fill="currentColor"/>
+          <path d="M38 86 C30 106 24 126 20 146 L30 148 C34 130 40 110 50 92Z" fill="currentColor"/>
+          <!-- 射门腿 伸出去 -->
+          <path d="M52 88 C60 105 80 118 92 130 L86 136 C74 124 56 110 50 92Z" fill="currentColor"/>
+          <ellipse cx="18" cy="149" rx="8" ry="5" fill="currentColor" opacity=".7"/>
+          <ellipse cx="94" cy="134" rx="6" ry="6" fill="currentColor" opacity=".7"/>
+        </svg>
+      </div>
+
+      <div class="wc-hero-inner">
+        <div class="wc-hero-left">
+          <div class="wc-live-badge">
+            <span class="wc-live-dot"></span>
+            🏆 2026 FIFA 世界杯 · 进行中
+          </div>
+          <h2>谁将举起大力神杯？</h2>
+          <div class="wc-hero-sub">📅 2026年6月–7月 · 美加墨联合主办 · 48支球队 · 104场比赛</div>
+          <div class="wc-odds-row">
+            <div class="wc-odd" onclick="location.href='/market?id=football-1'">
+              <span class="wo-flag">🇧🇷</span><span class="wo-name">巴西</span><span class="wo-val">3.50</span>
+            </div>
+            <div class="wc-odd" onclick="location.href='/market?id=football-1'">
+              <span class="wo-flag">🇦🇷</span><span class="wo-name">阿根廷</span><span class="wo-val">4.00</span>
+            </div>
+            <div class="wc-odd" onclick="location.href='/market?id=football-1'">
+              <span class="wo-flag">🇫🇷</span><span class="wo-name">法国</span><span class="wo-val">5.00</span>
+            </div>
+            <div class="wc-odd" onclick="location.href='/market?id=football-1'">
+              <span class="wo-flag">🏴󠁧󠁢󠁥󠁮󠁧󠁿</span><span class="wo-name">英格兰</span><span class="wo-val">6.50</span>
+            </div>
+            <div class="wc-odd" onclick="location.href='/market?id=football-1'">
+              <span class="wo-flag">🇩🇪</span><span class="wo-name">德国</span><span class="wo-val">7.00</span>
+            </div>
+          </div>
+        </div>
+        <div class="wc-side-markets">
+          <div class="wc-market-chip" onclick="location.href='/market?id=football-2'">
+            <span class="wmc-icon">👟</span>
+            <div class="wmc-info"><div class="wmc-title">世界杯金靴奖</div><div class="wmc-meta">5,430 人参与</div></div>
+            <span class="wmc-vol">$680K</span>
+          </div>
+          <div class="wc-market-chip" onclick="location.href='/market?id=football-3'">
+            <span class="wmc-icon">⭐</span>
+            <div class="wmc-info"><div class="wmc-title">梅西参赛世界杯？</div><div class="wmc-meta">12,100 人参与</div></div>
+            <span class="wmc-vol">$890K</span>
+          </div>
+          <div class="wc-market-chip" onclick="location.href='/market?id=football-1'">
+            <span class="wmc-icon">🏆</span>
+            <div class="wmc-info"><div class="wmc-title">哪支球队夺冠？</div><div class="wmc-meta">8,412 人参与</div></div>
+            <span class="wmc-vol">$1.2M</span>
+          </div>
+          <div class="wc-market-chip" onclick="switchCategory('football')">
+            <span class="wmc-icon">⚽</span>
+            <div class="wmc-info"><div class="wmc-title">查看全部足球市场</div><div class="wmc-meta">32 个市场开放中</div></div>
+            <span class="wmc-vol" style="color:rgba(255,255,255,.5)">→</span>
+          </div>
+        </div>
+      </div>
+      <div class="wc-data-bar">
+        <div class="wc-stat"><span class="ws-val">$4.2M+</span><span class="ws-key">总奖池</span></div>
+        <div class="wc-divider"></div>
+        <div class="wc-stat"><span class="ws-val">32,000+</span><span class="ws-key">参与人数</span></div>
+        <div class="wc-divider"></div>
+        <div class="wc-stat"><span class="ws-val">48 支</span><span class="ws-key">参赛球队</span></div>
+        <div class="wc-divider"></div>
+        <div class="wc-stat"><span class="ws-val">104 场</span><span class="ws-key">赛事预测</span></div>
+        <div class="wc-divider"></div>
+        <div class="wc-stat"><span class="ws-val">USDT 链上结算</span><span class="ws-key">透明可验</span></div>
+      </div>
+    </div>
+
+    <!-- ★★ 世界杯明星球员预测 -->
+    <div class="home-section">
+      <div class="wc-section-header">
+        <div class="wc-section-title">
+          <h3>⭐ 明星球员预测</h3>
+          <span class="wc-section-badge">金靴竞猜</span>
+        </div>
+        <span class="home-more" onclick="location.href='/market?id=football-2'">查看金靴市场 →</span>
+      </div>
+      <div class="star-players-grid">
+
+        <!-- 莱昂内尔·梅西 — LEGENDARY -->
+        <div class="star-card" onclick="location.href='/market?id=football-2'"
+          style="--sc-color:#74acdf;--sc-bg:linear-gradient(160deg,#001a4d 0%,#003082 40%,#74acdf22 100%);">
+          <div class="sc-inner">
+            <div class="sc-poster">
+              <div class="sc-art-bg"></div>
+              <div class="sc-num-bg">10</div>
+              <img class="sc-poster-img" src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=400&h=400&fit=crop&crop=entropy&auto=format&q=85" alt="" loading="eager" />
+              <div class="sc-top-badges">
+                <div class="sc-flag-num"><span class="sc-flag">🇦🇷</span><span class="sc-num">#10</span></div>
+                <div class="sc-badge sc-badge-live">热门</div>
+              </div>
+              <div class="sc-rarity sc-rarity-legendary">LEGENDARY</div>
+              <div class="sc-poster-info">
+                <div class="sc-name">莱昂内尔·梅西</div>
+                <div class="sc-club">阿根廷 · Inter Miami</div>
+              </div>
+            </div>
+            <div class="sc-stats">
+              <div class="sc-market"><div class="sc-label">金靴赔率</div><div class="sc-odds-val">12.00</div></div>
+              <div class="sc-bar-wrap"><div class="sc-bar" style="width:18%"></div></div>
+              <div class="sc-pct">18% 支持率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 克里斯蒂亚诺·罗纳尔多 — LEGENDARY -->
+        <div class="star-card" onclick="location.href='/market?id=football-2'"
+          style="--sc-color:#e8212a;--sc-bg:linear-gradient(160deg,#1a0005 0%,#6b0010 40%,#e8212a22 100%);">
+          <div class="sc-inner">
+            <div class="sc-poster">
+              <div class="sc-art-bg"></div>
+              <div class="sc-num-bg">7</div>
+              <img class="sc-poster-img" src="https://images.unsplash.com/photo-1551958219-acbc630e2914?w=400&h=400&fit=crop&crop=entropy&auto=format&q=85" alt="" loading="eager" />
+              <div class="sc-top-badges">
+                <div class="sc-flag-num"><span class="sc-flag">🇵🇹</span><span class="sc-num">#7</span></div>
+                <div class="sc-badge sc-badge-hot">传奇</div>
+              </div>
+              <div class="sc-rarity sc-rarity-legendary">LEGENDARY</div>
+              <div class="sc-poster-info">
+                <div class="sc-name">克里斯蒂亚诺·罗纳尔多</div>
+                <div class="sc-club">葡萄牙 · Al Nassr</div>
+              </div>
+            </div>
+            <div class="sc-stats">
+              <div class="sc-market"><div class="sc-label">金靴赔率</div><div class="sc-odds-val">15.00</div></div>
+              <div class="sc-bar-wrap"><div class="sc-bar" style="width:12%"></div></div>
+              <div class="sc-pct">12% 支持率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 基利安·姆巴佩 — EPIC -->
+        <div class="star-card" onclick="location.href='/market?id=football-2'"
+          style="--sc-color:#4169e1;--sc-bg:linear-gradient(160deg,#000b2e 0%,#001580 40%,#4169e155 100%);">
+          <div class="sc-inner">
+            <div class="sc-poster">
+              <div class="sc-art-bg"></div>
+              <div class="sc-num-bg">10</div>
+              <img class="sc-poster-img" src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=400&fit=crop&crop=entropy&auto=format&q=85" alt="" loading="eager" />
+              <div class="sc-top-badges">
+                <div class="sc-flag-num"><span class="sc-flag">🇫🇷</span><span class="sc-num">#10</span></div>
+                <div class="sc-badge sc-badge-live">最热门</div>
+              </div>
+              <div class="sc-rarity sc-rarity-epic">EPIC</div>
+              <div class="sc-poster-info">
+                <div class="sc-name">基利安·姆巴佩</div>
+                <div class="sc-club">法国 · Real Madrid</div>
+              </div>
+            </div>
+            <div class="sc-stats">
+              <div class="sc-market"><div class="sc-label">金靴赔率</div><div class="sc-odds-val">5.50</div></div>
+              <div class="sc-bar-wrap"><div class="sc-bar" style="width:25%"></div></div>
+              <div class="sc-pct">25% 支持率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 维尼修斯 — RARE -->
+        <div class="star-card" onclick="location.href='/market?id=football-2'"
+          style="--sc-color:#00a650;--sc-bg:linear-gradient(160deg,#001a0a 0%,#004d20 40%,#00a65033 100%);">
+          <div class="sc-inner">
+            <div class="sc-poster">
+              <div class="sc-art-bg"></div>
+              <div class="sc-num-bg">7</div>
+              <img class="sc-poster-img" src="https://images.unsplash.com/photo-1529900748604-07564a03e7a6?w=400&h=400&fit=crop&crop=entropy&auto=format&q=85" alt="" loading="eager" />
+              <div class="sc-top-badges">
+                <div class="sc-flag-num"><span class="sc-flag">🇧🇷</span><span class="sc-num">#7</span></div>
+                <div class="sc-badge" style="background:rgba(0,166,80,.3);color:#6ee7b7;border:1px solid rgba(0,166,80,.5);">新星</div>
+              </div>
+              <div class="sc-rarity sc-rarity-rare">RARE</div>
+              <div class="sc-poster-info">
+                <div class="sc-name">维尼修斯·儒尼奥尔</div>
+                <div class="sc-club">巴西 · Real Madrid</div>
+              </div>
+            </div>
+            <div class="sc-stats">
+              <div class="sc-market"><div class="sc-label">金靴赔率</div><div class="sc-odds-val">8.00</div></div>
+              <div class="sc-bar-wrap"><div class="sc-bar" style="width:20%"></div></div>
+              <div class="sc-pct">20% 支持率</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 欧文·哈兰德 — EPIC -->
+        <div class="star-card" onclick="location.href='/market?id=football-2'"
+          style="--sc-color:#6baed6;--sc-bg:linear-gradient(160deg,#001428 0%,#003060 40%,#6baed633 100%);">
+          <div class="sc-inner">
+            <div class="sc-poster">
+              <div class="sc-art-bg"></div>
+              <div class="sc-num-bg">9</div>
+              <img class="sc-poster-img" src="https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=400&h=400&fit=crop&crop=entropy&auto=format&q=85" alt="" loading="eager" />
+              <div class="sc-top-badges">
+                <div class="sc-flag-num"><span class="sc-flag">🇳🇴</span><span class="sc-num">#9</span></div>
+                <div class="sc-badge" style="background:rgba(107,174,214,.25);color:#bae6fd;border:1px solid rgba(107,174,214,.5);">机器</div>
+              </div>
+              <div class="sc-rarity sc-rarity-epic">EPIC</div>
+              <div class="sc-poster-info">
+                <div class="sc-name">欧文·哈兰德</div>
+                <div class="sc-club">挪威 · Man City</div>
+              </div>
+            </div>
+            <div class="sc-stats">
+              <div class="sc-market"><div class="sc-label">金靴赔率</div><div class="sc-odds-val">7.00</div></div>
+              <div class="sc-bar-wrap"><div class="sc-bar" style="width:16%"></div></div>
+              <div class="sc-pct">16% 支持率</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ★ 足球精选 — 世界杯期间置顶 -->
+    <div class="home-section">
+      <div class="wc-section-header">
+        <div class="wc-section-title">
+          <h3>⚽ 足球精选</h3>
+          <span class="wc-section-badge">世界杯</span>
+        </div>
+        <span class="home-more" onclick="switchCategory('football')">查看全部 →</span>
+      </div>
+      <div class="pick-magazine" id="homeFootball"></div>
+    </div>
+
+    <!-- ★ ATM 代币入口卡 (精简版，详情见 /atm) -->
+    <div class="home-section atm-entry-card" onclick="navTo('atm')" style="cursor:pointer;">
+      <div class="atm-entry-inner">
+        <div class="atm-entry-left">
+          <div class="atm-entry-logo">
+            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ce1126,#003087);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:14px;flex-shrink:0;">ATM</div>
+          </div>
+          <div class="atm-entry-info">
+            <div class="atm-entry-name">🔴 ATM 代币 <span class="atm-entry-badge"><span class="atm-live-dot" style="width:5px;height:5px;"></span>实时</span></div>
+            <div class="atm-entry-sub">Atletico Madrid Fan Token · Socios.com · Chiliz Chain</div>
+          </div>
+        </div>
+        <div class="atm-entry-price-block">
+          <div class="atm-entry-price" id="atmPrice">—</div>
+          <div class="atm-entry-chg apc-up" id="atmChange">—</div>
+        </div>
+        <div class="atm-entry-stats">
+          <div class="atm-entry-stat"><span class="aes-label">市值</span><span class="aes-val" id="atmMktCap">—</span></div>
+          <div class="atm-entry-stat"><span class="aes-label">24H 量</span><span class="aes-val" id="atmVolUSDT">—</span></div>
+          <div class="atm-entry-stat"><span class="aes-label">ATH</span><span class="aes-val" style="color:#d97706;">$58.46</span></div>
+        </div>
+        <div class="atm-entry-arrow">查看详情 →</div>
+      </div>
+    </div>
+
+    <!-- ★ 编辑精选 — 大图视觉区 -->
+    <div class="home-featured" id="homeFeatured"></div>
+
+    <!-- ★ 概率剧变 — 24h 变化最大的市场 -->
+    <div class="home-section">
+      <div class="home-section-header">
+        <h3>📈 概率剧变 · 24h</h3>
+        <span class="home-more" onclick="navTo('trending')">查看排行 →</span>
+      </div>
+      <div class="movers-strip mobile-show-4" id="moversStrip"></div>
+    </div>
+
+    <!-- ★ 分类入口 — 视觉导航 -->
+    <div class="home-section">
+      <div class="home-section-header">
+        <h3>🔍 探索分类</h3>
+      </div>
+      <div class="cat-entrance-diverse" id="catEntrance"></div>
+    </div>
+
+    <!-- ★ 篮球精选 — Layout B: 上横下列 -->
+    <div class="home-section">
+      <div class="home-section-header">
+        <h3>🏀 篮球精选</h3>
+        <span class="home-more" onclick="switchCategory('basketball')">查看全部 →</span>
+      </div>
+      <div class="pick-magazine" id="homeBasketball"></div>
+    </div>
+
+    <!-- ★ 加密货币 — Layout A -->
+    <div class="home-section">
+      <div class="home-section-header">
+        <h3>🪙 加密货币</h3>
+        <span class="home-more" onclick="switchCategory('crypto')">查看全部 →</span>
+      </div>
+      <div class="pick-magazine" id="homeCrypto"></div>
+    </div>
+
+    <!-- ★ 时事预测 — Layout B -->
+    <div class="home-section">
+      <div class="home-section-header">
+        <h3>📰 时事预测</h3>
+        <span class="home-more" onclick="switchCategory('events')">查看全部 →</span>
+      </div>
+      <div class="pick-magazine" id="homeEvents"></div>
+    </div>
+
+
+  </div>
+</div>
+
+<div class="pitch-divider"></div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ATM<span style="color:var(--accent)">NO.1</span></div>
+      <div class="footer-slogan">全球首选的WEB3预测平台</div>
+      <div class="footer-desc">覆盖体育、加密货币、时事等多个领域的去中心化预测市场</div>
+      <div class="footer-social">
+        <a href="#" title="Twitter/X">𝕏</a>
+        <a href="#" title="Telegram">✈️</a>
+        <a href="#" title="Discord">💬</a>
+        <a href="#" title="GitHub">🔗</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">平台导航</div>
+        <a onclick="navTo('home')">首页</a>
+        <a onclick="navTo('trending')">热门市场</a>
+        <a onclick="navTo('myBets')">我的注单</a>
+        <a onclick="toggleModal('contractsModal', true)">智能合约</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">热门预测</div>
+        <a onclick="switchCategory('football')">足球预测</a>
+        <a onclick="switchCategory('basketball')">篮球预测</a>
+        <a onclick="switchCategory('crypto')">加密货币</a>
+        <a onclick="switchCategory('events')">时事预测</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">帮助资源</div>
+        <a onclick="toggleModal('docsModal', true)">关于我们</a>
+        <a href="#">开发文档</a>
+        <a href="#">API 接入</a>
+        <a href="#">手续费说明</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">法律条款</div>
+        <a href="#">服务条款</a>
+        <a href="#">隐私政策</a>
+        <a href="#">免责声明</a>
+        <a href="#">合规信息</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">&copy; 2026 ATMNO.1. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- 连接钱包弹窗 -->
+<div class="overlay" id="walletModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('walletModal', false)">×</button>
+    <h3 data-i18n="modal.wallet.title">连接钱包</h3>
+    <p class="desc" data-i18n="modal.wallet.desc">选择钱包继续</p>
+    <div class="chain-list">
+      <div class="chain" onclick="connectMetaMask()">
+        <div class="left"><div class="icon" style="background:#f6851b;color:#fff">M</div>MetaMask</div>
+        <span class="chip" style="color:var(--accent-2);border-color:var(--accent-2);">已集成</span>
+      </div>
+      <div class="chain" onclick="wipWallet('WalletConnect')">
+        <div class="left"><div class="icon" style="background:#3b99fc;color:#fff">W</div>WalletConnect</div>
+        <span class="chip">即将上线</span>
+      </div>
+      <div class="chain" onclick="wipWallet('OKX Wallet')">
+        <div class="left"><div class="icon" style="background:#000;color:#fff">OK</div>OKX Wallet</div>
+        <span class="chip">即将上线</span>
+      </div>
+      <div class="chain" onclick="wipWallet('TronLink')">
+        <div class="left"><div class="icon" style="background:#e50914;color:#fff">T</div>TronLink</div>
+        <span class="chip">即将上线</span>
+      </div>
+    </div>
+    <p class="desc" style="margin-top:16px;">支持的网络（连接后可切换）</p>
+    <div class="chain-list">
+      <div class="chain" onclick="switchToChain(56)">
+        <div class="left"><div class="icon" style="background:#f3ba2f;color:#000">B</div>BNB Chain · BEP-20 USDT</div>
+        <span class="chip">切换</span>
+      </div>
+      <div class="chain" onclick="switchToChain(173)">
+        <div class="left"><div class="icon" style="background:#7c5cff;color:#fff">E</div>ENI 主网 · ENI-Peg USDT</div>
+        <span class="chip">切换</span>
+      </div>
+      <div class="chain" onclick="switchToChain(174)">
+        <div class="left"><div class="icon" style="background:#5a9cff;color:#fff">🧪</div>ENI 测试网 · USDTT (测试)</div>
+        <span class="chip">切换</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 合约信息弹窗 -->
+<div class="overlay" id="contractsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('contractsModal', false)">×</button>
+    <h3>智能合约</h3>
+    <p class="desc">BettingVault 合约地址（部署中）</p>
+    <div class="info-row"><span class="k">BNB Chain</span><span class="v">待公布</span></div>
+    <div class="info-row"><span class="k">ENI 主网</span><span class="v">待公布</span></div>
+    <div class="info-row"><span class="k">平台手续费</span><span class="v">盈利的 10%</span></div>
+    <div class="info-row"><span class="k">手续费接收</span><span class="v" id="feeRecipientCell" style="font-family:monospace;font-size:11px;">—</span></div>
+    <div class="info-row"><span class="k">预言机</span><span class="v">ESPN + 人工结算</span></div>
+    <div class="info-row"><span class="k">审计</span><span class="v">待公布</span></div>
+  </div>
+</div>
+
+<!-- 关于弹窗 -->
+<div class="overlay" id="docsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('docsModal', false)">×</button>
+    <h3>关于 ATMNO.1</h3>
+    <p class="body-text"><strong>ATMNO.1</strong> 是一个全领域的链上非托管预测市场，覆盖体育、时事、加密货币、娱乐等多个领域。所有资金通过智能合约流转，平台不持有用户资金。</p>
+    <p class="body-text" style="margin-top:10px;"><strong>玩法：</strong>连接钱包 → 选择预测结果 → 授权 USDT → 提交预测。结算后，胜出方调用 claim() 提取奖金。平台仅收取净盈利的 <strong>10%</strong> 手续费。</p>
+    <p class="body-text" style="margin-top:10px;"><strong>支持网络：</strong>BNB Chain (BEP-20 USDT)、ENI 主网 (ENI-Peg USDT)，另有 ENI 测试网可供体验。</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/shared/common.js?v=24"></script>
+<script>
+// ============================================================
+// 首页数据 — 视觉杂志风格
+// ============================================================
+
+// 分类渐变主题 — 用于替代库存照片
+const CAT_GRADIENTS = {
+  football:      'linear-gradient(135deg, #0d5e2e 0%, #1a3a4a 50%, #0a2540 100%)',
+  basketball:    'linear-gradient(135deg, #7c2d12 0%, #c2410c 40%, #451a03 100%)',
+  crypto:        'linear-gradient(135deg, #312e81 0%, #4338ca 40%, #1e1b4b 100%)',
+  events:        'linear-gradient(135deg, #164e63 0%, #0e7490 40%, #0c4a6e 100%)'
+};
+
+// 编辑精选 — 左侧4张轮播Banner + 右侧4个固定卡片
+const BANNER_SLIDES = [
+  { id:'football-1', catKey:'football', badge:'🏆 2026世界杯', title:'2026世界杯 — 谁将举起大力神杯？', img:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=500&fit=crop', odds:[{l:'巴西',v:'3.50'},{l:'阿根廷',v:'4.00'},{l:'法国',v:'5.00'}], vol:'$1.2M', preds:'8,412', time:'2026年6月–7月' },
+  { id:'basketball-1', catKey:'basketball', badge:'🏀 NBA 总决赛', title:'2025-26 NBA总冠军 — 谁能夺冠？', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=500&fit=crop', odds:[{l:'凯尔特人',v:'3.20'},{l:'雷霆',v:'4.50'},{l:'掘金',v:'5.50'}], vol:'$1.8M', preds:'9,800', time:'2026年6月' },
+  { id:'crypto-2', catKey:'crypto', badge:'🪙 ETH 展望', title:'ETH能否在2026年突破$10,000？', img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=800&h=500&fit=crop', odds:[{l:'是',v:'2.60'},{l:'否',v:'1.60'}], vol:'$1.5M', preds:'11,000', time:'2026年12月' },
+  { id:'events-2', catKey:'events', badge:'📰 AI 前沿', title:'AI 能否在2026年通过图灵测试？', img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop', odds:[{l:'是',v:'2.40'},{l:'否',v:'1.65'}], vol:'$560K', preds:'7,800', time:'2026年12月' },
+];
+const SIDE_CARDS = [
+  { id:'crypto-1', catKey:'crypto', badge:'🪙 加密货币', title:'BTC 2026年底价格区间', img:'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop', vol:'$3.2M', preds:'22,000', time:'2026年12月' },
+  { id:'events-2', catKey:'events', badge:'📰 时事预测', title:'AI 通过图灵测试？', img:'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=400&fit=crop', vol:'$560K', preds:'7,800', time:'2026年12月' },
+
+  { id:'football-3', catKey:'football', badge:'⚽ 传奇', title:'梅西参加世界杯？', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&h=400&fit=crop', vol:'$890K', preds:'12,100', time:'2026年6月' },
+];
+const FEATURED = BANNER_SLIDES;
+
+// 概率剧变 — 24h 变化最大
+const MOVERS = [
+  { id:'crypto-1', title:'BTC 价格区间', change:'+5.2%', from:'59.8% → 65.0%', vol:'$3.2M', dir:'up', catKey:'crypto' },
+  { id:'football-2', title:'世界杯金靴 — 姆巴佩', change:'+3.8%', from:'24.2% → 28.0%', vol:'$680K', dir:'up', catKey:'football' },
+  { id:'crypto-3', title:'SOL 市值超越 ETH', change:'-4.1%', from:'22.1% → 18.0%', vol:'$340K', dir:'down', catKey:'crypto' },
+  { id:'basketball-1', title:'NBA 总决赛 — 凯尔特人', change:'+2.5%', from:'28.5% → 31.0%', vol:'$1.8M', dir:'up', catKey:'basketball' },
+  { id:'events-3', title:'联储 2026 年降息', change:'+4.0%', from:'68.0% → 72.0%', vol:'$420K', dir:'up', catKey:'events' },
+  { id:'basketball-3', title:'湖人进季后赛', change:'-3.2%', from:'61.2% → 58.0%', vol:'$310K', dir:'down', catKey:'basketball' },
+  { id:'events-2', title:'AI 通过图灵测试', change:'+6.1%', from:'36.9% → 42.0%', vol:'$560K', dir:'up', catKey:'events' },
+
+];
+
+// 分类入口 — 使用渐变背景
+const CAT_ENTRIES = [
+  { id:'football', icon:'⚽', name:'足球', count:'32 个市场' },
+  { id:'basketball', icon:'🏀', name:'篮球', count:'18 个市场' },
+  { id:'crypto', icon:'🪙', name:'加密货币', count:'24 个市场' },
+  { id:'events', icon:'📰', name:'时事预测', count:'28 个市场' },
+];
+
+// 各分类精选（每类 2-4 个，图文混排）
+const CAT_PICKS = {
+  football: [
+    { id:'football-1', title:'2026世界杯 — 冠军', status:'live', time:'2026年6月', type:'multi', options:[{l:'巴西',pct:28},{l:'阿根廷',pct:22},{l:'法国',pct:18}], vol:'$1.2M', preds:'8,412', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&h=400&fit=crop' },
+    { id:'football-2', title:'2026世界杯金靴奖', status:'live', time:'2026年7月', type:'multi', options:[{l:'姆巴佩',pct:25},{l:'哈兰德',pct:20},{l:'维尼修斯',pct:18}], vol:'$680K', preds:'5,430', img:'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&h=400&fit=crop' },
+    { id:'football-3', title:'梅西会参加2026世界杯吗？', status:'hot', time:'2026年6月', type:'binary', yesPct:35, noPct:65, vol:'$890K', preds:'12,100', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&h=400&fit=crop' },
+    { id:'football-4', title:'2025-26 英超冠军', status:'soon', time:'2026年5月', type:'multi', options:[{l:'阿森纳',pct:35},{l:'曼城',pct:30},{l:'利物浦',pct:20}], vol:'$920K', preds:'6,102', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&h=400&fit=crop' },
+  ],
+  basketball: [
+    { id:'basketball-1', title:'2025-26 NBA总冠军', status:'hot', time:'2026年6月', type:'multi', options:[{l:'凯尔特人',pct:28},{l:'雷霆',pct:22},{l:'掘金',pct:18}], vol:'$1.8M', preds:'9,800', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=400&fit=crop' },
+    { id:'basketball-2', title:'2025-26 NBA MVP', status:'soon', time:'2026年5月', type:'multi', options:[{l:'SGA',pct:30},{l:'约基奇',pct:25},{l:'字母哥',pct:18}], vol:'$920K', preds:'6,500', img:'https://images.unsplash.com/photo-1504450758481-7338bbe75005?w=600&h=400&fit=crop' },
+    { id:'basketball-3', title:'湖人能否进入季后赛？', status:'hot', time:'2026年4月', type:'binary', yesPct:58, noPct:42, vol:'$310K', preds:'2,789', img:'https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=600&h=400&fit=crop' },
+    { id:'basketball-4', title:'会有球队赢 70+ 场吗？', status:'soon', time:'2026年4月', type:'binary', yesPct:12, noPct:88, vol:'$95K', preds:'1,102', img:'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?w=600&h=400&fit=crop' },
+  ],
+  crypto: [
+    { id:'crypto-1', title:'BTC 2026年底价格区间', status:'hot', time:'2026年12月', type:'multi', options:[{l:'$150K+',pct:28},{l:'$100K-$150K',pct:35},{l:'$60K-$100K',pct:25}], vol:'$3.2M', preds:'22,000', img:'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=600&h=400&fit=crop' },
+    { id:'crypto-2', title:'ETH能否突破$10,000？', status:'hot', time:'2026年12月', type:'binary', yesPct:38, noPct:62, vol:'$1.5M', preds:'11,000', img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=600&h=400&fit=crop' },
+    { id:'crypto-3', title:'SOL 市值能否超越 ETH？', status:'soon', time:'2026年', type:'binary', yesPct:18, noPct:82, vol:'$340K', preds:'3,201', img:'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop' },
+    { id:'crypto-4', title:'亚洲会推出现货 ETH ETF 吗？', status:'soon', time:'2026年', type:'binary', yesPct:55, noPct:45, vol:'$150K', preds:'1,345', img:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=400&fit=crop' },
+  ],
+  events: [
+    { id:'events-1', title:'2026年诺贝尔和平奖得主', status:'soon', time:'2026年10月', type:'multi', options:[{l:'个人',pct:55},{l:'组织',pct:45}], vol:'$340K', preds:'4,200', img:'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600&h=400&fit=crop' },
+    { id:'events-2', title:'AI是否会在2026年通过图灵测试？', status:'hot', time:'2026年12月', type:'binary', yesPct:42, noPct:58, vol:'$560K', preds:'7,800', img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop' },
+    { id:'events-3', title:'美联储 2026 年会降息吗？', status:'hot', time:'2026年', type:'binary', yesPct:72, noPct:28, vol:'$420K', preds:'3,890', img:'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=600&h=400&fit=crop' },
+    { id:'events-4', title:'SpaceX 2028年前登陆火星？', status:'soon', time:'2028年12月', type:'binary', yesPct:25, noPct:75, vol:'$310K', preds:'2,789', img:'https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=600&h=400&fit=crop' },
+  ]
+
+
+
+};
+
+// 实时交易动态
+const TICKER_DATA = [
+  { user:'0x7a2B', action:'买入', market:'BTC $200K', amount:'$2,500', type:'yes' },
+  { user:'0xf19E', action:'卖出', market:'NBA 总决赛', amount:'$1,200', type:'no' },
+  { user:'0x3cD4', action:'买入', market:'世界杯冠军', amount:'$5,000', type:'yes' },
+  { user:'0x8bA1', action:'买入', market:'ETH > $10K', amount:'$800', type:'no' },
+  { user:'0xd52F', action:'买入', market:'美国大选 2028', amount:'$3,200', type:'yes' },
+  { user:'0x1eC9', action:'卖出', market:'奥斯卡最佳影片', amount:'$600', type:'yes' },
+  { user:'0xa47B', action:'买入', market:'联储降息', amount:'$1,800', type:'yes' },
+  { user:'0x6fD2', action:'买入', market:'SOL vs ETH', amount:'$950', type:'no' },
+  { user:'0x2bE8', action:'买入', market:'欧冠冠军', amount:'$4,100', type:'yes' },
+  { user:'0x9cA3', action:'卖出', market:'BTC 市值占比', amount:'$2,200', type:'no' },
+];
+
+// ============================================================
+// 渲染函数
+// ============================================================
+function renderHome() {
+
+  // --- 实时交易动态 ---
+  const tickerEl = document.getElementById('tickerTrack');
+  if (tickerEl) {
+    const items = TICKER_DATA.map(t =>
+      `<span class="ticker-item">
+        <span class="ti-dot ${t.type === 'yes' ? 'ti-green' : 'ti-red'}"></span>
+        <span class="ti-user">${t.user}</span> ${t.action}
+        <b>${t.market}</b>
+        <span class="ti-amount ${t.type === 'yes' ? 'green' : 'red'}">${t.amount}</span>
+      </span>`
+    ).join('');
+    tickerEl.innerHTML = items + items;
+  }
+
+  // --- 编辑精选（左侧轮播 + 右侧固定） ---
+  const feat = document.getElementById('homeFeatured');
+  if (feat) {
+    // 构建左侧单个 banner slide
+    function buildBannerSlide(b) {
+      const oddsHtml = b.odds ? b.odds.map(o =>
+        `<div class="hf-odd">${o.l} <b>${o.v}</b></div>`
+      ).join('') : '';
+      return `
+        <div class="home-featured-main" onclick="location.href='/market?id=${b.id}'" style="cursor:pointer;">
+          <div class="hf-bg" style="background-image:url('${b.img}')"></div>
+          <div class="hf-overlay"></div>
+          <div class="hf-content">
+            <div class="hf-badge">${b.badge}</div>
+            <div class="hf-title">${b.title}</div>
+            <div class="hf-meta">📅 ${b.time} · 💰 ${b.vol} · 👥 ${b.preds} 人参与</div>
+            <div class="hf-odds">${oddsHtml}</div>
+          </div>
+        </div>
+      `;
+    }
+    // 左侧轮播 slides
+    const slides = BANNER_SLIDES.map((b, i) =>
+      `<div class="featured-slide${i === 0 ? ' active' : ''}" data-slide="${i}">${buildBannerSlide(b)}</div>`
+    ).join('');
+    // 右侧固定4个卡片
+    const sideHtml = SIDE_CARDS.map(c => `
+      <div class="home-featured-card" onclick="location.href='/market?id=${c.id}'" style="cursor:pointer;">
+        <div class="hf-bg" style="background-image:url('${c.img}')"></div>
+        <div class="hf-overlay"></div>
+        <div class="hf-content">
+          <div class="hf-badge">${c.badge}</div>
+          <div class="hf-title">${c.title}</div>
+          <div class="hf-meta">💰 ${c.vol} · 👥 ${c.preds} 人参与</div>
+        </div>
+      </div>
+    `).join('');
+    // 轮播圆点
+    const dots = BANNER_SLIDES.map((_, i) =>
+      `<button class="featured-dot${i === 0 ? ' active' : ''}" data-dot="${i}" onclick="goToFeaturedSlide(${i})"></button>`
+    ).join('');
+    // 组装：左侧carousel + 右侧固定side
+    feat.innerHTML = `
+      <div class="featured-layout">
+        <div class="featured-carousel">${slides}</div>
+        <div class="home-featured-side">${sideHtml}</div>
+      </div>
+      <div class="featured-dots">${dots}</div>
+    `;
+    // Carousel logic — 只控制左侧 banner
+    window._featIdx = 0;
+    window.goToFeaturedSlide = function(idx) {
+      window._featIdx = idx;
+      document.querySelectorAll('.featured-slide').forEach((s,i) => s.classList.toggle('active', i === idx));
+      document.querySelectorAll('.featured-dot').forEach((d,i) => d.classList.toggle('active', i === idx));
+    };
+    window._featTimer = setInterval(() => {
+      window.goToFeaturedSlide((window._featIdx + 1) % BANNER_SLIDES.length);
+    }, 6000);
+    // Pause on hover
+    feat.addEventListener('mouseenter', () => clearInterval(window._featTimer));
+    feat.addEventListener('mouseleave', () => {
+      window._featTimer = setInterval(() => {
+        window.goToFeaturedSlide((window._featIdx + 1) % BANNER_SLIDES.length);
+      }, 6000);
+    });
+  }
+
+  // --- 概率剧变 ---
+  const moversEl = document.getElementById('moversStrip');
+  if (moversEl) {
+    // 生成随机迷你折线图 SVG
+    function miniSparkSvg(dir) {
+      const color = dir === 'up' ? '#26d07c' : '#ff5b7a';
+      let pts = [];
+      let y = 18;
+      for (let i = 0; i <= 8; i++) {
+        y += (Math.random() - (dir === 'up' ? 0.35 : 0.65)) * 6;
+        y = Math.max(2, Math.min(26, y));
+        pts.push(`${i * 25},${y}`);
+      }
+      return `<svg viewBox="0 0 200 28" preserveAspectRatio="none" style="width:100%;height:100%">
+        <defs><linearGradient id="sg-${dir}" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${color}" stop-opacity=".25"/><stop offset="100%" stop-color="${color}" stop-opacity="0"/></linearGradient></defs>
+        <polyline points="${pts.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <polygon points="0,28 ${pts.join(' ')} 200,28" fill="url(#sg-${dir})"/>
+      </svg>`;
+    }
+    moversEl.innerHTML = MOVERS.map(m => `
+      <div class="mover-card" onclick="location.href='/market?id=${m.id}'" style="cursor:pointer;">
+        <div class="mover-title">${m.title}</div>
+        <div class="mover-change ${m.dir}">${m.dir === 'up' ? '↑' : '↓'} ${m.change}</div>
+        <div class="mover-from">${m.from}</div>
+        <div class="mover-spark">${miniSparkSvg(m.dir)}</div>
+        <div class="mover-vol">💰 ${m.vol}</div>
+      </div>
+    `).join('');
+  }
+
+  // --- 分类入口 ---
+  const catEl = document.getElementById('catEntrance');
+  if (catEl) {
+    catEl.innerHTML = CAT_ENTRIES.map((c, i) => {
+      const sizeClass = (i === 0 || i === 3) ? 'ce-card-large' : 'ce-card-normal';
+      const grad = CAT_GRADIENTS[c.id] || 'linear-gradient(135deg, #1a1a2e, #16213e)';
+      return `
+      <div class="${sizeClass}">
+        <div class="cat-entrance-card" onclick="switchCategory('${c.id}')" style="height:100%;">
+          <div class="ce-bg" style="background:${grad}; filter:none;"></div>
+          <div class="ce-overlay"></div>
+          <div class="ce-content">
+            <div class="ce-icon">${c.icon}</div>
+            <div class="ce-name">${c.name}</div>
+            <div class="ce-count">${c.count}</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  // --- 分类精选 — Magazine 交错布局 ---
+  function getStatusInfo(m) {
+    const statusClass = m.status === 'live' ? 'live' : m.status === 'hot' ? 'hot' : 'soon';
+    const statusLabel = m.status === 'live' ? '直播中' : m.status === 'hot' ? '热门' : '即将';
+    return { statusClass, statusLabel };
+  }
+
+  function buildBarsHtml(m, prefix) {
+    if (m.type === 'binary') {
+      return `
+        <div class="${prefix}-bar-row"><span class="${prefix}-bar-label">是</span><div class="${prefix}-bar-track"><div class="${prefix}-bar-fill" style="width:${m.yesPct}%"></div></div><span class="${prefix}-bar-pct">${m.yesPct}%</span></div>
+        <div class="${prefix}-bar-row"><span class="${prefix}-bar-label">否</span><div class="${prefix}-bar-track"><div class="${prefix}-bar-fill" style="width:${m.noPct}%;background:var(--red)"></div></div><span class="${prefix}-bar-pct" style="color:var(--red)">${m.noPct}%</span></div>`;
+    } else if (m.type === 'multi' && m.options) {
+      return m.options.slice(0, 2).map(o => `
+        <div class="${prefix}-bar-row"><span class="${prefix}-bar-label">${o.l}</span><div class="${prefix}-bar-track"><div class="${prefix}-bar-fill" style="width:${o.pct}%"></div></div><span class="${prefix}-bar-pct">${o.pct}%</span></div>`).join('');
+    }
+    return '';
+  }
+
+  // Layout A: left feature image + right stacked list
+  function renderLayoutA(items) {
+    const m0 = items[0];
+    const { statusClass: sc0, statusLabel: sl0 } = getStatusInfo(m0);
+    const href0 = m0.id ? `/market?id=${m0.id}` : `/${m0.catKey || ''}`;
+    let featureBars = '';
+    if (m0.type === 'binary') {
+      featureBars = `
+        <div class="pmf-bar"><span>是</span><div class="pmf-bar-track"><div class="pmf-bar-fill" style="width:${m0.yesPct}%"></div></div><span class="pmf-bar-pct">${m0.yesPct}%</span></div>
+        <div class="pmf-bar"><span>否</span><div class="pmf-bar-track"><div class="pmf-bar-fill" style="width:${m0.noPct}%;background:linear-gradient(90deg, var(--red), rgba(255,91,122,.6))"></div></div><span class="pmf-bar-pct" style="color:var(--red)">${m0.noPct}%</span></div>`;
+    } else if (m0.type === 'multi' && m0.options) {
+      featureBars = m0.options.slice(0, 3).map(o => `
+        <div class="pmf-bar"><span>${o.l}</span><div class="pmf-bar-track"><div class="pmf-bar-fill" style="width:${o.pct}%"></div></div><span class="pmf-bar-pct">${o.pct}%</span></div>`).join('');
+    }
+    const featureHtml = `<div class="pm-feature pm-stagger" onclick="location.href='${href0}'">
+      <div class="pmf-bg" style="background-image:url('${m0.img}')"></div>
+      <div class="pmf-grad"></div>
+      <div class="pmf-body">
+        <div class="pmf-badge mc-img-badge ${sc0}">${sl0}</div>
+        <div class="pmf-title">${m0.title}</div>
+        <div class="pmf-meta"><span>💰 ${m0.vol}</span><span>👥 ${m0.preds}</span><span>📅 ${m0.time}</span></div>
+        <div class="pmf-bars">${featureBars}</div>
+      </div>
+    </div>`;
+    const listHtml = items.slice(1).map(m => {
+      const { statusClass, statusLabel } = getStatusInfo(m);
+      const href = m.id ? `/market?id=${m.id}` : `/${m.catKey || ''}`;
+      return `<div class="pm-list-card pm-stagger" onclick="location.href='${href}'">
+        <div class="pml-thumb" style="background-image:url('${m.img}')">
+          <span class="pml-badge mc-img-badge ${statusClass}">${statusLabel}</span>
+        </div>
+        <div class="pml-body">
+          <div class="pml-title">${m.title}</div>
+          ${buildBarsHtml(m, 'pml')}
+          <div class="pml-foot"><span>💰 ${m.vol}</span><span>👥 ${m.preds}</span></div>
+        </div>
+      </div>`;
+    }).join('');
+    return `<div class="pm-layout-a">${featureHtml}<div class="pm-list">${listHtml}</div></div>`;
+  }
+
+  // Layout B: top 3 image cards + bottom compact strip
+  function renderLayoutB(items) {
+    const topItems = items.slice(0, 3);
+    const bottomItems = items.slice(3);
+    const cardsHtml = topItems.map(m => {
+      const { statusClass, statusLabel } = getStatusInfo(m);
+      const href = m.id ? `/market?id=${m.id}` : `/${m.catKey || ''}`;
+      return `<div class="pm-card pm-stagger" onclick="location.href='${href}'">
+        <div class="pmc-img" style="background-image:url('${m.img}')">
+          <span class="pmc-badge mc-img-badge ${statusClass}">${statusLabel}</span>
+        </div>
+        <div class="pmc-body">
+          <div class="pmc-title">${m.title}</div>
+          ${buildBarsHtml(m, 'pmc')}
+          <div class="pmc-foot"><span>💰 ${m.vol}</span><span>👥 ${m.preds}</span></div>
+        </div>
+      </div>`;
+    }).join('');
+    let compactHtml = '';
+    if (bottomItems.length) {
+      compactHtml = '<div class="pm-compact-strip">' + bottomItems.map(m => {
+        const href = m.id ? `/market?id=${m.id}` : `/${m.catKey || ''}`;
+        let topPct = '';
+        if (m.type === 'binary') topPct = m.yesPct + '%';
+        else if (m.type === 'multi' && m.options) topPct = m.options[0].pct + '%';
+        return `<div class="pm-compact pm-stagger" onclick="location.href='${href}'">
+          <span class="pmc2-title">${m.title}</span>
+          <span class="pmc2-pct">${topPct}</span>
+          <span class="pmc2-vol">💰 ${m.vol}</span>
+        </div>`;
+      }).join('') + '</div>';
+    }
+    return `<div class="pm-layout-b"><div class="pm-cards-row">${cardsHtml}</div>${compactHtml}</div>`;
+  }
+
+  // 渲染每个分类 — 奇偶交替布局
+  const cats = ['football','basketball','crypto','events'];
+  cats.forEach((cat, catIdx) => {
+    const el = document.getElementById('home' + cat.charAt(0).toUpperCase() + cat.slice(1));
+    if (!el || !CAT_PICKS[cat]) return;
+    const items = CAT_PICKS[cat].map(m => { m.catKey = cat; return m; });
+    el.innerHTML = (catIdx % 2 === 0) ? renderLayoutA(items) : renderLayoutB(items);
+  });
+
+  // Scroll-reveal observer — only animate offscreen sections
+  if ('IntersectionObserver' in window) {
+    const pmObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('pm-visible'); pmObs.unobserve(e.target); } });
+    }, { threshold: 0.05 });
+    document.querySelectorAll('.pick-magazine').forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top > window.innerHeight) { el.classList.add('pm-anim'); }  // only hide offscreen ones
+      else { el.classList.add('pm-visible'); }  // already visible = show immediately
+      pmObs.observe(el);
+    });
+  }
+}
+
+// ============================================================
+// ATM 代币实时行情 — Binance 公开 API (双接口容灾)
+// ============================================================
+const CIRC_SUPPLY = 8_511_208;
+
+function fmtUSD(n, digits) {
+  if (digits === undefined) digits = n < 1 ? 4 : 2;
+  return '$' + n.toLocaleString('en-US', {minimumFractionDigits: digits, maximumFractionDigits: digits});
+}
+function fmtM(n) {
+  if (n >= 1e9) return '$' + (n / 1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n / 1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n / 1e3).toFixed(1) + 'K';
+  return fmtUSD(n);
+}
+function setEl(id, text) {
+  const e = document.getElementById(id); if (e) e.textContent = text;
+}
+
+async function fetchATMPrice() {
+  try {
+    // 同时拉 ATM/USDT + CHZ/USDT 行情
+    const [atmRes, chzRes] = await Promise.all([
+      fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ATMUSDT'),
+      fetch('https://api.binance.com/api/v3/ticker/price?symbol=CHZUSDT')
+    ]);
+    if (!atmRes.ok) throw new Error('ATM fetch failed');
+    const d = await atmRes.json();
+
+    const price    = parseFloat(d.lastPrice);
+    const pct      = parseFloat(d.priceChangePercent);
+    const high24   = parseFloat(d.highPrice);
+    const low24    = parseFloat(d.lowPrice);
+    const volUSDT  = parseFloat(d.quoteVolume);   // 24h USDT 成交额
+    const volATM   = parseFloat(d.volume);         // 24h ATM 成交量
+    const mktCap   = price * CIRC_SUPPLY;
+    const prevClose = parseFloat(d.prevClosePrice);
+
+    // CHZ 折算
+    let chzStr = '—';
+    if (chzRes.ok) {
+      const chzD = await chzRes.json();
+      const chzPrice = parseFloat(chzD.price);
+      if (chzPrice > 0) chzStr = (price / chzPrice).toFixed(2) + ' CHZ';
+    }
+
+    // --- 主卡片 ---
+    const priceEl  = document.getElementById('atmPrice');
+    const changeEl = document.getElementById('atmChange');
+    if (priceEl) priceEl.textContent = fmtUSD(price);
+    if (changeEl) {
+      changeEl.textContent = (pct >= 0 ? '+' : '') + pct.toFixed(2) + '%';
+      changeEl.className = 'apc-change ' + (pct >= 0 ? 'apc-up' : 'apc-down');
+    }
+    const subEl = document.getElementById('atmSubPrice');
+    if (subEl) subEl.textContent = '≈ ' + chzStr;
+
+    const now = new Date();
+    setEl('atmUpdatedAt', now.toLocaleTimeString('zh-CN', {hour:'2-digit', minute:'2-digit', second:'2-digit'}));
+
+    // --- 统计格 ---
+    setEl('atmMktCap',    fmtM(mktCap));
+    setEl('atmVolUSDT',   fmtM(volUSDT));
+    setEl('atmVolATM',    (volATM / 1e6).toFixed(2) + 'M ATM');
+    setEl('atmHigh24',    fmtUSD(high24));
+    setEl('atmLow24',     fmtUSD(low24));
+    setEl('atmPrevClose', fmtUSD(prevClose));
+
+    // --- Header 小标签 ---
+    const headerAtm = document.getElementById('headerATMPrice');
+    if (headerAtm) {
+      const sign = pct >= 0 ? '+' : '';
+      headerAtm.innerHTML =
+        `<span class="hatm-sym">ATM</span>` +
+        `<span class="hatm-price">${fmtUSD(price)}</span>` +
+        `<span class="hatm-chg ${pct >= 0 ? 'up' : 'down'}">${sign}${pct.toFixed(2)}%</span>`;
+    }
+  } catch(e) {
+    console.warn('[ATM] fetch failed:', e.message);
+  }
+}
+
+fetchATMPrice();
+setInterval(fetchATMPrice, 30000);
+
+// ============================================================
+// 初始化
+// ============================================================
+initCommon('home');
+renderHome();
+</script>
+<script src="/shared/effects.js?v=24"></script>
+</body>
+</html>

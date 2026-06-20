@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="ATMNO.1">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6d28d9"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="crownGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background: purple rounded square -->
+  <rect width="200" height="200" rx="44" fill="url(#bg)"/>
+
+  <!-- Subtle top shine -->
+  <path d="M44,0 Q0,0 0,44 L0,80 Q100,110 200,80 L200,44 Q200,0 156,0 Z" fill="rgba(255,255,255,0.08)"/>
+
+  <!-- Crown body — 3-peak silhouette -->
+  <path d="
+    M 40,138
+    L 40,102
+    L 70,118
+    L 100,68
+    L 130,118
+    L 160,102
+    L 160,138
+    Z"
+    fill="url(#crownGrad)"
+    filter="url(#glow)"
+  />
+
+  <!-- Crown base bar -->
+  <rect x="40" y="138" width="120" height="22" rx="11" fill="#f59e0b"/>
+
+  <!-- Crown jewel — left peak tip -->
+  <circle cx="40" cy="100" r="11" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+
+  <!-- Crown jewel — center peak tip (largest) -->
+  <circle cx="100" cy="64" r="14" fill="#fde68a" stroke="#f59e0b" stroke-width="2.5"/>
+  <!-- Inner shine -->
+  <circle cx="95" cy="59" r="5" fill="rgba(255,255,255,0.45)"/>
+
+  <!-- Crown jewel — right peak tip -->
+  <circle cx="160" cy="100" r="11" fill="#fde68a" stroke="#f59e0b" stroke-width="2"/>
+</svg>

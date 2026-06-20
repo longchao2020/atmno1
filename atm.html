@@ -1,0 +1,919 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ATM 代币 · Atletico Madrid Fan Token · ATMNO.1</title>
+<meta name="description" content="Atletico Madrid Fan Token (ATM) 实时价格、数据分析、代币用途与马德里竞技俱乐部信息。ATMNO.1 — 我们相信 ATM 将成为 NO.1。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=38" />
+<style>
+/* ===== ATM PAGE LOCAL STYLES ===== */
+
+/* Hero banner */
+.atm-hero {
+  position: relative; overflow: hidden;
+  border-radius: 24px; margin-bottom: 32px;
+  background: linear-gradient(135deg, #ce1126 0%, #8b0b1a 35%, #1a0a3c 65%, #003087 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 12px 60px rgba(206,17,38,.3), 0 4px 16px rgba(0,0,48,.4);
+  min-height: 320px;
+  display: flex; flex-direction: column;
+}
+.atm-hero::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(ellipse 60% 80% at 100% 50%, rgba(255,255,255,.04) 0%, transparent 70%);
+}
+
+/* Floating decorative elements */
+.atm-hero-deco { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+.atm-hero-stripe {
+  position: absolute; top: 0; bottom: 0; right: 0; width: 50%;
+  background: repeating-linear-gradient(
+    -55deg,
+    transparent,
+    transparent 18px,
+    rgba(255,255,255,.025) 18px,
+    rgba(255,255,255,.025) 36px
+  );
+}
+.atm-hero-ball {
+  position: absolute; font-size: 120px; opacity: .05;
+  right: -20px; bottom: -20px;
+  animation: atm-ball-spin 20s linear infinite;
+  transform-origin: center center;
+}
+@keyframes atm-ball-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.atm-hero-shield {
+  position: absolute; right: 80px; top: 50%; transform: translateY(-50%);
+  opacity: .06; width: 220px; height: 260px;
+}
+
+/* Hero inner content */
+.atm-hero-inner {
+  position: relative; z-index: 1;
+  padding: 32px 36px 24px;
+  flex: 1;
+  display: grid; grid-template-columns: 1fr 280px; gap: 28px; align-items: start;
+}
+@media (max-width: 860px) {
+  .atm-hero-inner { grid-template-columns: 1fr; padding: 24px 20px 20px; gap: 16px; }
+  .atm-hero { min-height: auto; }
+  .atm-hero-shield { display: none; }
+}
+
+.atm-hero-left {}
+
+.atm-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 999px; margin-bottom: 14px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.atm-hero-title {
+  font-size: 38px; font-weight: 900; color: #fff;
+  letter-spacing: -1.2px; line-height: 1; margin-bottom: 6px;
+  text-shadow: 0 2px 24px rgba(0,0,0,.4);
+}
+.atm-hero-title .atm-hero-red { color: #ff3a50; }
+.atm-hero-subtitle {
+  font-size: 15px; color: rgba(255,255,255,.55); margin-bottom: 20px; font-weight: 500;
+}
+
+/* Live price inside hero */
+.atm-hero-price-row {
+  display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px;
+}
+.atm-hero-price {
+  font-size: 44px; font-weight: 900; color: #fff; letter-spacing: -1.5px;
+  text-shadow: 0 0 40px rgba(255,255,255,.15);
+}
+.atm-hero-chg {
+  font-size: 20px; font-weight: 700; padding: 4px 12px; border-radius: 8px;
+}
+.atm-hero-chg.up   { background: rgba(52,211,153,.2); color: #6ee7b7; }
+.atm-hero-chg.down { background: rgba(251,113,133,.2); color: #fca5a5; }
+.atm-hero-price-sub {
+  font-size: 13px; color: rgba(255,255,255,.4); margin-bottom: 20px;
+}
+
+/* Predict buttons */
+.atm-hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.atm-hero-btn {
+  padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; transition: all .2s var(--ease-out-expo);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.atm-hero-btn-primary {
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  color: #1a1000;
+  box-shadow: 0 4px 20px rgba(251,191,36,.4);
+}
+.atm-hero-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(251,191,36,.5); }
+.atm-hero-btn-secondary {
+  background: rgba(255,255,255,.12); color: #fff;
+  border: 1px solid rgba(255,255,255,.2);
+}
+.atm-hero-btn-secondary:hover { background: rgba(255,255,255,.2); transform: translateY(-2px); }
+
+/* Right side: quick stats in hero */
+.atm-hero-right {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  align-content: start;
+}
+.atm-qs {
+  background: rgba(0,0,0,.25); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 12px 14px;
+  backdrop-filter: blur(8px);
+}
+.atm-qs-label { font-size: 9px; color: rgba(255,255,255,.4); font-weight: 700; text-transform: uppercase; letter-spacing: .6px; margin-bottom: 4px; }
+.atm-qs-val   { font-size: 18px; font-weight: 800; color: #fff; }
+.atm-qs-sub   { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 2px; }
+
+/* Bottom ticker bar */
+.atm-hero-bar {
+  position: relative; z-index: 1;
+  display: flex; gap: 0; overflow: hidden;
+  background: rgba(0,0,0,.3); border-top: 1px solid rgba(255,255,255,.06);
+  backdrop-filter: blur(8px);
+}
+.atm-hbar-item {
+  flex: 1; text-align: center; padding: 10px 8px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.atm-hbar-item:last-child { border-right: none; }
+.atm-hbar-label { font-size: 9px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px; }
+.atm-hbar-val   { font-size: 13px; font-weight: 700; color: #fff; margin-top: 2px; }
+
+/* ===== SECTION HEADERS ===== */
+.atm-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.atm-section-head h2 {
+  font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -.4px;
+  display: flex; align-items: center; gap: 8px;
+}
+.atm-section-tag {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(206,17,38,.1); color: #ce1126; border: 1px solid rgba(206,17,38,.2);
+}
+[data-theme="dark"] .atm-section-tag { background: rgba(251,113,133,.1); color: #fb7185; border-color: rgba(251,113,133,.2); }
+
+/* ===== CLUB INFO CARDS GRID ===== */
+.atm-club-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .atm-club-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .atm-club-grid { grid-template-columns: 1fr; } }
+
+.atm-club-card {
+  background: var(--card); border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  transition: transform .3s var(--ease-out-expo), box-shadow .3s;
+}
+.atm-club-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.atm-club-card-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  background: linear-gradient(135deg, #ce1126 0%, #003087 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 64px; position: relative; overflow: hidden;
+}
+.atm-club-card-img::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 50%, rgba(0,0,0,.3) 100%);
+}
+.atm-club-card-body { padding: 16px; }
+.atm-club-card-title { font-size: 15px; font-weight: 800; color: var(--text); margin-bottom: 4px; }
+.atm-club-card-text  { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ===== UTILITY SECTION ===== */
+.atm-utility-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .atm-utility-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .atm-utility-grid { grid-template-columns: 1fr; } }
+
+.atm-util-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 20px 16px; text-align: center;
+  transition: transform .3s var(--ease-out-expo), box-shadow .3s, border-color .3s;
+  cursor: default;
+}
+.atm-util-card:hover {
+  transform: translateY(-4px); box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+.atm-util-icon {
+  width: 52px; height: 52px; border-radius: 14px; margin: 0 auto 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.atm-util-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.atm-util-desc  { font-size: 12px; color: var(--text-dim); line-height: 1.6; }
+
+/* ===== MILESTONES TIMELINE ===== */
+.atm-timeline {
+  position: relative; padding-left: 28px; margin-bottom: 24px;
+}
+.atm-timeline::before {
+  content: ''; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px;
+  background: linear-gradient(to bottom, #ce1126, #003087);
+  border-radius: 1px;
+}
+.atm-tl-item {
+  position: relative; margin-bottom: 20px;
+}
+.atm-tl-item::before {
+  content: ''; position: absolute; left: -24px; top: 5px;
+  width: 10px; height: 10px; border-radius: 50%;
+  background: #ce1126; border: 2px solid var(--card);
+  box-shadow: 0 0 0 2px #ce1126;
+}
+.atm-tl-date  { font-size: 10px; font-weight: 700; color: var(--text-dim); text-transform: uppercase; letter-spacing: .5px; margin-bottom: 2px; }
+.atm-tl-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+.atm-tl-desc  { font-size: 12px; color: var(--text-dim); line-height: 1.5; }
+
+/* ===== HOW TO BUY ===== */
+.atm-buy-steps {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .atm-buy-steps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .atm-buy-steps { grid-template-columns: 1fr; } }
+.atm-tl-grid { }
+@media (max-width: 700px) { .atm-tl-grid { grid-template-columns: 1fr !important; } }
+
+.atm-buy-step {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  padding: 20px 16px; position: relative; overflow: hidden;
+}
+.atm-buy-step-num {
+  position: absolute; top: 12px; right: 14px;
+  font-size: 48px; font-weight: 900; color: var(--border);
+  line-height: 1; letter-spacing: -2px; pointer-events: none;
+}
+.atm-buy-step-icon { font-size: 28px; margin-bottom: 10px; }
+.atm-buy-step-title { font-size: 14px; font-weight: 800; color: var(--text); margin-bottom: 6px; }
+.atm-buy-step-desc  { font-size: 12px; color: var(--text-dim); line-height: 1.6; position: relative; z-index: 1; }
+
+/* ===== EXCHANGES GRID ===== */
+.atm-ex-grid {
+  display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px;
+  margin-bottom: 24px;
+}
+@media (max-width: 800px) { .atm-ex-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { .atm-ex-grid { grid-template-columns: repeat(2, 1fr); } }
+
+.atm-ex-item {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px 12px; text-align: center;
+  cursor: pointer; text-decoration: none; color: inherit;
+  transition: transform .2s var(--ease-out-expo), box-shadow .2s, border-color .2s;
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+}
+.atm-ex-item:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+.atm-ex-logo {
+  width: 42px; height: 42px; border-radius: 12px; font-size: 24px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--card-inner);
+}
+.atm-ex-name  { font-size: 13px; font-weight: 700; color: var(--text); }
+.atm-ex-pair  { font-size: 10px; color: var(--text-dim); }
+.atm-ex-badge {
+  font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 4px;
+  background: rgba(16,185,129,.12); color: #10b981; border: 1px solid rgba(16,185,129,.2);
+}
+
+/* ===== STATS CARDS (full-width) ===== */
+.atm-full-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+  margin-bottom: 24px;
+}
+@media (max-width: 900px) { .atm-full-stats { grid-template-columns: repeat(2, 1fr); } }
+
+.atm-stat-pill {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 18px 16px;
+  display: flex; flex-direction: column; gap: 4px;
+}
+.atm-stat-pill-label { font-size: 10px; color: var(--text-dim); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; }
+.atm-stat-pill-val   { font-size: 22px; font-weight: 900; color: var(--text); letter-spacing: -.5px; }
+.atm-stat-pill-sub   { font-size: 11px; color: var(--text-dim); }
+
+/* ===== SOCIOS CARD ===== */
+.atm-socios-banner {
+  border-radius: 20px; padding: 28px 32px;
+  background: linear-gradient(135deg, #1a0a3c 0%, #0d1f5e 50%, #003087 100%);
+  border: 1px solid rgba(255,255,255,.1);
+  box-shadow: 0 8px 40px rgba(0,48,135,.3);
+  display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center;
+  margin-bottom: 24px; position: relative; overflow: hidden;
+}
+@media (max-width: 640px) { .atm-socios-banner { grid-template-columns: 1fr; } }
+.atm-socios-banner::before {
+  content: '⛓️';
+  position: absolute; right: 120px; top: 50%; transform: translateY(-50%);
+  font-size: 80px; opacity: .05; pointer-events: none;
+}
+.atm-socios-title { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 6px; }
+.atm-socios-sub   { font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.6; max-width: 480px; }
+.atm-socios-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 16px; padding: 10px 20px; border-radius: 10px;
+  background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+  color: #fff; font-size: 13px; font-weight: 700; cursor: pointer;
+  text-decoration: none;
+  transition: background .2s, transform .2s var(--ease-out-expo);
+}
+.atm-socios-link:hover { background: rgba(255,255,255,.2); transform: translateY(-2px); }
+.atm-socios-stats {
+  display: flex; flex-direction: column; gap: 10px; flex-shrink: 0;
+}
+.atm-socios-stat {
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
+  border-radius: 12px; padding: 12px 16px; text-align: center; min-width: 130px;
+}
+.atm-socios-stat-val { font-size: 22px; font-weight: 900; color: #fff; }
+.atm-socios-stat-lbl { font-size: 10px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+
+/* ===== PREDICTION CTA ===== */
+.atm-predict-cta {
+  border-radius: 20px; padding: 32px;
+  background: var(--gradient-accent);
+  position: relative; overflow: hidden;
+  margin-bottom: 32px; text-align: center;
+}
+.atm-predict-cta::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='1' fill='rgba(255,255,255,.06)'/%3E%3C/svg%3E") repeat;
+  pointer-events: none;
+}
+.atm-cta-title { font-size: 28px; font-weight: 900; color: #fff; margin-bottom: 8px; letter-spacing: -.5px; }
+.atm-cta-sub   { font-size: 14px; color: rgba(255,255,255,.7); margin-bottom: 20px; }
+.atm-cta-btns  { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.atm-cta-btn {
+  padding: 13px 28px; border-radius: 12px; font-size: 14px; font-weight: 800;
+  cursor: pointer; border: none;
+  transition: all .2s var(--ease-out-expo);
+}
+.atm-cta-btn-white { background: #fff; color: #7c3aed; }
+.atm-cta-btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,.2); }
+.atm-cta-btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.5); }
+.atm-cta-btn-outline:hover { background: rgba(255,255,255,.15); transform: translateY(-2px); }
+
+/* ===== TROPHY ROW ===== */
+.atm-trophy-row {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px;
+}
+.atm-trophy-chip {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; border-radius: 12px;
+  background: var(--card); border: 1px solid var(--border);
+  transition: border-color .2s, transform .2s;
+  cursor: default;
+}
+.atm-trophy-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+.atm-trophy-icon { font-size: 22px; }
+.atm-trophy-info {}
+.atm-trophy-name { font-size: 13px; font-weight: 700; color: var(--text); }
+.atm-trophy-year { font-size: 10px; color: var(--text-dim); }
+
+/* Adjust page section spacing */
+.atm-page-section { margin-bottom: 32px; }
+
+/* Supply visual bar */
+.atm-supply-bar-wrap {
+  height: 8px; background: var(--card-inner); border-radius: 999px; overflow: hidden; margin: 8px 0 4px;
+}
+.atm-supply-bar {
+  height: 100%; border-radius: 999px;
+  background: linear-gradient(90deg, #ce1126, #a855f7);
+  width: 85.1%;
+  transition: width 1.5s var(--ease-out-expo);
+}
+</style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header></header>
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<div class="data-bar">
+  <div id="dataSource" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim);">
+    <span class="live-dot" style="background:var(--text-dim);animation:none;width:6px;height:6px;"></span>
+    <span>ATM 代币 · 实时数据 · Binance API</span>
+  </div>
+</div>
+
+<div class="wrap wrap-single">
+
+  <!-- ★★★ ATM 英雄区 -->
+  <div class="atm-hero">
+    <div class="atm-hero-deco">
+      <div class="atm-hero-stripe"></div>
+      <div class="atm-hero-ball">⚽</div>
+      <!-- Abstract shield (Atletico) -->
+      <svg class="atm-hero-shield" viewBox="0 0 200 240" xmlns="http://www.w3.org/2000/svg" fill="white">
+        <path d="M100 10 L190 50 L190 140 C190 190 100 230 100 230 C100 230 10 190 10 140 L10 50 Z"/>
+        <path d="M100 30 L175 65 L175 138 C175 180 100 215 100 215 C100 215 25 180 25 138 L25 65 Z" fill="none" stroke="white" stroke-width="3" opacity=".3"/>
+        <!-- vertical stripe -->
+        <rect x="85" y="40" width="30" height="165" fill="white" opacity=".08"/>
+      </svg>
+    </div>
+
+    <div class="atm-hero-inner">
+      <div class="atm-hero-left">
+        <div class="atm-hero-badge">
+          <span style="width:7px;height:7px;border-radius:50%;background:#fbbf24;animation:pulse 1.4s infinite;display:inline-block;"></span>
+          🔴⚪🔵 Atletico Madrid Fan Token
+        </div>
+        <div class="atm-hero-title">
+          <span class="atm-hero-red">ATM</span> 代币
+        </div>
+        <div class="atm-hero-subtitle">马德里竞技官方粉丝代币 · Socios.com · Chiliz Chain</div>
+
+        <div class="atm-hero-price-row">
+          <div class="atm-hero-price" id="atmHeroPrice">—</div>
+          <div class="atm-hero-chg" id="atmHeroChg">—</div>
+        </div>
+        <div class="atm-hero-price-sub" id="atmHeroPriceSub">加载中…</div>
+
+        <div class="atm-hero-btns">
+          <button class="atm-hero-btn atm-hero-btn-primary" onclick="window.open('https://www.binance.com/en/trade/ATM_USDT','_blank')">
+            📈 去币安交易
+          </button>
+          <button class="atm-hero-btn atm-hero-btn-secondary" onclick="location.href='/football'">
+            🏆 ATM 赛事预测
+          </button>
+          <button class="atm-hero-btn atm-hero-btn-secondary" onclick="window.open('https://www.socios.com/atletico-madrid/','_blank')">
+            🔗 Socios.com
+          </button>
+        </div>
+      </div>
+
+      <div class="atm-hero-right">
+        <div class="atm-qs">
+          <div class="atm-qs-label">市值</div>
+          <div class="atm-qs-val" id="atmHeroMktCap">—</div>
+          <div class="atm-qs-sub">Market Cap</div>
+        </div>
+        <div class="atm-qs">
+          <div class="atm-qs-label">24H 量</div>
+          <div class="atm-qs-val" id="atmHeroVol">—</div>
+          <div class="atm-qs-sub">Volume (USDT)</div>
+        </div>
+        <div class="atm-qs">
+          <div class="atm-qs-label">24H 最高</div>
+          <div class="atm-qs-val" id="atmHeroHigh">—</div>
+          <div class="atm-qs-sub">24H High</div>
+        </div>
+        <div class="atm-qs">
+          <div class="atm-qs-label">24H 最低</div>
+          <div class="atm-qs-val" id="atmHeroLow">—</div>
+          <div class="atm-qs-sub">24H Low</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="atm-hero-bar">
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">历史最高 ATH</div>
+        <div class="atm-hbar-val" style="color:#fbbf24;">$58.46</div>
+      </div>
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">ATH 日期</div>
+        <div class="atm-hbar-val">2021-05-16</div>
+      </div>
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">历史最低 ATL</div>
+        <div class="atm-hbar-val" style="color:#fb7185;">$0.75</div>
+      </div>
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">ATL 日期</div>
+        <div class="atm-hbar-val">2026-02-06</div>
+      </div>
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">流通量</div>
+        <div class="atm-hbar-val">8.51M / 10M</div>
+      </div>
+      <div class="atm-hbar-item">
+        <div class="atm-hbar-label">底层链</div>
+        <div class="atm-hbar-val">Chiliz Chain</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FULL STATS ===== -->
+  <div class="atm-page-section">
+    <div class="atm-full-stats">
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">当前价格</div>
+        <div class="atm-stat-pill-val" id="atmStatPrice">—</div>
+        <div class="atm-stat-pill-sub">ATM / USDT</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">市值</div>
+        <div class="atm-stat-pill-val" id="atmStatMktCap">—</div>
+        <div class="atm-stat-pill-sub">流通量 × 价格</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">24H 成交额</div>
+        <div class="atm-stat-pill-val" id="atmStatVol">—</div>
+        <div class="atm-stat-pill-sub">USDT</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">24H ATM 成交量</div>
+        <div class="atm-stat-pill-val" id="atmStatVolAtm">—</div>
+        <div class="atm-stat-pill-sub">ATM tokens</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">昨日收盘</div>
+        <div class="atm-stat-pill-val" id="atmStatPrev">—</div>
+        <div class="atm-stat-pill-sub">Previous Close</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">流通量 / 总量</div>
+        <div class="atm-stat-pill-val">8.51M</div>
+        <div class="atm-stat-pill-sub">Total: 10,000,000</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">历史最高 ATH</div>
+        <div class="atm-stat-pill-val" style="color:#ce1126;">$58.46</div>
+        <div class="atm-stat-pill-sub">2021年5月16日</div>
+      </div>
+      <div class="atm-stat-pill">
+        <div class="atm-stat-pill-label">历史最低 ATL</div>
+        <div class="atm-stat-pill-val" style="color:var(--accent);">$0.75</div>
+        <div class="atm-stat-pill-sub">2026年2月6日</div>
+      </div>
+    </div>
+
+    <!-- Supply bar -->
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px 20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <span style="font-size:13px;font-weight:700;color:var(--text);">流通量占比</span>
+        <span style="font-size:13px;font-weight:800;color:var(--accent);">85.1%</span>
+      </div>
+      <div class="atm-supply-bar-wrap"><div class="atm-supply-bar"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-dim);margin-top:4px;">
+        <span>已流通: 8,511,208 ATM</span>
+        <span>总量: 10,000,000 ATM</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ATLETICO MADRID CLUB INFO ===== -->
+  <div class="atm-page-section">
+    <div class="atm-section-head">
+      <h2>🔴⚪🔵 马德里竞技俱乐部</h2>
+      <span class="atm-section-tag">Club Info</span>
+    </div>
+
+    <div class="atm-club-grid">
+      <!-- Card 1: Stadium -->
+      <div class="atm-club-card">
+        <div class="atm-club-card-img" style="background:linear-gradient(135deg,#ce1126 0%,#8b0b1a 100%);">
+          <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&h=340&fit=crop" alt="Estadio Civitas Metropolitano" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" onerror="this.style.display='none'"/>
+          <span style="position:relative;z-index:1;">🏟️</span>
+        </div>
+        <div class="atm-club-card-body">
+          <div class="atm-club-card-title">大都会球场</div>
+          <div class="atm-club-card-text">Estadio Civitas Metropolitano · 容纳 68,456 名观众 · 2017年落成 · 全欧洲最现代化的球场之一</div>
+        </div>
+      </div>
+      <!-- Card 2: History -->
+      <div class="atm-club-card">
+        <div class="atm-club-card-img" style="background:linear-gradient(135deg,#003087 0%,#1a0a3c 100%);">
+          <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&h=340&fit=crop" alt="Football" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" onerror="this.style.display='none'"/>
+          <span style="position:relative;z-index:1;">⚽</span>
+        </div>
+        <div class="atm-club-card-body">
+          <div class="atm-club-card-title">俱乐部历史</div>
+          <div class="atm-club-card-text">创立于 1903 年 · 西班牙马德里 · 绰号「马蹄铁」· 西甲三大豪门之一 · 与皇马同城竞争</div>
+        </div>
+      </div>
+      <!-- Card 3: Titles -->
+      <div class="atm-club-card">
+        <div class="atm-club-card-img" style="background:linear-gradient(135deg,#fbbf24 0%,#b45309 100%);">
+          <img src="https://images.unsplash.com/photo-1567450765069-db81d70fa7e7?w=600&h=340&fit=crop" alt="Trophy" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;" loading="lazy" onerror="this.style.display='none'"/>
+          <span style="position:relative;z-index:1;">🏆</span>
+        </div>
+        <div class="atm-club-card-body">
+          <div class="atm-club-card-title">荣耀史册</div>
+          <div class="atm-club-card-text">11 次西甲冠军 · 1 次欧冠亚军 · 3 次欧联杯 · 2 次欧超杯 · 1 次世俱杯冠军</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trophy chips -->
+    <div class="atm-trophy-row">
+      <div class="atm-trophy-chip">
+        <span class="atm-trophy-icon">🥇</span>
+        <div class="atm-trophy-info"><div class="atm-trophy-name">La Liga 西甲冠军</div><div class="atm-trophy-year">11次 · 最近 2020-21</div></div>
+      </div>
+      <div class="atm-trophy-chip">
+        <span class="atm-trophy-icon">🏆</span>
+        <div class="atm-trophy-info"><div class="atm-trophy-name">UEFA Europa League</div><div class="atm-trophy-year">3次 · 2018, 2012, 2010</div></div>
+      </div>
+      <div class="atm-trophy-chip">
+        <span class="atm-trophy-icon">⭐</span>
+        <div class="atm-trophy-info"><div class="atm-trophy-name">UEFA Super Cup</div><div class="atm-trophy-year">2次 · 2018, 2012</div></div>
+      </div>
+      <div class="atm-trophy-chip">
+        <span class="atm-trophy-icon">🌍</span>
+        <div class="atm-trophy-info"><div class="atm-trophy-name">FIFA Club World Cup</div><div class="atm-trophy-year">1次 · 2025</div></div>
+      </div>
+      <div class="atm-trophy-chip">
+        <span class="atm-trophy-icon">🇪🇸</span>
+        <div class="atm-trophy-info"><div class="atm-trophy-name">Copa del Rey</div><div class="atm-trophy-year">10次 西班牙国王杯</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOKEN UTILITY ===== -->
+  <div class="atm-page-section">
+    <div class="atm-section-head">
+      <h2>🪙 ATM 代币用途</h2>
+      <span class="atm-section-tag">Token Utility</span>
+    </div>
+    <div class="atm-utility-grid">
+      <div class="atm-util-card">
+        <div class="atm-util-icon" style="background:rgba(206,17,38,.1);">🗳️</div>
+        <div class="atm-util-title">球迷投票权</div>
+        <div class="atm-util-desc">参与俱乐部官方投票，例如球衣颜色、队歌、队徽细节等，让球迷真正影响俱乐部决策</div>
+      </div>
+      <div class="atm-util-card">
+        <div class="atm-util-icon" style="background:rgba(251,191,36,.1);">🎫</div>
+        <div class="atm-util-title">独家特权</div>
+        <div class="atm-util-desc">获取球员签名周边、VIP 球场体验资格、更衣室参观、球员互动等只有持币者才能享有的体验</div>
+      </div>
+      <div class="atm-util-card">
+        <div class="atm-util-icon" style="background:rgba(99,102,241,.1);">📊</div>
+        <div class="atm-util-title">ATMNO.1 预测</div>
+        <div class="atm-util-desc">在 ATMNO.1 平台参与马竞赛事预测、世界杯竞猜，持有 ATM 享受平台积分加成与手续费优惠</div>
+      </div>
+      <div class="atm-util-card">
+        <div class="atm-util-icon" style="background:rgba(16,185,129,.1);">💎</div>
+        <div class="atm-util-title">价值存储</div>
+        <div class="atm-util-desc">总量限定 1000 万枚，随马德里竞技全球影响力扩大，稀缺代币潜在价值增长，ATH 曾达 $58.46</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SOCIOS / CHILIZ BANNER ===== -->
+  <div class="atm-socios-banner">
+    <div>
+      <div class="atm-socios-title">🔗 Socios.com × Chiliz Chain</div>
+      <div class="atm-socios-sub">ATM 代币由 Socios.com 发行，运行于 Chiliz Chain 专属体育公链。Socios 是全球领先的球迷代币平台，已与 PSG、巴萨、尤文、AC 米兰等 100+ 顶级俱乐部合作，为球迷提供真正的俱乐部参与感。</div>
+      <a class="atm-socios-link" href="https://www.socios.com/atletico-madrid/" target="_blank">🔗 访问 Socios ATM 页面 →</a>
+    </div>
+    <div class="atm-socios-stats">
+      <div class="atm-socios-stat">
+        <div class="atm-socios-stat-val">100+</div>
+        <div class="atm-socios-stat-lbl">合作俱乐部</div>
+      </div>
+      <div class="atm-socios-stat">
+        <div class="atm-socios-stat-val">CHZ</div>
+        <div class="atm-socios-stat-lbl">底层链代币</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== EXCHANGES ===== -->
+  <div class="atm-page-section">
+    <div class="atm-section-head">
+      <h2>🏦 在哪里买 ATM</h2>
+      <span class="atm-section-tag">Exchanges</span>
+    </div>
+    <div class="atm-ex-grid">
+      <a class="atm-ex-item" href="https://www.binance.com/en/trade/ATM_USDT" target="_blank">
+        <div class="atm-ex-logo">🟡</div>
+        <div class="atm-ex-name">Binance</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">最高流动性</div>
+      </a>
+      <a class="atm-ex-item" href="https://bingx.com/" target="_blank">
+        <div class="atm-ex-logo">🔵</div>
+        <div class="atm-ex-name">BingX</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">现货可买</div>
+      </a>
+      <a class="atm-ex-item" href="https://www.bitget.com/" target="_blank">
+        <div class="atm-ex-logo">🟢</div>
+        <div class="atm-ex-name">Bitget</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">现货可买</div>
+      </a>
+      <a class="atm-ex-item" href="https://www.bitrue.com/" target="_blank">
+        <div class="atm-ex-logo">🔴</div>
+        <div class="atm-ex-name">Bitrue</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">现货可买</div>
+      </a>
+      <a class="atm-ex-item" href="https://www.coinex.com/" target="_blank">
+        <div class="atm-ex-logo">⚪</div>
+        <div class="atm-ex-name">CoinEx</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">现货可买</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ===== HOW TO BUY ===== -->
+  <div class="atm-page-section">
+    <div class="atm-section-head">
+      <h2>📖 如何购买 ATM</h2>
+      <span class="atm-section-tag">How to Buy</span>
+    </div>
+    <div class="atm-buy-steps">
+      <div class="atm-buy-step">
+        <div class="atm-buy-step-num">01</div>
+        <div class="atm-buy-step-icon">📱</div>
+        <div class="atm-buy-step-title">注册交易所</div>
+        <div class="atm-buy-step-desc">在 Binance、BingX 等支持 ATM 的交易所注册账户，完成 KYC 实名认证</div>
+      </div>
+      <div class="atm-buy-step">
+        <div class="atm-buy-step-num">02</div>
+        <div class="atm-buy-step-icon">💳</div>
+        <div class="atm-buy-step-title">充值 USDT</div>
+        <div class="atm-buy-step-desc">通过银行卡、C2C 或转账方式充值 USDT 到账户，USDT 是购买 ATM 的主要媒介</div>
+      </div>
+      <div class="atm-buy-step">
+        <div class="atm-buy-step-num">03</div>
+        <div class="atm-buy-step-icon">📊</div>
+        <div class="atm-buy-step-title">买入 ATM</div>
+        <div class="atm-buy-step-desc">搜索 ATM/USDT 交易对，下限价单或市价单购买 ATM 代币到账</div>
+      </div>
+      <div class="atm-buy-step">
+        <div class="atm-buy-step-num">04</div>
+        <div class="atm-buy-step-icon">🏆</div>
+        <div class="atm-buy-step-title">参与预测</div>
+        <div class="atm-buy-step-desc">持有 ATM 后，来 ATMNO.1 参与马竞赛事和世界杯预测，赢取 USDT 奖励</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== TOKEN MILESTONES TIMELINE ===== -->
+  <div class="atm-page-section">
+    <div class="atm-section-head">
+      <h2>📅 ATM 代币大事记</h2>
+      <span class="atm-section-tag">Timeline</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="atm-tl-grid">
+      <div class="atm-timeline">
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2020 年</div>
+          <div class="atm-tl-title">🚀 ATM 代币发行</div>
+          <div class="atm-tl-desc">Socios.com 与马德里竞技合作，发行 ATM 球迷代币，成为首批顶级球队代币之一</div>
+        </div>
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2021年5月16日</div>
+          <div class="atm-tl-title">🏆 历史最高价 $58.46</div>
+          <div class="atm-tl-desc">受加密市场牛市与球迷代币热潮驱动，ATM 创下 $58.46 的历史最高价，市值突破 5 亿美元</div>
+        </div>
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2021 — 2023</div>
+          <div class="atm-tl-title">📉 市场调整期</div>
+          <div class="atm-tl-desc">随加密熊市到来，ATM 进入长期调整，但俱乐部持续举办持币者专属活动维持社区活跃</div>
+        </div>
+      </div>
+      <div class="atm-timeline">
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2024 年</div>
+          <div class="atm-tl-title">⛓️ 迁移至 Chiliz Chain</div>
+          <div class="atm-tl-desc">ATM 迁移至 Chiliz 专属体育公链，提升交易速度与用途扩展性，开放 DeFi 应用场景</div>
+        </div>
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2026年2月6日</div>
+          <div class="atm-tl-title">📍 历史最低价 $0.75</div>
+          <div class="atm-tl-desc">市场低谷期，ATM 触及 $0.75 的历史最低点，随后随世界杯热度上升开始反弹</div>
+        </div>
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2026 年（当前）</div>
+          <div class="atm-tl-title">🌍 世界杯助推复苏</div>
+          <div class="atm-tl-desc">2026 FIFA 世界杯带动足球相关代币热度，ATM 从低点大幅反弹，ATMNO.1 平台同步上线</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== PREDICTION CTA ===== -->
+  <div class="atm-predict-cta">
+    <div class="atm-cta-title">🏆 我们相信 ATM 将成为 NO.1</div>
+    <div class="atm-cta-sub">持有 ATM，参与马竞赛事预测，赢取 USDT 奖励 · 链上透明，钱包直连</div>
+    <div class="atm-cta-btns">
+      <button class="atm-cta-btn atm-cta-btn-white" onclick="location.href='/football'">
+        ⚽ 开始赛事预测
+      </button>
+      <button class="atm-cta-btn atm-cta-btn-outline" onclick="window.open('https://www.binance.com/en/trade/ATM_USDT','_blank')">
+        📈 购买 ATM 代币
+      </button>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- ===== TOAST / MODALS (reused from common) ===== -->
+<div id="toast" class="toast"></div>
+
+<script src="/shared/common.js"></script>
+<script src="/shared/effects.js"></script>
+<script>
+// Build page — use initCommon which handles header + mobile nav correctly
+initCommon('atm');
+// Override header active state for 'atm' tab
+document.querySelectorAll('.hn-item').forEach(el => {
+  el.classList.toggle('active', el.getAttribute('data-cat') === 'atm');
+});
+
+// ===== Real-time ATM Price =====
+const CIRC_SUPPLY = 8_511_208;
+function fmtUSD(n, digits) {
+  if (isNaN(n)) return '—';
+  return '$' + n.toFixed(digits !== undefined ? digits : 2);
+}
+function fmtM(n) {
+  if (isNaN(n)) return '—';
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return '$' + (n/1e3).toFixed(1) + 'K';
+  return '$' + n.toFixed(2);
+}
+function fmtBigNum(n) {
+  if (isNaN(n)) return '—';
+  if (n >= 1e6) return (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+  return n.toFixed(0);
+}
+function setEl(id, text) { const e = document.getElementById(id); if (e) e.textContent = text; }
+function setClass(id, cls) { const e = document.getElementById(id); if (e) { e.className = e.className.replace(/\bup\b|\bdown\b/g,'').trim() + ' ' + cls; } }
+
+async function fetchATMPagePrice() {
+  try {
+    const r = await fetch('https://api.binance.com/api/v3/ticker/24hr?symbol=ATMUSDT');
+    const d = await r.json();
+    const price    = parseFloat(d.lastPrice);
+    const pct      = parseFloat(d.priceChangePercent);
+    const high24   = parseFloat(d.highPrice);
+    const low24    = parseFloat(d.lowPrice);
+    const volUSDT  = parseFloat(d.quoteVolume);
+    const volATM   = parseFloat(d.volume);
+    const mktCap   = price * CIRC_SUPPLY;
+    const prevClose= parseFloat(d.prevClosePrice);
+    const isUp     = pct >= 0;
+    const pctStr   = (isUp ? '+' : '') + pct.toFixed(2) + '%';
+    const now      = new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+
+    // Hero
+    setEl('atmHeroPrice', fmtUSD(price));
+    setEl('atmHeroChg', pctStr);
+    setClass('atmHeroChg', isUp ? 'up' : 'down');
+    setEl('atmHeroPriceSub', `≈ 实时价格 · Binance API · ${now}`);
+    setEl('atmHeroMktCap', fmtM(mktCap));
+    setEl('atmHeroVol', fmtM(volUSDT));
+    setEl('atmHeroHigh', fmtUSD(high24));
+    setEl('atmHeroLow', fmtUSD(low24));
+
+    // Full stats
+    setEl('atmStatPrice', fmtUSD(price));
+    setEl('atmStatMktCap', fmtM(mktCap));
+    setEl('atmStatVol', fmtM(volUSDT));
+    setEl('atmStatVolAtm', fmtBigNum(volATM) + ' ATM');
+    setEl('atmStatPrev', fmtUSD(prevClose));
+
+    // Header ticker (from common.js)
+    const ticker = document.getElementById('headerATMPrice');
+    if (ticker) {
+      ticker.querySelector('.hatm-price').textContent = fmtUSD(price);
+      const chgEl = ticker.querySelector('.hatm-chg');
+      chgEl.textContent = pctStr;
+      chgEl.className = 'hatm-chg ' + (isUp ? 'up' : 'down');
+    }
+  } catch(e) {
+    console.warn('[ATM page] fetch failed:', e.message);
+  }
+}
+
+fetchATMPagePrice();
+setInterval(fetchATMPagePrice, 30000);
+
+// Animate supply bar on load
+setTimeout(() => {
+  const bar = document.querySelector('.atm-supply-bar');
+  if (bar) bar.style.width = '85.1%';
+}, 400);
+</script>
+</body>
+</html>

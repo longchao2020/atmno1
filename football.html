@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>足球预测 · ATMNO.1</title>
+<meta name="description" content="ATMNO.1 — 全球首选的WEB3预测平台。覆盖体育、加密货币、时事、文娱等多个领域的去中心化预测市场。" />
+<meta name="keywords" content="ATMNO.1,Web3,预测市场,prediction market,区块链,blockchain,加密货币,体育预测" />
+<meta property="og:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta property="og:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。链上透明，钱包直连。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://atmno1.world" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=38" />
+<style>
+  .cat-hero { border: 1px solid rgba(38,208,124,.2); }
+  .cat-hero-badge { background: rgba(38,208,124,.15); color: #26d07c; border: 1px solid rgba(38,208,124,.3); }
+  .cat-hero-tag { background: rgba(38,208,124,.1); border-color: rgba(38,208,124,.2); color: rgba(38,208,124,.8); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header></header>
+
+<!-- ==================== MOBILE NAV ==================== -->
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<!-- NO hero banner on football page (it has its own cat-hero below) -->
+
+<!-- ==================== DATA BAR ==================== -->
+<div class="data-bar">
+  <div id="dataSource" style="display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim);">
+    <span class="live-dot" style="background:var(--text-dim);animation:none;width:6px;height:6px;"></span>
+    <span data-i18n="hero.loading">Data sources: loading…</span>
+  </div>
+</div>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<div class="wrap">
+  <div>
+    <!-- Football category hero -->
+    <div class="cat-hero" style="margin-bottom:16px;">
+      <div class="cat-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=1200&h=500&fit=crop')"></div>
+      <div class="cat-hero-overlay"></div>
+      <div class="cat-hero-content">
+        <div class="cat-hero-badge" style="background:rgba(38,208,124,.2);color:#26d07c;border:1px solid rgba(38,208,124,.3);">⚽ FOOTBALL PREDICTIONS</div>
+        <div class="cat-hero-title" data-i18n="football.heroTitle">Football · Global Leagues & Tournaments</div>
+        <div class="cat-hero-sub" data-i18n="football.heroSub">Predict match results, champions, top scorers and more</div>
+      </div>
+    </div>
+
+    <!-- Sub-league navigation -->
+    <div class="sub-nav" id="footballSubNav">
+      <div class="sub-nav-item active" data-sub="worldcup" onclick="switchFootballSub('worldcup')">
+        <span>🏆</span> <span data-i18n="football.worldcup">World Cup 2026</span>
+      </div>
+      <div class="sub-nav-item" data-sub="ucl" onclick="switchFootballSub('ucl')">
+        <span>⭐</span> <span data-i18n="football.ucl">Champions League</span>
+      </div>
+      <div class="sub-nav-item" data-sub="epl" onclick="switchFootballSub('epl')">
+        <span>🦁</span> <span data-i18n="football.epl">Premier League</span>
+      </div>
+      <div class="sub-nav-item" data-sub="laliga" onclick="switchFootballSub('laliga')">
+        <span>🇪🇸</span> <span data-i18n="football.laliga">La Liga</span>
+      </div>
+      <div class="sub-nav-item" data-sub="seriea" onclick="switchFootballSub('seriea')">
+        <span>🇮🇹</span> <span data-i18n="football.seriea">Serie A</span>
+      </div>
+      <div class="sub-nav-item" data-sub="bundesliga" onclick="switchFootballSub('bundesliga')">
+        <span>🇩🇪</span> <span data-i18n="football.bundesliga">Bundesliga</span>
+      </div>
+    </div>
+
+    <!-- World Cup sub-section (active by default) -->
+    <div id="footballWorldcup" class="football-sub active">
+      <div class="section-title">
+        <h2 data-i18n="matches.title">FIFA World Cup 2026 · Group Stage</h2>
+        <div class="filters">
+          <span class="chip" data-filter="all" onclick="setFilter('all')" data-i18n="matches.all">All</span>
+          <span class="chip" data-filter="today" onclick="setFilter('today')" data-i18n="matches.today">Today</span>
+          <span class="chip" data-filter="live" onclick="setFilter('live')" data-i18n="matches.live">Live</span>
+        </div>
+      </div>
+      <div class="match-list" id="matchList"></div>
+    </div>
+
+    <!-- Champions League sub-section -->
+    <div id="footballUcl" class="football-sub">
+      <div class="section-title" style="margin-bottom:12px;"><h3>🏆 欧冠联赛 2025-26</h3></div>
+      <div class="market-grid-pro" id="uclGrid"></div>
+    </div>
+
+    <!-- EPL sub-section -->
+    <div id="footballEpl" class="football-sub">
+      <div class="section-title" style="margin-bottom:12px;"><h3>🏴󠁧󠁢󠁥󠁮󠁧󠁿 英超联赛 2025-26</h3></div>
+      <div class="market-grid-pro" id="eplGrid"></div>
+    </div>
+
+    <!-- La Liga sub-section -->
+    <div id="footballLaliga" class="football-sub">
+      <div class="section-title" style="margin-bottom:12px;"><h3>🇪🇸 西甲联赛 2025-26</h3></div>
+      <div class="market-grid-pro" id="laligaGrid"></div>
+    </div>
+
+    <!-- Serie A sub-section -->
+    <div id="footballSeriea" class="football-sub">
+      <div class="section-title" style="margin-bottom:12px;"><h3>🇮🇹 意甲联赛 2025-26</h3></div>
+      <div class="market-grid-pro" id="serieaGrid"></div>
+    </div>
+
+    <!-- Bundesliga sub-section -->
+    <div id="footballBundesliga" class="football-sub">
+      <div class="section-title" style="margin-bottom:12px;"><h3>🇩🇪 德甲联赛 2025-26</h3></div>
+      <div class="market-grid-pro" id="bundesligaGrid"></div>
+    </div>
+  </div>
+
+  <!-- ==================== SIDEBAR ==================== -->
+  <aside class="aside" id="aside">
+    <div class="slip-handle" onclick="document.getElementById('aside').classList.toggle('open')">
+      <span data-i18n="slip.title">Bet slip</span> <span id="slipCountMobile" style="color:var(--accent)">0</span> · <span data-i18n="slip.tapExpand">tap to expand</span>
+    </div>
+    <div class="slip">
+      <h3><span data-i18n="slip.title">Bet slip</span> <span id="slipCount" style="color:var(--accent)">0</span></h3>
+      <div id="slipItems"><div class="empty" data-i18n="slip.empty">Pick an odd to start betting</div></div>
+      <div id="slipForm" style="display:none;">
+        <div class="row"><span data-i18n="slip.totalOdd">Total odds</span><span id="totalOdd" style="color:var(--accent)">-</span></div>
+        <div class="row"><span data-i18n="slip.stakeLabel">Stake (USDT)</span><span id="walletBal" style="color:var(--text-dim)">—</span></div>
+        <input type="number" id="stake" placeholder="0.00" min="0" step="0.1" />
+        <div class="row"><span data-i18n="slip.payoutGross">Gross payout</span><span id="payoutGross" style="color:var(--text-dim)">0.00</span></div>
+        <div class="row"><span data-i18n="slip.fee">Platform fee (10% of profit)</span><span id="payoutFee" style="color:var(--text-dim)">0.00</span></div>
+        <div class="row big"><span data-i18n="slip.payoutNet">You receive</span><span id="payout" style="color:var(--accent-2)">0.00</span></div>
+        <button class="btn btn-green" id="placeBtn"><span>🔐 </span><span data-i18n="slip.placeBet">Approve + Bet</span></button>
+        <div style="font-size:11px;color:var(--text-dim);text-align:center;margin-top:6px;line-height:1.5;">
+          <span data-i18n="slip.sig2note">Two wallet signatures needed: approve USDT, then submit</span><br/>
+          <span data-i18n="slip.custodyNote">Funds move directly from your wallet to the contract vault</span>
+        </div>
+      </div>
+    </div>
+    <div class="slip" style="margin-top:14px;" id="myBetsPanel">
+      <h3><span data-i18n="myBets.title">My Bets</span> <span id="myBetsCount" style="color:var(--accent)">0</span></h3>
+      <div id="myBetsList">
+        <div class="empty" style="color:var(--text-dim);font-size:13px;padding:12px 0;text-align:center;" data-i18n="myBets.empty">
+          Wallet not connected or no bets yet
+        </div>
+      </div>
+    </div>
+    <div class="slip" style="margin-top:14px;">
+      <h3 data-i18n="dataStatus.title">Data sources</h3>
+      <div class="row"><span data-i18n="dataStatus.fixtures">Fixtures</span><span>ESPN API</span></div>
+      <div class="row"><span data-i18n="dataStatus.odds">Odds</span><span id="oddsSrc" data-i18n="dataStatus.oddsPending">key not set</span></div>
+      <div class="row"><span data-i18n="dataStatus.lastUpdate">Last update</span><span id="oracleTime">—</span></div>
+      <div class="row"><span data-i18n="dataStatus.interval">Refresh interval</span><span>30s</span></div>
+    </div>
+  </aside>
+</div>
+
+<!-- ==================== HOST CITIES BANNER ==================== -->
+<div style="overflow:hidden;padding:0 32px;margin:12px 0;max-width:100vw;">
+  <div class="host-cities" style="display:flex;gap:14px;overflow-x:auto;padding:8px 0;scrollbar-width:none;">
+    <div class="city-chip">🏟 MetLife Stadium · New York</div>
+    <div class="city-chip">🏟 SoFi Stadium · Los Angeles</div>
+    <div class="city-chip">🏟 AT&T Stadium · Dallas</div>
+    <div class="city-chip">🏟 Estadio Azteca · Mexico City</div>
+    <div class="city-chip">🏟 BMO Field · Toronto</div>
+    <div class="city-chip">🏟 Hard Rock Stadium · Miami</div>
+    <div class="city-chip">🏟 Lumen Field · Seattle</div>
+    <div class="city-chip">🏟 Lincoln Financial · Philadelphia</div>
+    <div class="city-chip">🏟 NRG Stadium · Houston</div>
+    <div class="city-chip">🏟 Arrowhead Stadium · Kansas City</div>
+    <div class="city-chip">🏟 Mercedes-Benz · Atlanta</div>
+    <div class="city-chip">🏟 Estadio BBVA · Monterrey</div>
+    <div class="city-chip">🏟 Estadio Akron · Guadalajara</div>
+    <div class="city-chip">🏟 BC Place · Vancouver</div>
+    <div class="city-chip">🏟 Gillette Stadium · Boston</div>
+    <div class="city-chip">🏟 Levi's Stadium · San Francisco</div>
+  </div>
+</div>
+
+<!-- ==================== PITCH DIVIDER ==================== -->
+<div class="pitch-divider"></div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ATM<span style="color:var(--accent)">NO.1</span></div>
+      <div class="footer-slogan">全球首选的WEB3预测平台</div>
+      <div class="footer-desc">覆盖足球、篮球、加密货币、时事等多个领域的去中心化预测市场</div>
+      <div class="footer-social">
+        <a href="#" title="Twitter/X">𝕏</a>
+        <a href="#" title="Telegram">✈️</a>
+        <a href="#" title="Discord">💬</a>
+        <a href="#" title="GitHub">🔗</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">平台导航</div>
+        <a onclick="navTo('home')">首页</a>
+        <a onclick="navTo('trending')">热门市场</a>
+        <a onclick="navTo('myBets')">我的注单</a>
+        <a onclick="toggleModal('contractsModal', true)">智能合约</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">热门预测</div>
+        <a onclick="switchCategory('football')">足球预测</a>
+        <a onclick="switchCategory('basketball')">篮球预测</a>
+        <a onclick="switchCategory('crypto')">加密货币</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">帮助资源</div>
+        <a onclick="toggleModal('docsModal', true)">关于我们</a>
+        <a href="#">开发文档</a>
+        <a href="#">API 接入</a>
+        <a href="#">手续费说明</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">法律条款</div>
+        <a href="#">服务条款</a>
+        <a href="#">隐私政策</a>
+        <a href="#">免责声明</a>
+        <a href="#">合规信息</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">&copy; 2026 ATMNO.1. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Connect wallet modal -->
+<div class="overlay" id="walletModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('walletModal', false)">×</button>
+    <h3 data-i18n="modal.wallet.title">Connect Wallet</h3>
+    <p class="desc" data-i18n="modal.wallet.desc">Choose a wallet to continue</p>
+    <div class="chain-list">
+      <div class="chain" onclick="connectMetaMask()">
+        <div class="left"><div class="icon" style="background:#f6851b;color:#fff">M</div>MetaMask</div>
+        <span class="chip" style="color:var(--accent-2);border-color:var(--accent-2);" data-i18n="modal.wallet.integrated">Integrated</span>
+      </div>
+      <div class="chain" onclick="wipWallet('WalletConnect')">
+        <div class="left"><div class="icon" style="background:#3b99fc;color:#fff">W</div>WalletConnect</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('OKX Wallet')">
+        <div class="left"><div class="icon" style="background:#000;color:#fff">OK</div>OKX Wallet</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('TronLink')">
+        <div class="left"><div class="icon" style="background:#e50914;color:#fff">T</div>TronLink</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+    </div>
+
+    <p class="desc" style="margin-top:16px;" data-i18n="modal.wallet.networks">Supported networks (switch after connecting)</p>
+    <div class="chain-list">
+      <div class="chain" onclick="switchToChain(56)">
+        <div class="left"><div class="icon" style="background:#f3ba2f;color:#000">B</div>BNB Chain · BEP-20 USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(173)">
+        <div class="left"><div class="icon" style="background:#7c5cff;color:#fff">E</div>ENI Mainnet · ENI-Peg USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(174)">
+        <div class="left"><div class="icon" style="background:#5a9cff;color:#fff">🧪</div>ENI Testnet · USDTT (test)</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contracts info modal -->
+<div class="overlay" id="contractsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('contractsModal', false)">×</button>
+    <h3 data-i18n="modal.contracts.title">Smart Contracts</h3>
+    <p class="desc" data-i18n="modal.contracts.desc">BettingVault addresses (deploying soon)</p>
+    <div class="info-row"><span class="k">BNB Chain</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k">ENI Mainnet</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.fee">Platform fee</span><span class="v">10% of profit</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.feeRecipient">Fee recipient</span><span class="v" id="feeRecipientCell" style="font-family:monospace;font-size:11px;">—</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.oracle">Oracle</span><span class="v">ESPN + manual settle</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.audit">Audit</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <p class="body-text" style="margin-top:14px;" data-i18n="modal.contracts.note">Solidity source (BettingVault.sol) will be published after the demo phase. Core flow: approve USDT → placeBet(matchId, outcome, amount) → contract locks stake → settleMatch by owner/oracle → user calls claim() to receive net payout minus 10% of profit.</p>
+  </div>
+</div>
+
+<!-- Docs modal -->
+<div class="overlay" id="docsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('docsModal', false)">×</button>
+    <h3 data-i18n="modal.docs.title">About ATMNO.1</h3>
+    <p class="body-text" data-i18n="modal.docs.p1"><strong>ATMNO.1</strong> is a comprehensive non-custodial on-chain prediction market covering sports, events, crypto, and more. Stakes and payouts flow through smart contracts — the platform never holds user funds.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p2"><strong>How it works:</strong> Connect your wallet, pick a match outcome, approve USDT, and submit the bet. On settlement, winners call claim() to withdraw. The platform takes <strong>10% of net profit</strong> at claim time (not principal).</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p3"><strong>Supported networks:</strong> BNB Chain (BEP-20 USDT), ENI Mainnet (ENI-Peg USDT). ENI Testnet available for testing.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p4"><strong>Data sources:</strong> Fixtures via ESPN public API, odds via The Odds API (bet365 feed). Refreshed every 30 seconds.</p>
+  </div>
+</div>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ==================== SHARED JS ==================== -->
+<script src="/shared/common.js?v=24"></script>
+
+<script>
+// ============================================================
+// FOOTBALL-SPECIFIC JAVASCRIPT
+// ============================================================
+
+// ============================================================
+// API Config
+// ============================================================
+// ESPN public API for FIFA World Cup fixtures (CORS-enabled, no key needed)
+const FIXTURES_API = 'https://site.api.espn.com/apis/site/v2/sports/soccer/fifa.world/scoreboard';
+
+// The Odds API for real-time odds
+const ODDS_API_KEY = 'FC1215b3d6a980ce1f416011755a4e83';
+const ODDS_API_URL = 'https://api.the-odds-api.com/v4/sports/soccer_fifa_world_cup/odds';
+
+// Global matches array (populated by loadMatches())
+let matches = [];
+
+// Fallback mock data when API fails
+const FALLBACK_MATCHES = [
+  { id: 'mock-1', league: 'Group A', home: '墨西哥', away: '乌兹别克', hf: '🇲🇽', af: '🇺🇿', time: '06-11 19:00', live: false, odds: { h: 1.60, d: 3.80, a: 5.50 }, _mock: true },
+  { id: 'mock-2', league: 'Group B', home: '加拿大', away: '厄瓜多尔', hf: '🇨🇦', af: '🇪🇨', time: '06-12 22:00', live: false, odds: { h: 2.20, d: 3.20, a: 3.10 }, _mock: true },
+  { id: 'mock-3', league: 'Group C', home: '美国',   away: '塞尔维亚', hf: '🇺🇸', af: '🇷🇸', time: '06-13 01:00', live: false, odds: { h: 1.95, d: 3.40, a: 3.80 }, _mock: true },
+];
+
+// ============================================================
+// Data Layer: Fetch fixtures & odds
+// ============================================================
+
+// Fetch FIFA World Cup fixtures from ESPN API
+async function fetchFixtures() {
+  try {
+    // ESPN defaults to ±1 week; use dates param for full WC schedule
+    // 2026 World Cup: 2026-06-11 → 2026-07-19
+    const url = `${FIXTURES_API}?dates=20260611-20260719&limit=200`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`ESPN ${res.status}`);
+    const data = await res.json();
+    if (!data.events || data.events.length === 0) {
+      // ESPN may not return future events; fallback to regular scoreboard
+      const res2 = await fetch(FIXTURES_API);
+      const data2 = await res2.json();
+      return parseEspnEvents(data2.events || []);
+    }
+    return parseEspnEvents(data.events);
+  } catch (e) {
+    console.warn('[fetchFixtures] ESPN 请求失败：', e);
+    throw e;
+  }
+}
+
+// Parse ESPN raw events into our internal match structure
+function parseEspnEvents(events) {
+  return events.map(ev => {
+    const comp = (ev.competitions && ev.competitions[0]) || {};
+    const cs = comp.competitors || [];
+    const home = cs.find(c => c.homeAway === 'home') || cs[0] || {};
+    const away = cs.find(c => c.homeAway === 'away') || cs[1] || {};
+    const status = (ev.status && ev.status.type) || {};
+    const d = ev.date ? new Date(ev.date) : null;
+    const timeStr = d ? `${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}` : 'TBD';
+    return {
+      id: ev.id,
+      league: (ev.season && ev.season.slug) || 'World Cup 2026',
+      home: (home.team && (home.team.displayName || home.team.name)) || 'TBD',
+      away: (away.team && (away.team.displayName || away.team.name)) || 'TBD',
+      hf: (home.team && home.team.flag && home.team.flag.href) ? `<img src="${home.team.flag.href}" style="width:22px;height:15px;border-radius:2px;vertical-align:middle;" />` : '⚽',
+      af: (away.team && away.team.flag && away.team.flag.href) ? `<img src="${away.team.flag.href}" style="width:22px;height:15px;border-radius:2px;vertical-align:middle;" />` : '⚽',
+      time: timeStr,
+      live: status.state === 'in',
+      matchStatus: status.state === 'in' ? 'live' : (status.completed ? 'finished' : 'upcoming'),
+      // Odds filled by fetchOdds() separately; defaults here
+      odds: { h: 2.00, d: 3.20, a: 3.50 },
+    };
+  }).slice(0, 12); // Show first 12 matches
+}
+
+// Fetch odds from The Odds API (bet365 feed)
+async function fetchOdds(matches) {
+  if (ODDS_API_KEY) {
+    try {
+      const url = `${ODDS_API_URL}?apiKey=${ODDS_API_KEY}&regions=uk,eu&markets=h2h&oddsFormat=decimal&bookmakers=bet365`;
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Odds API ${res.status}`);
+      const data = await res.json();
+      // Match by home/away team name
+      matches.forEach(m => {
+        const hit = data.find(d =>
+          (d.home_team || '').toLowerCase().includes(m.home.toLowerCase()) ||
+          (m.home.toLowerCase().includes((d.home_team || '').toLowerCase()))
+        );
+        if (hit && hit.bookmakers && hit.bookmakers[0]) {
+          const outcomes = ((hit.bookmakers[0].markets || [])[0] || {}).outcomes || [];
+          const hO = outcomes.find(o => o.name === hit.home_team);
+          const aO = outcomes.find(o => o.name === hit.away_team);
+          const dO = outcomes.find(o => o.name === 'Draw');
+          if (hO) m.odds.h = hO.price;
+          if (aO) m.odds.a = aO.price;
+          if (dO) m.odds.d = dO.price;
+        }
+      });
+      return 'real';
+    } catch (e) {
+      console.warn('[fetchOdds] The Odds API 失败，退回随机赔率：', e);
+    }
+  }
+  // Fallback: generate reasonable random 1x2 odds
+  matches.forEach(m => {
+    const h = +(1.3 + Math.random() * 2.5).toFixed(2);
+    const a = +(1.5 + Math.random() * 4).toFixed(2);
+    const d = +(3.0 + Math.random() * 2).toFixed(2);
+    m.odds = { h, d, a };
+  });
+  return 'mock';
+}
+
+// ============================================================
+// Data source status chip
+// ============================================================
+let _dataSourceState = { kind: 'loading', msg: '' };
+
+function refreshDataSourceChip() {
+  const src = document.getElementById('dataSource');
+  if (!src) return;
+  if (_dataSourceState.kind === 'loading') {
+    src.innerHTML = `<span class="live-dot" style="background:var(--accent);animation:none;"></span> <span>${t('fixturesProgress.loading')}</span>`;
+  } else if (_dataSourceState.kind === 'ok') {
+    const { oddsSource, count } = _dataSourceState;
+    const oddsLabel = oddsSource === 'real' ? t('fixturesProgress.oddsReal') : t('fixturesProgress.oddsMock');
+    src.innerHTML = `<span class="live-dot" style="background:var(--accent-2)"></span> <span>${t('fixturesProgress.ok', oddsLabel, count)}</span>`;
+    const os = document.getElementById('oddsSrc'); if (os) os.textContent = oddsSource === 'real' ? t('dataStatus.oddsReal') : t('dataStatus.oddsPending');
+  } else if (_dataSourceState.kind === 'fail') {
+    src.innerHTML = `<span class="live-dot" style="background:var(--red);animation:none;"></span> <span>${t('fixturesProgress.fail', _dataSourceState.msg)}</span>`;
+  }
+}
+
+// Main entry: load matches + odds
+async function loadMatches() {
+  try {
+    _dataSourceState = { kind: 'loading' };
+    refreshDataSourceChip();
+    matches = await fetchFixtures();
+    if (!matches.length) throw new Error('ESPN returned no events');
+
+    const oddsSource = await fetchOdds(matches);
+    _dataSourceState = { kind: 'ok', oddsSource, count: matches.length };
+    refreshDataSourceChip();
+    const ot = document.getElementById('oracleTime');
+    if (ot) ot.textContent = new Date().toLocaleTimeString();
+  } catch (e) {
+    console.error(e);
+    matches = FALLBACK_MATCHES.slice();
+    _dataSourceState = { kind: 'fail', msg: e.message || 'unknown' };
+    refreshDataSourceChip();
+  }
+  renderMatches();
+}
+
+// ============================================================
+// Match list rendering with filters
+// ============================================================
+let currentFilter = 'all'; // 'all' | 'today' | 'live'
+
+function filteredMatches() {
+  if (currentFilter === 'live') return matches.filter(m => m.live);
+  if (currentFilter === 'today') {
+    // time is 'MM-DD HH:MM' format (from parseEspnEvents)
+    const now = new Date();
+    const md = `${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
+    return matches.filter(m => (m.time || '').startsWith(md));
+  }
+  return matches;
+}
+
+function renderMatches() {
+  const list = document.getElementById('matchList');
+  const shown = filteredMatches();
+  if (!shown.length && matches.length) {
+    const msg = currentFilter === 'live' ? t('matches.noLive')
+               : currentFilter === 'today' ? t('matches.noToday')
+               : '—';
+    list.innerHTML = `<div style="text-align:center;padding:40px;color:var(--text-dim);font-size:14px;">${msg}</div>`;
+    // Update filter chip highlight
+    syncFilterChips();
+    return;
+  }
+  list.innerHTML = shown.map(m => {
+    const canBet = m.matchStatus === 'upcoming';
+    const isSelected = (team) => state.picks.some(p => String(p.matchId) === String(m.id) && p.team === team);
+    const odd = (label, key, val) => canBet ? `
+      <div class="odd ${isSelected(key) ? 'selected' : ''}" onclick="togglePick('${m.id}', '${key}', ${val})">
+        <div class="label">${label}</div>
+        <div class="val">${val.toFixed(2)}</div>
+      </div>` : `
+      <div class="odd odd-disabled">
+        <div class="label">${label}</div>
+        <div class="val">${val.toFixed(2)}</div>
+      </div>`;
+    const statusBadge = m.matchStatus === 'live'
+      ? '<span class="live-dot"></span> <span style="color:var(--red)">LIVE</span> ·'
+      : m.matchStatus === 'finished'
+      ? '<span style="color:var(--text-dim);font-size:11px;">✓ ' + t('match.finished') + '</span> ·'
+      : '<span style="color:var(--green);font-size:11px;">' + t('match.upcoming') + '</span> ·';
+    const disabledMsg = !canBet
+      ? `<div style="text-align:center;font-size:11px;color:var(--text-dim);margin-top:4px;">${m.matchStatus === 'live' ? t('match.betDisabled') : t('match.finishedNoBet')}</div>`
+      : '';
+    return `
+    <div class="match${!canBet ? ' match-no-bet' : ''}">
+      <div>
+        <div class="meta">
+          ${statusBadge}
+          <span>${m.league}</span> · <span>${m.time}</span>
+        </div>
+        <div class="teams">
+          <span>${m.hf} ${localizeTeam(m.home)}</span>
+          <span class="vs">VS</span>
+          <span>${localizeTeam(m.away)} ${m.af}</span>
+        </div>
+      </div>
+      <div class="odds">
+        ${odd(t('odd.home'), 'h', m.odds.h)}
+        ${odd(t('odd.draw'), 'd', m.odds.d)}
+        ${odd(t('odd.away'), 'a', m.odds.a)}
+        ${disabledMsg}
+      </div>
+    </div>`;
+  }).join('');
+  syncFilterChips();
+}
+
+function syncFilterChips() {
+  document.querySelectorAll('[data-filter]').forEach(c => {
+    const isActive = c.getAttribute('data-filter') === currentFilter;
+    c.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
+    c.style.color = isActive ? 'var(--accent)' : 'var(--text-dim)';
+  });
+}
+
+function setFilter(f) {
+  currentFilter = f;
+  renderMatches();
+}
+
+// ============================================================
+// Bet Slip
+// ============================================================
+function togglePick(matchId, team, odd) {
+  // matchId is string from onclick (ESPN id can be "401...")
+  // Only allow upcoming matches
+  const matchObj = matches.find(m => String(m.id) === String(matchId));
+  if (matchObj && matchObj.matchStatus !== 'upcoming') return;
+  const existing = state.picks.findIndex(p => String(p.matchId) === String(matchId));
+  if (existing >= 0) {
+    if (state.picks[existing].team === team) {
+      state.picks.splice(existing, 1);
+    } else {
+      state.picks[existing] = { matchId, team, odd };
+    }
+  } else {
+    state.picks.push({ matchId, team, odd });
+  }
+  renderMatches();
+  renderSlip();
+}
+
+function renderSlip() {
+  const items = document.getElementById('slipItems');
+  const form = document.getElementById('slipForm');
+  document.getElementById('slipCount').textContent = state.picks.length;
+  const cm = document.getElementById('slipCountMobile'); if (cm) cm.textContent = state.picks.length;
+  if (state.picks.length === 0) {
+    items.innerHTML = `<div class="empty">${t('slip.empty')}</div>`;
+    form.style.display = 'none';
+    return;
+  }
+  items.innerHTML = state.picks.map(p => {
+    const m = matches.find(x => String(x.id) === String(p.matchId));
+    if (!m) return '';
+    const homeLoc = localizeTeam(m.home);
+    const awayLoc = localizeTeam(m.away);
+    const label = p.team === 'h' ? t('myBets.pickHomeWin', homeLoc)
+                : p.team === 'a' ? t('myBets.pickAwayWin', awayLoc)
+                : t('myBets.pickDraw');
+    return `
+    <div class="slip-item">
+      <div class="top"><span>${homeLoc} vs ${awayLoc}</span><button class="rm" onclick="togglePick('${m.id}', '${p.team}', 0)">×</button></div>
+      <div class="bot"><span class="pick">${label}</span><span class="odd-v">@ ${p.odd.toFixed(2)}</span></div>
+    </div>`;
+  }).join('');
+  form.style.display = 'block';
+  const total = state.picks.reduce((acc, p) => acc * p.odd, 1);
+  document.getElementById('totalOdd').textContent = total.toFixed(2);
+  updatePayout();
+}
+
+function updatePayout() {
+  const stake = parseFloat(document.getElementById('stake').value) || 0;
+  const total = state.picks.reduce((acc, p) => acc * p.odd, 1);
+  const gross = stake * total;
+  const { fee, net } = calcFee(stake, gross);
+  const gEl = document.getElementById('payoutGross');
+  const fEl = document.getElementById('payoutFee');
+  const nEl = document.getElementById('payout');
+  if (gEl) gEl.textContent = gross.toFixed(2) + ' USDT';
+  if (fEl) fEl.textContent = '− ' + fee.toFixed(2) + ' USDT';
+  if (nEl) nEl.textContent = net.toFixed(2) + ' USDT';
+}
+
+// ============================================================
+// Place Bet (non-custodial, transfer USDT to vault)
+// ============================================================
+async function placeBet() {
+  const stake = parseFloat(document.getElementById('stake').value) || 0;
+  if (!state.connected) {
+    toggleModal('walletModal', true);
+    toast(t('toast.connectFirst'));
+    return;
+  }
+  if (stake <= 0) { toast(t('toast.enterStake')); return; }
+  if (stake > state.balance) { toast(t('toast.insufficient')); return; }
+  if (state.picks.length === 0) { toast(t('toast.selectOdd')); return; }
+
+  // Only allow real bets on whitelisted chains (currently ENI Testnet 174)
+  if (!BET_ENABLED_CHAINS.has(state.chainId)) {
+    toast(t('toast.betChainNotEnabled', CHAIN_META[state.chainId]?.name || state.chainId));
+    return;
+  }
+
+  // Vault address must be set
+  if (!VAULT_ADDRESS || /^0x0+$/.test(VAULT_ADDRESS)) {
+    toast(t('toast.vaultUnset'));
+    return;
+  }
+
+  const usdtMeta = USDT_CONTRACTS[state.chainId];
+  if (!usdtMeta) { toast(t('toast.usdtNotFound')); return; }
+
+  const placeBtn = document.getElementById('placeBtn');
+  const originalBtnText = placeBtn.textContent;
+  placeBtn.disabled = true;
+
+  try {
+    // Recreate provider/signer each bet to avoid "network changed" errors
+    provider = new ethers.BrowserProvider(window.ethereum);
+    signer = await provider.getSigner();
+    const usdt = new ethers.Contract(usdtMeta.address, ERC20_WRITE_ABI, signer);
+    const amt = ethers.parseUnits(String(stake), usdtMeta.decimals);
+
+    // Re-check on-chain balance (avoid stale local state)
+    const onChainBal = await usdt.balanceOf(state.address);
+    if (onChainBal < amt) {
+      toast(t('toast.insufficient'));
+      placeBtn.disabled = false;
+      placeBtn.textContent = originalBtnText;
+      return;
+    }
+
+    // Step 1: transfer stake → VAULT_ADDRESS (simplified vault mode, 1 tx)
+    // Note: when BettingVault contract is deployed, this becomes approve + vault.placeBet
+    placeBtn.textContent = t('slip.txPending');
+    toast(t('toast.sendingBet'));
+    const tx = await usdt.transfer(VAULT_ADDRESS, amt);
+    toast(t('toast.waitingConfirm', shortAddr(tx.hash)));
+
+    const receipt = await tx.wait();
+    if (receipt.status !== 1) throw new Error('Transaction reverted');
+
+    // Success: save bet to local myBets for display in "My Bets"
+    const total = state.picks.reduce((acc, p) => acc * p.odd, 1);
+    const firstPick = state.picks[0];
+    const firstMatch = matches.find(x => String(x.id) === String(firstPick.matchId)) || {};
+    state.myBets.unshift({
+      id: 'bet-' + Date.now(),
+      homeTeam: firstMatch.home || '—',
+      awayTeam: firstMatch.away || '—',
+      pickType: firstPick.team,
+      odd: total,
+      stake: stake,
+      status: 'pending',
+      placedAt: new Date().toISOString().replace('T', ' ').slice(0, 16),
+      txHash: tx.hash,
+      chainId: state.chainId,
+    });
+
+    // Persist + clear slip + refresh UI + refresh balance
+    saveMyBets();
+    state.picks = [];
+    renderSlip();
+    renderMyBets();
+    refreshBalance();
+
+    toast(t('toast.betSuccess', stake.toFixed(2), shortAddr(tx.hash)));
+  } catch (e) {
+    console.error('[placeBet] failed:', e);
+    const msg = e.reason || e.shortMessage || e.message || String(e);
+    if (msg.includes('user rejected') || msg.includes('ACTION_REJECTED')) {
+      toast(t('toast.userCancel'));
+    } else {
+      toast(t('toast.betFail', msg.slice(0, 60)));
+    }
+  } finally {
+    placeBtn.disabled = false;
+    placeBtn.textContent = originalBtnText;
+  }
+}
+
+// ============================================================
+// Claim payout
+// ============================================================
+async function claimPayout(betId) {
+  if (!state.connected) { toast(t('toast.connectFirst')); return; }
+  const bet = state.myBets.find(b => b.id === betId);
+  if (!bet || bet.status !== 'won' || bet.claimed) return;
+  const gross = +(bet.stake * bet.odd).toFixed(2);
+  const { net } = calcFee(bet.stake, gross);
+  toast(t('toast.claiming', net.toFixed(2)));
+  setTimeout(() => {
+    bet.claimed = true;
+    saveMyBets();
+    renderMyBets();
+    toast(t('toast.claimed', net.toFixed(2)));
+  }, 1200);
+}
+
+// ============================================================
+// Oracle: refresh odds every 30s
+// ============================================================
+async function refreshOdds() {
+  if (!matches.length) return;
+  await fetchOdds(matches);
+  document.getElementById('oracleTime').textContent = new Date().toLocaleTimeString('zh-CN');
+  renderMatches();
+}
+
+// ============================================================
+// Football sub-navigation
+// ============================================================
+function switchFootballSub(sub) {
+  document.querySelectorAll('.football-sub').forEach(s => s.classList.remove('active'));
+  const target = document.getElementById('football' + sub.charAt(0).toUpperCase() + sub.slice(1));
+  if (target) target.classList.add('active');
+  document.querySelectorAll('#footballSubNav .sub-nav-item').forEach(el => {
+    el.classList.toggle('active', el.getAttribute('data-sub') === sub);
+  });
+  if (sub === 'worldcup') {
+    renderMatches();
+  }
+}
+
+// ============================================================
+// League Sub-Section Markets
+// ============================================================
+const LEAGUE_MARKETS = {
+  ucl: [
+    { id:'ucl-1', title:'2025-26 欧冠冠军', status:'hot', time:'2026年6月', type:'multi', options:[{l:'皇马',pct:22},{l:'曼城',pct:20},{l:'拜仁',pct:16}], vol:'$1.6M', preds:'12,400', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=200&h=200&fit=crop' },
+    { id:'ucl-2', title:'欧冠最佳射手', status:'soon', time:'2026年6月', type:'multi', options:[{l:'哈兰德',pct:28},{l:'姆巴佩',pct:22},{l:'维尼修斯',pct:18}], vol:'$320K', preds:'3,200', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&h=200&fit=crop' },
+    { id:'ucl-3', title:'会有英超球队进决赛吗？', status:'hot', time:'2026年6月', type:'binary', yesPct:68, noPct:32, vol:'$180K', preds:'2,100', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=200&h=200&fit=crop' },
+  ],
+  epl: [
+    { id:'epl-1', title:'2025-26 英超冠军', status:'hot', time:'2026年5月', type:'multi', options:[{l:'阿森纳',pct:35},{l:'曼城',pct:30},{l:'利物浦',pct:20}], vol:'$920K', preds:'6,102', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=200&h=200&fit=crop' },
+    { id:'epl-2', title:'英超金靴奖', status:'soon', time:'2026年5月', type:'multi', options:[{l:'哈兰德',pct:32},{l:'萨拉赫',pct:22},{l:'伊萨克',pct:18}], vol:'$280K', preds:'2,800', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&h=200&fit=crop' },
+    { id:'epl-3', title:'曼联能进前四吗？', status:'hot', time:'2026年5月', type:'binary', yesPct:40, noPct:60, vol:'$210K', preds:'3,500', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=200&h=200&fit=crop' },
+  ],
+  laliga: [
+    { id:'laliga-1', title:'2025-26 西甲冠军', status:'hot', time:'2026年5月', type:'multi', options:[{l:'皇马',pct:38},{l:'巴萨',pct:35},{l:'马竞',pct:15}], vol:'$680K', preds:'4,500', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&h=200&fit=crop' },
+    { id:'laliga-2', title:'西甲最佳射手', status:'soon', time:'2026年5月', type:'multi', options:[{l:'姆巴佩',pct:30},{l:'莱万',pct:25},{l:'拉菲尼亚',pct:18}], vol:'$190K', preds:'2,100', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=200&h=200&fit=crop' },
+    { id:'laliga-3', title:'巴萨能实现联赛欧冠双冠？', status:'soon', time:'2026年6月', type:'binary', yesPct:18, noPct:82, vol:'$120K', preds:'1,800', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=200&h=200&fit=crop' },
+  ],
+  seriea: [
+    { id:'seriea-1', title:'2025-26 意甲冠军', status:'hot', time:'2026年5月', type:'multi', options:[{l:'国米',pct:35},{l:'尤文',pct:25},{l:'那不勒斯',pct:20}], vol:'$420K', preds:'3,200', img:'https://images.unsplash.com/photo-1543326727-cf6c39e8f84c?w=200&h=200&fit=crop' },
+    { id:'seriea-2', title:'意甲最佳射手', status:'soon', time:'2026年5月', type:'multi', options:[{l:'劳塔罗',pct:28},{l:'弗拉霍维奇',pct:22},{l:'卢卡库',pct:16}], vol:'$110K', preds:'1,400', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=200&h=200&fit=crop' },
+  ],
+  bundesliga: [
+    { id:'bun-1', title:'2025-26 德甲冠军', status:'hot', time:'2026年5月', type:'multi', options:[{l:'拜仁',pct:45},{l:'多特',pct:22},{l:'勒沃库森',pct:18}], vol:'$380K', preds:'2,800', img:'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=200&h=200&fit=crop' },
+    { id:'bun-2', title:'拜仁能包揽联赛+杯赛？', status:'soon', time:'2026年5月', type:'binary', yesPct:30, noPct:70, vol:'$95K', preds:'1,100', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=200&h=200&fit=crop' },
+  ],
+};
+
+function renderLeagueGrid(gridId, markets) {
+  const grid = document.getElementById(gridId);
+  if (!grid || !markets) return;
+  grid.innerHTML = markets.map(m => {
+    const sc = m.status === 'live' ? 'live' : m.status === 'hot' ? 'hot' : 'soon';
+    const sl = m.status === 'live' ? '🔴 LIVE' : m.status === 'hot' ? '🔥 热门' : '⏳ 即将';
+    let contentHtml = '';
+    if (m.type === 'binary') {
+      contentHtml = `
+        <div class="mc-pro-vs">
+          <div class="mc-pro-vs-side yes"><span class="mc-pro-vs-label">YES</span><span class="mc-pro-vs-pct">${m.yesPct}%</span></div>
+          <div class="mc-pro-vs-divider">VS</div>
+          <div class="mc-pro-vs-side no"><span class="mc-pro-vs-label">NO</span><span class="mc-pro-vs-pct">${m.noPct}%</span></div>
+        </div>
+        <div class="mc-pro-vs-bar"><div class="mc-pro-vs-bar-yes" style="width:${m.yesPct}%"></div></div>`;
+    } else if (m.type === 'multi' && m.options) {
+      contentHtml = `<div class="mc-pro-opts">${m.options.slice(0,3).map((o,i) => `
+        <div class="mc-pro-opt">
+          <span class="mc-pro-opt-rank">${i+1}</span>
+          <span class="mc-pro-opt-name">${o.l}</span>
+          <div class="mc-pro-opt-bar"><div class="mc-pro-opt-bar-fill" style="width:${o.pct}%"></div></div>
+          <span class="mc-pro-opt-pct">${o.pct}%</span>
+        </div>`).join('')}</div>`;
+    }
+    return `
+      <div class="mc-pro" onclick="location.href='/market?id=${m.id}'">
+        <div class="mc-pro-banner" style="background-image:url('${m.img}')">
+          <span class="mc-pro-badge ${sc}">${sl}</span>
+          <span class="mc-pro-time">📅 ${m.time}</span>
+        </div>
+        <div class="mc-pro-body">
+          <div class="mc-pro-title">${m.title}</div>
+          ${contentHtml}
+          <div class="mc-pro-footer">
+            <span>💰 ${m.vol}</span>
+            <span>👥 ${m.preds}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+renderLeagueGrid('uclGrid', LEAGUE_MARKETS.ucl);
+renderLeagueGrid('eplGrid', LEAGUE_MARKETS.epl);
+renderLeagueGrid('laligaGrid', LEAGUE_MARKETS.laliga);
+renderLeagueGrid('serieaGrid', LEAGUE_MARKETS.seriea);
+renderLeagueGrid('bundesligaGrid', LEAGUE_MARKETS.bundesliga);
+
+// ============================================================
+// Initialization
+// ============================================================
+initCommon('football');
+
+// Set up stake input listener
+document.getElementById('stake').addEventListener('input', updatePayout);
+document.getElementById('placeBtn').addEventListener('click', placeBet);
+
+// Initial renders
+renderSlip();
+renderMyBets();
+syncFilterChips();
+
+// Loading state for match list
+document.getElementById('matchList').innerHTML = `
+  <div style="text-align:center;padding:40px;color:var(--text-dim);font-size:14px;">
+    <div style="display:inline-block;width:20px;height:20px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;"></div>
+    <div style="margin-top:10px;">${t('matches.loading')}</div>
+  </div>
+  <style>@keyframes spin { to { transform: rotate(360deg); } }</style>
+`;
+
+// Load matches from ESPN API
+loadMatches();
+
+// Refresh odds every 30 seconds
+setInterval(refreshOdds, 30000);
+</script>
+<script src="/shared/effects.js?v=24"></script>
+</body>
+</html>

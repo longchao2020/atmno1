@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>斯诺克预测 · ATMNO.1</title>
+<meta name="description" content="ATMNO.1 — 全球首选的WEB3预测平台。覆盖体育、加密货币、时事、文娱等多个领域的去中心化预测市场。" />
+<meta name="keywords" content="ATMNO.1,Web3,预测市场,prediction market,区块链,blockchain,加密货币,体育预测" />
+<meta property="og:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta property="og:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。链上透明，钱包直连。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://atmno1.world" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=38" />
+<style>
+  .cat-hero { border: 1px solid rgba(0,150,136,.2); }
+  .cat-hero-badge { background: rgba(0,150,136,.15); color: #009688; border: 1px solid rgba(0,150,136,.3); }
+  .cat-hero-tag { background: rgba(0,150,136,.1); border-color: rgba(0,150,136,.2); color: rgba(0,150,136,.8); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<header></header>
+
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<div class="wrap" style="grid-template-columns: 1fr; max-width: 1320px; margin: 0 auto;">
+  <div class="section-title"><h2 data-i18n="cat.snooker">🎱 Snooker</h2></div>
+  <div class="cat-hero">
+    <div class="cat-hero-bg" style="background-image:url('https://images.unsplash.com/photo-1615213612138-4d1195b1c0e6?w=1200&h=400&fit=crop')"></div>
+    <div class="cat-hero-overlay"></div>
+    <div class="cat-hero-content">
+      <div class="cat-hero-badge" style="background:rgba(76,175,80,.2);color:#66bb6a;border:1px solid rgba(76,175,80,.3);">🎱 SNOOKER</div>
+      <div class="cat-hero-title">世锦赛 · 大师赛 · 英锦赛 · 排名赛</div>
+      <div class="cat-hero-sub">预测斯诺克三大赛冠军、147满分与世界排名变化</div>
+      <div class="cat-hero-tags">
+        <span class="cat-hero-tag" style="background:rgba(76,175,80,.15);border-color:rgba(76,175,80,.3);color:#66bb6a;">世锦赛</span>
+        <span class="cat-hero-tag" style="background:rgba(255,215,0,.15);border-color:rgba(255,215,0,.3);color:#ffd700;">大师赛</span>
+        <span class="cat-hero-tag" style="background:rgba(33,150,243,.15);border-color:rgba(33,150,243,.3);color:#42a5f5;">英锦赛</span>
+        <span class="cat-hero-tag" style="background:rgba(255,112,67,.15);border-color:rgba(255,112,67,.3);color:#ff7043;">排名赛</span>
+      </div>
+    </div>
+  </div>
+  <div class="market-grid-pro" id="snookerGrid"></div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ATM<span style="color:var(--accent)">NO.1</span></div>
+      <div class="footer-slogan">全球首选的WEB3预测平台</div>
+      <div class="footer-desc">覆盖体育、加密货币、时事、影音等多个领域的去中心化预测市场</div>
+      <div class="footer-social">
+        <a href="#" title="Twitter/X">𝕏</a>
+        <a href="#" title="Telegram">✈️</a>
+        <a href="#" title="Discord">💬</a>
+        <a href="#" title="GitHub">🔗</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">平台导航</div>
+        <a onclick="navTo('home')">首页</a>
+        <a onclick="navTo('trending')">热门市场</a>
+        <a onclick="navTo('myBets')">我的注单</a>
+        <a onclick="toggleModal('contractsModal', true)">智能合约</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">热门预测</div>
+        <a onclick="switchCategory('football')">足球预测</a>
+        <a onclick="switchCategory('basketball')">篮球预测</a>
+        <a onclick="switchCategory('crypto')">加密货币</a>
+        <a onclick="switchCategory('esports')">电竞赛事</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">帮助资源</div>
+        <a onclick="toggleModal('docsModal', true)">关于我们</a>
+        <a href="#">开发文档</a>
+        <a href="#">API 接入</a>
+        <a href="#">手续费说明</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">法律条款</div>
+        <a href="#">服务条款</a>
+        <a href="#">隐私政策</a>
+        <a href="#">免责声明</a>
+        <a href="#">合规信息</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">&copy; 2026 ATMNO.1. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- Connect wallet modal -->
+<div class="overlay" id="walletModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('walletModal', false)">×</button>
+    <h3 data-i18n="modal.wallet.title">Connect Wallet</h3>
+    <p class="desc" data-i18n="modal.wallet.desc">Choose a wallet to continue</p>
+    <div class="chain-list">
+      <div class="chain" onclick="connectMetaMask()">
+        <div class="left"><div class="icon" style="background:#f6851b;color:#fff">M</div>MetaMask</div>
+        <span class="chip" style="color:var(--accent-2);border-color:var(--accent-2);" data-i18n="modal.wallet.integrated">Integrated</span>
+      </div>
+      <div class="chain" onclick="wipWallet('WalletConnect')">
+        <div class="left"><div class="icon" style="background:#3b99fc;color:#fff">W</div>WalletConnect</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('OKX Wallet')">
+        <div class="left"><div class="icon" style="background:#000;color:#fff">OK</div>OKX Wallet</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('TronLink')">
+        <div class="left"><div class="icon" style="background:#e50914;color:#fff">T</div>TronLink</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+    </div>
+    <p class="desc" style="margin-top:16px;" data-i18n="modal.wallet.networks">Supported networks (switch after connecting)</p>
+    <div class="chain-list">
+      <div class="chain" onclick="switchToChain(56)">
+        <div class="left"><div class="icon" style="background:#f3ba2f;color:#000">B</div>BNB Chain · BEP-20 USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(173)">
+        <div class="left"><div class="icon" style="background:#7c5cff;color:#fff">E</div>ENI Mainnet · ENI-Peg USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(174)">
+        <div class="left"><div class="icon" style="background:#5a9cff;color:#fff">🧪</div>ENI Testnet · USDTT (test)</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contracts info modal -->
+<div class="overlay" id="contractsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('contractsModal', false)">×</button>
+    <h3 data-i18n="modal.contracts.title">Smart Contracts</h3>
+    <p class="desc" data-i18n="modal.contracts.desc">BettingVault addresses (deploying soon)</p>
+    <div class="info-row"><span class="k">BNB Chain</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k">ENI Mainnet</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.fee">Platform fee</span><span class="v">10% of profit</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.feeRecipient">Fee recipient</span><span class="v" id="feeRecipientCell" style="font-family:monospace;font-size:11px;">—</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.oracle">Oracle</span><span class="v">ESPN + manual settle</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.audit">Audit</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <p class="body-text" style="margin-top:14px;" data-i18n="modal.contracts.note">Solidity source (BettingVault.sol) will be published after the demo phase. Core flow: approve USDT → placeBet(matchId, outcome, amount) → contract locks stake → settleMatch by owner/oracle → user calls claim() to receive net payout minus 10% of profit.</p>
+  </div>
+</div>
+
+<!-- Docs modal -->
+<div class="overlay" id="docsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('docsModal', false)">×</button>
+    <h3 data-i18n="modal.docs.title">About ATMNO.1</h3>
+    <p class="body-text" data-i18n="modal.docs.p1"><strong>ATMNO.1</strong> is a comprehensive non-custodial on-chain prediction market covering sports, events, crypto, and more. Stakes and payouts flow through smart contracts — the platform never holds user funds.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p2"><strong>How it works:</strong> Connect your wallet, pick a match outcome, approve USDT, and submit the bet. On settlement, winners call claim() to withdraw. The platform takes <strong>10% of net profit</strong> at claim time (not principal).</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p3"><strong>Supported networks:</strong> BNB Chain (BEP-20 USDT), ENI Mainnet (ENI-Peg USDT). ENI Testnet available for testing.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p4"><strong>Data sources:</strong> Fixtures via ESPN public API, odds via The Odds API (bet365 feed). Refreshed every 30 seconds.</p>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/shared/common.js?v=24"></script>
+<script>
+const SNOOKER_MARKETS = [
+  { id:'snooker-1', title:'2026世锦赛冠军', status:'soon', time:'2026年4–5月', type:'multi', options:[{l:"奥沙利文",pct:28},{l:'Trump',pct:22},{l:'Brecel',pct:18}], vol:'$120K', preds:'1,234', img:'https://images.unsplash.com/photo-1615213612138-4d1195b1c0e6?w=200&h=200&fit=crop' },
+  { id:'snooker-2', title:'奥沙利文能赢第 9 个世锦赛吗？', status:'hot', time:'2026年5月', type:'binary', yesPct:32, noPct:68, vol:'$95K', preds:'1,102', img:'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=200&h=200&fit=crop' },
+  { id:'snooker-3', title:'2026大师赛冠军', status:'soon', time:'2026年1月', type:'multi', options:[{l:'Trump',pct:24},{l:"奥沙利文",pct:22},{l:'Selby',pct:16}], vol:'$78K', preds:'756', img:'https://images.unsplash.com/photo-1534158914592-062992fbe900?w=200&h=200&fit=crop' },
+  { id:'snooker-4', title:'2026年终世界排名第一', status:'soon', time:'2026年12月', type:'multi', options:[{l:'Trump',pct:35},{l:"奥沙利文",pct:28},{l:'Brecel',pct:18}], vol:'$65K', preds:'678', img:'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=200&h=200&fit=crop' },
+  { id:'snooker-5', title:'2026年有人打出147满分？', status:'hot', time:'2026年12月', type:'binary', yesPct:78, noPct:22, vol:'$42K', preds:'890', img:'https://images.unsplash.com/photo-1615213612138-4d1195b1c0e6?w=200&h=200&fit=crop' },
+  { id:'snooker-6', title:'2026英锦赛冠军', status:'soon', time:'2026年12月', type:'multi', options:[{l:"奥沙利文",pct:26},{l:'Allen',pct:20},{l:'Trump',pct:18}], vol:'$55K', preds:'620', img:'https://images.unsplash.com/photo-1534158914592-062992fbe900?w=200&h=200&fit=crop' },
+  { id:'snooker-7', title:'中国选手2026年夺冠排名赛？', status:'hot', time:'2026年', type:'binary', yesPct:65, noPct:35, vol:'$38K', preds:'1,450', img:'https://images.unsplash.com/photo-1617802690992-15d93263d3a9?w=200&h=200&fit=crop' },
+  { id:'snooker-8', title:'2026赛季最多排名赛冠军', status:'soon', time:'2026年', type:'multi', options:[{l:'Trump',pct:30},{l:'Brecel',pct:22},{l:"奥沙利文",pct:20}], vol:'$48K', preds:'580', img:'https://images.unsplash.com/photo-1615213612138-4d1195b1c0e6?w=200&h=200&fit=crop' },
+];
+
+function renderGrid() {
+  const grid = document.getElementById('snookerGrid');
+  if (!grid) return;
+  grid.innerHTML = SNOOKER_MARKETS.map(m => {
+    const sc = m.status === 'live' ? 'live' : m.status === 'hot' ? 'hot' : 'soon';
+    const sl = m.status === 'live' ? '🔴 LIVE' : m.status === 'hot' ? '🔥 热门' : '⏳ 即将';
+    let contentHtml = '';
+    if (m.type === 'binary') {
+      contentHtml = `
+        <div class="mc-pro-vs">
+          <div class="mc-pro-vs-side yes"><span class="mc-pro-vs-label">YES</span><span class="mc-pro-vs-pct">${m.yesPct}%</span></div>
+          <div class="mc-pro-vs-divider">VS</div>
+          <div class="mc-pro-vs-side no"><span class="mc-pro-vs-label">NO</span><span class="mc-pro-vs-pct">${m.noPct}%</span></div>
+        </div>
+        <div class="mc-pro-vs-bar"><div class="mc-pro-vs-bar-yes" style="width:${m.yesPct}%"></div></div>`;
+    } else if (m.type === 'multi' && m.options) {
+      contentHtml = `<div class="mc-pro-opts">${m.options.slice(0,3).map((o,i) => `
+        <div class="mc-pro-opt">
+          <span class="mc-pro-opt-rank">${i+1}</span>
+          <span class="mc-pro-opt-name">${o.l}</span>
+          <div class="mc-pro-opt-bar"><div class="mc-pro-opt-bar-fill" style="width:${o.pct}%"></div></div>
+          <span class="mc-pro-opt-pct">${o.pct}%</span>
+        </div>`).join('')}</div>`;
+    }
+    return `
+      <div class="mc-pro" onclick="location.href='/market?id=${m.id}'">
+        <div class="mc-pro-banner" style="background-image:url('${m.img}')">
+          <span class="mc-pro-badge ${sc}">${sl}</span>
+          <span class="mc-pro-time">📅 ${m.time}</span>
+        </div>
+        <div class="mc-pro-body">
+          <div class="mc-pro-title">${m.title}</div>
+          ${contentHtml}
+          <div class="mc-pro-footer">
+            <span>💰 ${m.vol}</span>
+            <span>👥 ${m.preds}</span>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
+initCommon('snooker');
+renderGrid();
+</script>
+<script src="/shared/effects.js?v=24"></script>
+</body>
+</html>

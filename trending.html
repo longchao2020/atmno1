@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>热门市场 · ATMNO.1</title>
+<meta name="description" content="ATMNO.1 — 全球首选的WEB3预测平台。覆盖体育、加密货币、时事、文娱等多个领域的去中心化预测市场。" />
+<meta name="keywords" content="ATMNO.1,Web3,预测市场,prediction market,区块链,blockchain,加密货币,体育预测" />
+<meta property="og:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta property="og:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。链上透明，钱包直连。" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://atmno1.world" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
+<meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=38" />
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header></header>
+
+<!-- ==================== MOBILE NAV ==================== -->
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<div class="wrap" style="grid-template-columns: 1fr; max-width: 1320px; margin: 0 auto;">
+
+  <!-- Page Title -->
+  <div class="section-title" style="margin-bottom:4px;">
+    <h2 data-i18n="trending.title">🔥 热门预测</h2>
+  </div>
+  <p style="color:var(--text-dim);font-size:13px;margin:0 0 18px 0;line-height:1.5;" data-i18n="trending.subtitle">
+    全平台最热门的预测市场，按成交量、概率变化、参与人数排序
+  </p>
+
+  <!-- ==================== SORT / FILTER BAR ==================== -->
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;align-items:center;">
+    <span style="color:var(--text-dim);font-size:12px;margin-right:4px;">排序：</span>
+    <button class="chip sort-btn active" data-sort="volume" onclick="sortTrending('volume')">💰 成交量</button>
+    <button class="chip sort-btn" data-sort="change" onclick="sortTrending('change')">📈 概率变化</button>
+    <button class="chip sort-btn" data-sort="participants" onclick="sortTrending('participants')">👥 参与人数</button>
+    <button class="chip sort-btn" data-sort="newest" onclick="sortTrending('newest')">🕐 最新</button>
+    <span style="flex:1"></span>
+    <span style="color:var(--text-dim);font-size:12px;">筛选：</span>
+    <button class="chip filter-cat-btn active" data-cat="all" onclick="filterCat('all')">全部</button>
+    <button class="chip filter-cat-btn" data-cat="football" onclick="filterCat('football')">⚽</button>
+    <button class="chip filter-cat-btn" data-cat="basketball" onclick="filterCat('basketball')">🏀</button>
+    <button class="chip filter-cat-btn" data-cat="crypto" onclick="filterCat('crypto')">🪙</button>
+    <button class="chip filter-cat-btn" data-cat="events" onclick="filterCat('events')">📰</button>
+  </div>
+
+  <!-- ==================== LEADERBOARD STATS ==================== -->
+  <div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:20px;">
+    <div style="flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--text-dim);">总市场数</div>
+      <div style="font-size:22px;font-weight:800;color:var(--accent);" id="statTotal">15</div>
+    </div>
+    <div style="flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--text-dim);">总成交量</div>
+      <div style="font-size:22px;font-weight:800;color:var(--accent-2);" id="statVol">$14.8M</div>
+    </div>
+    <div style="flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--text-dim);">总参与者</div>
+      <div style="font-size:22px;font-weight:800;color:var(--green);" id="statPreds">98,412</div>
+    </div>
+    <div style="flex:1;min-width:140px;background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--text-dim);">LIVE 市场</div>
+      <div style="font-size:22px;font-weight:800;color:var(--red);" id="statLive">5</div>
+    </div>
+  </div>
+
+  <!-- ==================== MARKET GRID ==================== -->
+  <div class="market-grid-pro" id="trendingGrid"></div>
+
+</div>
+
+<!-- ==================== PITCH DIVIDER ==================== -->
+<div class="pitch-divider"></div>
+
+<!-- ==================== FOOTER ==================== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="footer-logo">ATM<span style="color:var(--accent)">NO.1</span></div>
+      <div class="footer-slogan">全球首选的WEB3预测平台</div>
+      <div class="footer-desc">覆盖足球、篮球、加密货币、时事等多个领域的去中心化预测市场</div>
+      <div class="footer-social">
+        <a href="#" title="Twitter/X">𝕏</a>
+        <a href="#" title="Telegram">✈️</a>
+        <a href="#" title="Discord">💬</a>
+        <a href="#" title="GitHub">🔗</a>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <div class="footer-col-title">平台导航</div>
+        <a onclick="navTo('home')">首页</a>
+        <a onclick="navTo('trending')">热门市场</a>
+        <a onclick="navTo('myBets')">我的注单</a>
+        <a onclick="toggleModal('contractsModal', true)">智能合约</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">热门预测</div>
+        <a onclick="switchCategory('football')">足球预测</a>
+        <a onclick="switchCategory('basketball')">篮球预测</a>
+        <a onclick="switchCategory('crypto')">加密货币</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">帮助资源</div>
+        <a onclick="toggleModal('docsModal', true)">关于我们</a>
+        <a href="#">开发文档</a>
+        <a href="#">API 接入</a>
+        <a href="#">手续费说明</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">法律条款</div>
+        <a href="#">服务条款</a>
+        <a href="#">隐私政策</a>
+        <a href="#">免责声明</a>
+        <a href="#">合规信息</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copyright">&copy; 2026 ATMNO.1. All rights reserved.</span>
+  </div>
+</footer>
+
+<!-- ==================== MODALS ==================== -->
+<!-- Connect wallet modal -->
+<div class="overlay" id="walletModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('walletModal', false)">×</button>
+    <h3 data-i18n="modal.wallet.title">Connect Wallet</h3>
+    <p class="desc" data-i18n="modal.wallet.desc">Choose a wallet to continue</p>
+    <div class="chain-list">
+      <div class="chain" onclick="connectMetaMask()">
+        <div class="left"><div class="icon" style="background:#f6851b;color:#fff">M</div>MetaMask</div>
+        <span class="chip" style="color:var(--accent-2);border-color:var(--accent-2);" data-i18n="modal.wallet.integrated">Integrated</span>
+      </div>
+      <div class="chain" onclick="wipWallet('WalletConnect')">
+        <div class="left"><div class="icon" style="background:#3b99fc;color:#fff">W</div>WalletConnect</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('OKX Wallet')">
+        <div class="left"><div class="icon" style="background:#000;color:#fff">OK</div>OKX Wallet</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+      <div class="chain" onclick="wipWallet('TronLink')">
+        <div class="left"><div class="icon" style="background:#e50914;color:#fff">T</div>TronLink</div>
+        <span class="chip" data-i18n="modal.wallet.pending">Coming</span>
+      </div>
+    </div>
+    <p class="desc" style="margin-top:16px;" data-i18n="modal.wallet.networks">Supported networks (switch after connecting)</p>
+    <div class="chain-list">
+      <div class="chain" onclick="switchToChain(56)">
+        <div class="left"><div class="icon" style="background:#f3ba2f;color:#000">B</div>BNB Chain · BEP-20 USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(173)">
+        <div class="left"><div class="icon" style="background:#7c5cff;color:#fff">E</div>ENI Mainnet · ENI-Peg USDT</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+      <div class="chain" onclick="switchToChain(174)">
+        <div class="left"><div class="icon" style="background:#5a9cff;color:#fff">🧪</div>ENI Testnet · USDTT (test)</div>
+        <span class="chip" data-i18n="modal.wallet.switch">Switch</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Contracts info modal -->
+<div class="overlay" id="contractsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('contractsModal', false)">×</button>
+    <h3 data-i18n="modal.contracts.title">Smart Contracts</h3>
+    <p class="desc" data-i18n="modal.contracts.desc">BettingVault addresses (deploying soon)</p>
+    <div class="info-row"><span class="k">BNB Chain</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k">ENI Mainnet</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.fee">Platform fee</span><span class="v">10% of profit</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.feeRecipient">Fee recipient</span><span class="v" id="feeRecipientCell" style="font-family:monospace;font-size:11px;">—</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.oracle">Oracle</span><span class="v">ESPN + manual settle</span></div>
+    <div class="info-row"><span class="k" data-i18n="modal.contracts.audit">Audit</span><span class="v" data-i18n="modal.contracts.pending">TBA</span></div>
+    <p class="body-text" style="margin-top:14px;" data-i18n="modal.contracts.note">Solidity source (BettingVault.sol) will be published after the demo phase. Core flow: approve USDT → placeBet(matchId, outcome, amount) → contract locks stake → settleMatch by owner/oracle → user calls claim() to receive net payout minus 10% of profit.</p>
+  </div>
+</div>
+
+<!-- Docs modal -->
+<div class="overlay" id="docsModal">
+  <div class="modal">
+    <button class="close" onclick="toggleModal('docsModal', false)">×</button>
+    <h3 data-i18n="modal.docs.title">About ATMNO.1</h3>
+    <p class="body-text" data-i18n="modal.docs.p1"><strong>ATMNO.1</strong> is a comprehensive non-custodial on-chain prediction market covering sports, events, crypto, and more. Stakes and payouts flow through smart contracts — the platform never holds user funds.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p2"><strong>How it works:</strong> Connect your wallet, pick a match outcome, approve USDT, and submit the bet. On settlement, winners call claim() to withdraw. The platform takes <strong>10% of net profit</strong> at claim time (not principal).</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p3"><strong>Supported networks:</strong> BNB Chain (BEP-20 USDT), ENI Mainnet (ENI-Peg USDT). ENI Testnet available for testing.</p>
+    <p class="body-text" style="margin-top:10px;" data-i18n="modal.docs.p4"><strong>Data sources:</strong> Fixtures via ESPN public API, odds via The Odds API (bet365 feed). Refreshed every 30 seconds.</p>
+  </div>
+</div>
+
+<!-- ==================== TOAST ==================== -->
+<div class="toast" id="toast"></div>
+
+<!-- ==================== SHARED JS ==================== -->
+<script src="/shared/common.js?v=24"></script>
+
+<script>
+// ============================================================
+// TRENDING PAGE — 热门排行榜
+// ============================================================
+
+// ============================================================
+// Trending Market Data — 15+ markets across all categories
+// ============================================================
+const TRENDING_DATA = [
+  // ===== FOOTBALL (⚽ 足球) =====
+  {
+    title: 'FIFA World Cup 2026 — Winner',
+    id: 'football-1',
+    titleZh: '2026世界杯 — 冠军',
+    cat: '⚽ 足球',
+    catKey: 'football',
+    status: 'live',
+    time: 'Jun 2026',
+    sortTime: '2026-06-11',
+    type: 'multi',
+    options: [
+      { l: 'Brazil', lz: '巴西', pct: 28 },
+      { l: 'Argentina', lz: '阿根廷', pct: 22 },
+      { l: 'France', lz: '法国', pct: 18 }
+    ],
+    vol: '$1.2M',
+    volNum: 1200000,
+    preds: '8,412',
+    predsNum: 8412,
+    img: 'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=200&h=200&fit=crop',
+    change: '+5.2%',
+    changeNum: 5.2
+  },
+  {
+    title: 'World Cup 2026 — Top Scorer',
+    id: 'football-2',
+    titleZh: '2026世界杯 — 金靴奖',
+    cat: '⚽ 足球',
+    catKey: 'football',
+    status: 'live',
+    time: 'Jul 2026',
+    sortTime: '2026-07-01',
+    type: 'multi',
+    options: [
+      { l: 'Mbappé', lz: '姆巴佩', pct: 28 },
+      { l: 'Haaland', lz: '哈兰德', pct: 22 },
+      { l: 'Vinicius Jr', lz: '维尼修斯', pct: 18 }
+    ],
+    vol: '$680K',
+    volNum: 680000,
+    preds: '3,241',
+    predsNum: 3241,
+    img: 'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=200&h=200&fit=crop',
+    change: '+3.8%',
+    changeNum: 3.8
+  },
+  {
+    title: 'Champions League 2025-26 Winner',
+    id: 'football-5',
+    titleZh: '2025-26欧冠冠军',
+    cat: '⚽ 足球',
+    catKey: 'football',
+    status: 'live',
+    time: 'Jun 2026',
+    sortTime: '2026-06-01',
+    type: 'multi',
+    options: [
+      { l: 'Real Madrid', lz: '皇马', pct: 29 },
+      { l: 'Man City', lz: '曼城', pct: 22 },
+      { l: 'Bayern', lz: '拜仁', pct: 17 }
+    ],
+    vol: '$1.5M',
+    volNum: 1500000,
+    preds: '7,643',
+    predsNum: 7643,
+    img: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=200&h=200&fit=crop',
+    change: '+2.1%',
+    changeNum: 2.1
+  },
+
+  // ===== BASKETBALL (🏀 篮球) =====
+  {
+    title: 'NBA Finals 2026 — Champion',
+    id: 'basketball-1',
+    titleZh: '2026 NBA总决赛 — 冠军',
+    cat: '🏀 篮球',
+    catKey: 'basketball',
+    status: 'hot',
+    time: 'Jun 2026',
+    sortTime: '2026-06-15',
+    type: 'multi',
+    options: [
+      { l: 'Celtics', lz: '凯尔特人', pct: 31 },
+      { l: 'Thunder', lz: '雷霆', pct: 25 },
+      { l: 'Lakers', lz: '湖人', pct: 14 }
+    ],
+    vol: '$890K',
+    volNum: 890000,
+    preds: '5,127',
+    predsNum: 5127,
+    img: 'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=200&h=200&fit=crop',
+    change: '+4.6%',
+    changeNum: 4.6
+  },
+  {
+    title: 'NBA MVP 2025-26',
+    id: 'basketball-2',
+    titleZh: '2025-26赛季 NBA MVP',
+    cat: '🏀 篮球',
+    catKey: 'basketball',
+    status: 'hot',
+    time: 'Apr 2026',
+    sortTime: '2026-04-15',
+    type: 'multi',
+    options: [
+      { l: 'Jokic', lz: '约基奇', pct: 32 },
+      { l: 'Luka', lz: '东契奇', pct: 28 },
+      { l: 'SGA', pct: 22 }
+    ],
+    vol: '$420K',
+    volNum: 420000,
+    preds: '3,890',
+    predsNum: 3890,
+    img: 'https://images.unsplash.com/photo-1504450758481-7338bbe75c8e?w=200&h=200&fit=crop',
+    change: '+1.5%',
+    changeNum: 1.5
+  },
+
+  // ===== CRYPTO (🪙 加密) =====
+  {
+    title: 'Will BTC hit $200K by Dec 2026?',
+    id: 'crypto-1',
+    titleZh: 'BTC 2026年底突破 $200K？',
+    cat: '🪙 加密',
+    catKey: 'crypto',
+    status: 'hot',
+    time: 'Dec 2026',
+    sortTime: '2026-12-31',
+    type: 'binary',
+    yesPct: 65,
+    noPct: 35,
+    vol: '$2.1M',
+    volNum: 2100000,
+    preds: '12,847',
+    predsNum: 12847,
+    img: 'https://images.unsplash.com/photo-1518546305927-5a555bb7020d?w=200&h=200&fit=crop',
+    change: '+8.3%',
+    changeNum: 8.3
+  },
+  {
+    title: 'ETH Price > $10K by Dec 2026?',
+    id: 'crypto-2',
+    titleZh: 'ETH 2026年底超过 $10K？',
+    cat: '🪙 加密',
+    catKey: 'crypto',
+    status: 'hot',
+    time: 'Dec 2026',
+    sortTime: '2026-12-31',
+    type: 'binary',
+    yesPct: 36,
+    noPct: 64,
+    vol: '$560K',
+    volNum: 560000,
+    preds: '4,892',
+    predsNum: 4892,
+    img: 'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=200&h=200&fit=crop',
+    change: '-3.1%',
+    changeNum: -3.1
+  },
+  {
+    title: 'Will SOL flip ETH market cap?',
+    id: 'crypto-3',
+    titleZh: 'SOL市值能否超越ETH？',
+    cat: '🪙 加密',
+    catKey: 'crypto',
+    status: 'soon',
+    time: '2026',
+    sortTime: '2026-12-01',
+    type: 'binary',
+    yesPct: 18,
+    noPct: 82,
+    vol: '$340K',
+    volNum: 340000,
+    preds: '3,201',
+    predsNum: 3201,
+    img: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=200&h=200&fit=crop',
+    change: '-1.8%',
+    changeNum: -1.8
+  },
+
+  // ===== EVENTS (📰 时事) =====
+  {
+    title: '2028 US Presidential Election',
+    id: 'events-1',
+    titleZh: '2028美国总统大选',
+    cat: '📰 时事',
+    catKey: 'events',
+    status: 'hot',
+    time: 'Nov 2028',
+    sortTime: '2028-11-05',
+    type: 'multi',
+    options: [
+      { l: 'Republican', lz: '共和党', pct: 45 },
+      { l: 'Democrat', lz: '民主党', pct: 42 },
+      { l: 'Other', lz: '其他', pct: 13 }
+    ],
+    vol: '$3.8M',
+    volNum: 3800000,
+    preds: '21,503',
+    predsNum: 21503,
+    img: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=200&h=200&fit=crop',
+    change: '+2.4%',
+    changeNum: 2.4
+  },
+  {
+    title: 'Will AI pass Turing Test by 2027?',
+    id: 'events-2',
+    titleZh: 'AI 2027年前能通过图灵测试吗？',
+    cat: '📰 时事',
+    catKey: 'events',
+    status: 'hot',
+    time: 'Dec 2027',
+    sortTime: '2027-12-31',
+    type: 'binary',
+    yesPct: 68,
+    noPct: 32,
+    vol: '$580K',
+    volNum: 580000,
+    preds: '5,234',
+    predsNum: 5234,
+    img: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=200&h=200&fit=crop',
+    change: '+6.7%',
+    changeNum: 6.7
+  },
+  {
+    title: 'Will the Fed cut rates in 2026?',
+    id: 'events-3',
+    titleZh: '美联储2026年会降息吗？',
+    cat: '📰 时事',
+    catKey: 'events',
+    status: 'live',
+    time: '2026',
+    sortTime: '2026-09-01',
+    type: 'binary',
+    yesPct: 72,
+    noPct: 28,
+    vol: '$420K',
+    volNum: 420000,
+    preds: '3,890',
+    predsNum: 3890,
+    img: 'https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=200&h=200&fit=crop',
+    change: '+1.2%',
+    changeNum: 1.2
+  },
+
+
+  // Extra: SpaceX Mars
+  {
+    title: 'SpaceX Mars Mission by 2028?',
+    id: 'events-4',
+    titleZh: 'SpaceX 2028年前登陆火星？',
+    cat: '📰 时事',
+    catKey: 'events',
+    status: 'soon',
+    time: 'Dec 2028',
+    sortTime: '2028-12-31',
+    type: 'binary',
+    yesPct: 25,
+    noPct: 75,
+    vol: '$310K',
+    volNum: 310000,
+    preds: '2,789',
+    predsNum: 2789,
+    img: 'https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=200&h=200&fit=crop',
+    change: '+0.3%',
+    changeNum: 0.3
+  },
+];
+
+// ============================================================
+// State
+// ============================================================
+let currentSort = 'volume';
+let currentCatFilter = 'all';
+
+// ============================================================
+// Sort & Filter Logic
+// ============================================================
+function getSortedData() {
+  let data = TRENDING_DATA.slice();
+
+  // Apply category filter
+  if (currentCatFilter !== 'all') {
+    data = data.filter(m => m.catKey === currentCatFilter);
+  }
+
+  // Apply sort
+  switch (currentSort) {
+    case 'volume':
+      data.sort((a, b) => b.volNum - a.volNum);
+      break;
+    case 'change':
+      data.sort((a, b) => Math.abs(b.changeNum) - Math.abs(a.changeNum));
+      break;
+    case 'participants':
+      data.sort((a, b) => b.predsNum - a.predsNum);
+      break;
+    case 'newest':
+      data.sort((a, b) => b.sortTime.localeCompare(a.sortTime));
+      break;
+  }
+  return data;
+}
+
+function sortTrending(key) {
+  currentSort = key;
+  document.querySelectorAll('.sort-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-sort') === key);
+    btn.style.borderColor = btn.classList.contains('active') ? 'var(--accent)' : 'var(--border)';
+    btn.style.color = btn.classList.contains('active') ? 'var(--accent)' : 'var(--text-dim)';
+  });
+  renderTrending();
+}
+
+function filterCat(cat) {
+  currentCatFilter = cat;
+  document.querySelectorAll('.filter-cat-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.getAttribute('data-cat') === cat);
+    btn.style.borderColor = btn.classList.contains('active') ? 'var(--accent)' : 'var(--border)';
+    btn.style.color = btn.classList.contains('active') ? 'var(--accent)' : 'var(--text-dim)';
+  });
+  renderTrending();
+}
+
+// ============================================================
+// Render
+// ============================================================
+function renderTrending() {
+  const lang = (typeof state !== 'undefined' && state.lang) ? state.lang : 'zh-CN';
+  const isZh = lang === 'zh-TW' || lang === 'zh-CN';
+  const tl = (item) => isZh ? (item.titleZh || item.title) : item.title;
+  const ol = (opt) => isZh && opt.lz ? opt.lz : opt.l;
+
+  const data = getSortedData();
+  const grid = document.getElementById('trendingGrid');
+
+  if (!data.length) {
+    grid.innerHTML = '<div style="text-align:center;padding:60px 20px;color:var(--text-dim);font-size:14px;grid-column:1/-1;">暂无该分类的热门市场</div>';
+    return;
+  }
+
+  grid.innerHTML = data.map((m, idx) => {
+    const statusClass = m.status === 'live' ? 'live' : m.status === 'hot' ? 'hot' : 'soon';
+    const statusLabel = m.status === 'live' ? '🔴 LIVE' : m.status === 'hot' ? '🔥 HOT' : '⏳ SOON';
+    const changeColor = m.changeNum >= 0 ? 'var(--green)' : 'var(--red)';
+    const changeIcon = m.changeNum >= 0 ? '▲' : '▼';
+
+    // Build options/binary content
+    let contentHtml = '';
+    if (m.type === 'binary') {
+      contentHtml = `
+        <div class="mc-pro-vs">
+          <div class="mc-pro-vs-side yes"><span class="mc-pro-vs-label">${isZh ? 'YES' : 'YES'}</span><span class="mc-pro-vs-pct">${m.yesPct}%</span></div>
+          <div class="mc-pro-vs-divider">VS</div>
+          <div class="mc-pro-vs-side no"><span class="mc-pro-vs-label">${isZh ? 'NO' : 'NO'}</span><span class="mc-pro-vs-pct">${m.noPct}%</span></div>
+        </div>
+        <div class="mc-pro-vs-bar"><div class="mc-pro-vs-bar-yes" style="width:${m.yesPct}%"></div></div>`;
+    } else if (m.type === 'multi' && m.options) {
+      contentHtml = `<div class="mc-pro-opts">${m.options.map((o,i) => `
+        <div class="mc-pro-opt">
+          <span class="mc-pro-opt-rank">${i+1}</span>
+          <span class="mc-pro-opt-name">${ol(o)}</span>
+          <div class="mc-pro-opt-bar"><div class="mc-pro-opt-bar-fill" style="width:${o.pct}%"></div></div>
+          <span class="mc-pro-opt-pct">${o.pct}%</span>
+        </div>`).join('')}</div>`;
+    }
+
+    return `
+    <div class="mc-pro" onclick="location.href='/market?id=${m.id||m.catKey}'">
+      <div class="mc-pro-banner" style="background-image:url('${m.img}')">
+        <span class="mc-pro-badge ${statusClass}">${statusLabel}</span>
+        <span class="mc-pro-rank">#${idx + 1}</span>
+        <span class="mc-pro-time">📅 ${m.time}</span>
+      </div>
+      <div class="mc-pro-body">
+        <div class="mc-pro-meta">
+          <span class="mc-pro-cat">${m.cat}</span>
+          <span class="mc-pro-change" style="color:${changeColor}">${changeIcon} ${m.change}</span>
+        </div>
+        <div class="mc-pro-title">${tl(m)}</div>
+        ${contentHtml}
+        <div class="mc-pro-footer">
+          <span>💰 ${m.vol}</span>
+          <span>👥 ${m.preds}</span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Update stats
+  const filtered = data;
+  document.getElementById('statTotal').textContent = filtered.length;
+  const totalVol = filtered.reduce((s, m) => s + m.volNum, 0);
+  document.getElementById('statVol').textContent = totalVol >= 1000000
+    ? '$' + (totalVol / 1000000).toFixed(1) + 'M'
+    : '$' + (totalVol / 1000).toFixed(0) + 'K';
+  const totalPreds = filtered.reduce((s, m) => s + m.predsNum, 0);
+  document.getElementById('statPreds').textContent = totalPreds.toLocaleString();
+  document.getElementById('statLive').textContent = filtered.filter(m => m.status === 'live').length;
+}
+
+// ============================================================
+// Initialization
+// ============================================================
+initCommon('trending');
+
+// Initial sort buttons style
+document.querySelectorAll('.sort-btn').forEach(btn => {
+  const isActive = btn.getAttribute('data-sort') === currentSort;
+  btn.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
+  btn.style.color = isActive ? 'var(--accent)' : 'var(--text-dim)';
+});
+document.querySelectorAll('.filter-cat-btn').forEach(btn => {
+  const isActive = btn.getAttribute('data-cat') === currentCatFilter;
+  btn.style.borderColor = isActive ? 'var(--accent)' : 'var(--border)';
+  btn.style.color = isActive ? 'var(--accent)' : 'var(--text-dim)';
+});
+
+// Render the grid
+renderTrending();
+</script>
+<script src="/shared/effects.js?v=24"></script>
+</body>
+</html>
