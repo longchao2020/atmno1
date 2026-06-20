@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>世界杯 2026 专题 · ATMNO.1</title>
+<meta name="description" content="2026 FIFA 世界杯实时赛程、小组积分、赔率分析与链上预测市场。ATMNO.1 — 全球首选 Web3 预测平台。" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
+<link rel="stylesheet" href="/shared/style.css?v=42" />
+<style>
+/* ===== WORLDCUP PAGE STYLES ===== */
+
+/* Hero */
+.wc-hero {
+  position: relative; border-radius: 24px; overflow: hidden;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, #0a3d1f 0%, #064e2a 30%, #0d5c3a 60%, #1a3a0f 100%);
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: 0 16px 64px rgba(0,100,0,.35);
+  min-height: 280px; display: flex; flex-direction: column;
+}
+.wc-hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image: url('https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=1200&h=500&fit=crop&crop=top');
+  background-size: cover; background-position: center 30%;
+  opacity: 0.22;
+}
+.wc-hero-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(135deg, rgba(10,61,31,.95) 0%, rgba(10,61,31,.7) 60%, transparent 100%);
+}
+.wc-hero-inner {
+  position: relative; z-index: 2;
+  padding: 36px 40px 28px;
+  flex: 1; display: grid; grid-template-columns: 1fr 280px; gap: 24px; align-items: start;
+}
+@media (max-width: 860px) {
+  .wc-hero-inner { grid-template-columns: 1fr; padding: 24px 20px; gap: 16px; }
+  .wc-hero { min-height: auto; }
+}
+.wc-hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 999px; margin-bottom: 12px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.22);
+  color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase;
+}
+.wc-hero-title {
+  font-size: 36px; font-weight: 900; color: #fff; line-height: 1.1;
+  margin-bottom: 8px; letter-spacing: -1px;
+  text-shadow: 0 2px 24px rgba(0,0,0,.5);
+}
+.wc-hero-sub { font-size: 14px; color: rgba(255,255,255,.55); margin-bottom: 20px; }
+.wc-hero-stats { display: flex; gap: 20px; flex-wrap: wrap; }
+.wc-hero-stat { text-align: center; }
+.wc-hero-stat-val { font-size: 22px; font-weight: 900; color: #fff; }
+.wc-hero-stat-label { font-size: 10px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
+.wc-hero-right {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px; align-content: start;
+}
+.wc-qs {
+  background: rgba(0,0,0,.3); border: 1px solid rgba(255,255,255,.12);
+  border-radius: 12px; padding: 12px 14px; backdrop-filter: blur(8px);
+}
+.wc-qs-label { font-size: 9px; color: rgba(255,255,255,.4); font-weight: 700; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px; }
+.wc-qs-val { font-size: 17px; font-weight: 900; color: #fff; }
+.wc-qs-sub { font-size: 10px; color: rgba(255,255,255,.35); margin-top: 2px; }
+
+/* Bottom info bar */
+.wc-hero-bar {
+  position: relative; z-index: 2;
+  display: flex; overflow-x: auto; scrollbar-width: none;
+  background: rgba(0,0,0,.35); border-top: 1px solid rgba(255,255,255,.06);
+}
+.wc-hero-bar::-webkit-scrollbar { display: none; }
+.wc-hbar-item {
+  flex: 1; min-width: 100px; text-align: center; padding: 10px 8px;
+  border-right: 1px solid rgba(255,255,255,.06);
+}
+.wc-hbar-item:last-child { border-right: none; }
+.wc-hbar-label { font-size: 9px; color: rgba(255,255,255,.35); text-transform: uppercase; letter-spacing: .5px; }
+.wc-hbar-val { font-size: 13px; font-weight: 700; color: #fff; margin-top: 2px; }
+
+/* Section */
+.wc-section { margin-bottom: 32px; }
+.wc-section-head {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+}
+.wc-section-head h2 {
+  font-size: 20px; font-weight: 900; color: var(--text); letter-spacing: -.3px;
+  display: flex; align-items: center; gap: 8px;
+}
+.wc-tag {
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .6px;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgba(16,185,129,.1); color: #10b981; border: 1px solid rgba(16,185,129,.25);
+}
+.wc-tag-live {
+  background: rgba(239,68,68,.12); color: #f87171; border-color: rgba(239,68,68,.25);
+  animation: wc-pulse 2s ease-in-out infinite;
+}
+@keyframes wc-pulse { 0%,100%{opacity:1} 50%{opacity:.6} }
+
+/* Hot news cards */
+.wc-news-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+}
+@media (max-width: 900px) { .wc-news-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .wc-news-grid { grid-template-columns: 1fr; } }
+.wc-news-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+  overflow: hidden; cursor: pointer;
+  transition: transform .3s var(--ease-out-expo), box-shadow .3s, border-color .3s;
+}
+.wc-news-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--accent); }
+.wc-news-img {
+  width: 100%; aspect-ratio: 16/9; object-fit: cover;
+  background: linear-gradient(135deg, #0a3d1f, #1a5c2a); overflow: hidden;
+}
+.wc-news-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wc-news-body { padding: 14px; }
+.wc-news-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 5px; font-size: 10px; font-weight: 700; margin-bottom: 6px;
+  background: rgba(139,92,246,.1); color: var(--accent); border: 1px solid rgba(139,92,246,.2);
+}
+.wc-news-title { font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.4; margin-bottom: 6px; }
+.wc-news-meta { font-size: 11px; color: var(--text-dim); }
+
+/* Group standings */
+.wc-groups-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+  margin-bottom: 12px;
+}
+@media (max-width: 900px) { .wc-groups-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .wc-groups-grid { grid-template-columns: 1fr; } }
+.wc-group-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+}
+.wc-group-head {
+  background: linear-gradient(135deg, rgba(139,92,246,.12), rgba(139,92,246,.04));
+  padding: 10px 14px; border-bottom: 1px solid var(--border);
+  font-size: 12px; font-weight: 800; color: var(--accent); letter-spacing: .3px;
+}
+.wc-group-table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.wc-group-table th {
+  padding: 5px 8px; text-align: right; color: var(--text-dim); font-size: 10px; font-weight: 700;
+}
+.wc-group-table th:first-child { text-align: left; }
+.wc-group-table td {
+  padding: 7px 8px; border-top: 1px solid var(--border);
+  text-align: right; color: var(--text);
+}
+.wc-group-table td:first-child { text-align: left; font-weight: 600; }
+.wc-team-name { display: flex; align-items: center; gap: 6px; }
+.wc-team-flag { font-size: 16px; }
+.wc-qualified { color: #10b981; font-weight: 800; }
+.wc-contention { color: #f59e0b; font-weight: 700; }
+.wc-eliminated { color: var(--text-dim); }
+
+/* CTA */
+.wc-cta {
+  text-align: center; padding: 40px 24px;
+  background: linear-gradient(135deg, rgba(139,92,246,.08), rgba(236,72,153,.06));
+  border: 1px solid rgba(139,92,246,.2); border-radius: 20px; margin-top: 16px;
+}
+.wc-cta-title { font-size: 22px; font-weight: 900; color: var(--text); margin-bottom: 8px; }
+.wc-cta-sub { font-size: 14px; color: var(--text-dim); margin-bottom: 20px; }
+.wc-cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.wc-cta-btn {
+  padding: 12px 24px; border-radius: 12px; font-size: 14px; font-weight: 700;
+  cursor: pointer; border: none; transition: all .2s;
+}
+.wc-cta-btn-primary { background: linear-gradient(135deg,#7c3aed,#6d28d9); color: #fff; }
+.wc-cta-btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(109,40,217,.4); }
+.wc-cta-btn-outline { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.wc-cta-btn-outline:hover { background: rgba(139,92,246,.1); transform: translateY(-2px); }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
+</head>
+<body>
+
+<header></header>
+<nav class="mobile-nav" id="mobileNav"></nav>
+
+<div class="activity-ticker">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<div class="wrap wrap-single">
+
+  <!-- ===== HERO ===== -->
+  <div class="wc-hero">
+    <div class="wc-hero-bg"></div>
+    <div class="wc-hero-overlay"></div>
+    <div class="wc-hero-inner">
+      <div class="wc-hero-left">
+        <div class="wc-hero-badge"><span class="live-dot"></span> 2026 FIFA 世界杯 · 进行中</div>
+        <div class="wc-hero-title">⚽ 2026 FIFA<br>世界杯专题</div>
+        <div class="wc-hero-sub">美国 · 加拿大 · 墨西哥联合主办 · 48支球队 · 104场比赛</div>
+        <div class="wc-hero-stats">
+          <div class="wc-hero-stat"><div class="wc-hero-stat-val">48</div><div class="wc-hero-stat-label">参赛队伍</div></div>
+          <div class="wc-hero-stat"><div class="wc-hero-stat-val">104</div><div class="wc-hero-stat-label">场比赛</div></div>
+          <div class="wc-hero-stat"><div class="wc-hero-stat-val">16</div><div class="wc-hero-stat-label">主办城市</div></div>
+          <div class="wc-hero-stat"><div class="wc-hero-stat-val">$11B</div><div class="wc-hero-stat-label">总投注额</div></div>
+        </div>
+      </div>
+      <div class="wc-hero-right">
+        <div class="wc-qs"><div class="wc-qs-label">冠军热门</div><div class="wc-qs-val">🇧🇷 巴西</div><div class="wc-qs-sub">赔率 3.20</div></div>
+        <div class="wc-qs"><div class="wc-qs-label">金靴热门</div><div class="wc-qs-val">🇫🇷 姆巴佩</div><div class="wc-qs-sub">赔率 2.90</div></div>
+        <div class="wc-qs"><div class="wc-qs-label">最大冷门</div><div class="wc-qs-val">🇯🇵 日本</div><div class="wc-qs-sub">首轮爆冷</div></div>
+        <div class="wc-qs"><div class="wc-qs-label">已参与用户</div><div class="wc-qs-val" id="wcUserCount">—</div><div class="wc-qs-sub">竞猜人次</div></div>
+      </div>
+    </div>
+    <div class="wc-hero-bar">
+      <div class="wc-hbar-item"><div class="wc-hbar-label">进行阶段</div><div class="wc-hbar-val">小组赛 D3</div></div>
+      <div class="wc-hbar-item"><div class="wc-hbar-label">已完成场次</div><div class="wc-hbar-val">30/104</div></div>
+      <div class="wc-hbar-item"><div class="wc-hbar-label">总进球数</div><div class="wc-hbar-val">92</div></div>
+      <div class="wc-hbar-item"><div class="wc-hbar-label">最多进球</div><div class="wc-hbar-val">🇩🇪 德国 12</div></div>
+      <div class="wc-hbar-item"><div class="wc-hbar-label">ATM 实时价</div><div class="wc-hbar-val" id="wcAtmPrice">—</div></div>
+      <div class="wc-hbar-item"><div class="wc-hbar-label">世界杯结束</div><div class="wc-hbar-val">07-19</div></div>
+    </div>
+  </div>
+
+  <!-- ===== 世界杯预测市场 ===== -->
+  <div class="wc-section">
+    <div class="wc-section-head">
+      <h2>🎯 世界杯预测市场 <span class="wc-tag wc-tag-live">· 全程可竞猜</span></h2>
+      <span onclick="navTo('football')" style="font-size:12px;color:var(--accent);cursor:pointer;font-weight:700;">单场竞猜 →</span>
+    </div>
+    <div class="market-grid-pro" id="wcMarketsGrid"></div>
+  </div>
+
+  <!-- ===== 世界杯热点新闻 ===== -->
+  <div class="wc-section">
+    <div class="wc-section-head">
+      <h2>📰 世界杯热点资讯</h2>
+      <span class="wc-tag">实时追踪</span>
+    </div>
+    <div class="wc-news-grid">
+      <div class="wc-news-card" onclick="navTo('events')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&h=225&fit=crop&crop=top" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">🔥 热门</div>
+          <div class="wc-news-title">德国小组赛 3 连胜，防线无失球震惊全场</div>
+          <div class="wc-news-meta">📅 6月21日 · ⚽ 小组赛</div>
+        </div>
+      </div>
+      <div class="wc-news-card" onclick="navTo('events')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=400&h=225&fit=crop&crop=top" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">⚡ 爆冷</div>
+          <div class="wc-news-title">日本 2-0 击败克罗地亚，亚洲足球再度震撼世界</div>
+          <div class="wc-news-meta">📅 6月20日 · ⚽ 小组赛 D轮</div>
+        </div>
+      </div>
+      <div class="wc-news-card" onclick="navTo('events')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1624280157150-4d1ed8632989?w=400&h=225&fit=crop&crop=top" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">🎯 金靴</div>
+          <div class="wc-news-title">姆巴佩连场进球，金靴赔率大幅缩水至 2.9</div>
+          <div class="wc-news-meta">📅 6月21日 · 💰 赔率变动</div>
+        </div>
+      </div>
+      <div class="wc-news-card" onclick="navTo('events')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1504305754058-2f08ccd89a0a?w=400&h=225&fit=crop&crop=top" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">📊 分析</div>
+          <div class="wc-news-title">巴西小组赛全胜，内马尔传球数据惊人 — 冲冠呼声最高</div>
+          <div class="wc-news-meta">📅 6月21日 · 🏆 冠军热门</div>
+        </div>
+      </div>
+      <div class="wc-news-card" onclick="navTo('events')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1640693316735-3fe5ee2de856?w=400&h=225&fit=crop&crop=top" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">🇲🇦 摩洛哥</div>
+          <div class="wc-news-title">摩洛哥强势晋级 16 强，非洲雄鹰能否重演卡塔尔奇迹？</div>
+          <div class="wc-news-meta">📅 6月20日 · 🌍 非洲代表</div>
+        </div>
+      </div>
+      <div class="wc-news-card" onclick="navTo('crypto')">
+        <div class="wc-news-img"><img src="https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=400&h=225&fit=crop" alt="" loading="lazy" /></div>
+        <div class="wc-news-body">
+          <div class="wc-news-badge">⚡ ATM</div>
+          <div class="wc-news-title">世界杯热度带动 ATM 代币上涨，Socios 生态持续受益</div>
+          <div class="wc-news-meta">📅 6月21日 · 🪙 代币动态</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== 小组积分榜 ===== -->
+  <div class="wc-section">
+    <div class="wc-section-head">
+      <h2>📊 小组积分榜（第3轮前）</h2>
+      <span class="wc-tag">实时</span>
+    </div>
+    <div class="wc-groups-grid" id="wcGroupsGrid"></div>
+  </div>
+
+  <!-- ===== CTA ===== -->
+  <div class="wc-cta">
+    <div class="wc-cta-title">🏆 谁将举起大力神杯？你来预测！</div>
+    <div class="wc-cta-sub">持有 ATM 代币参与链上预测，赢取 USDT 奖励 · 链上透明 · 钱包直连</div>
+    <div class="wc-cta-btns">
+      <button class="wc-cta-btn wc-cta-btn-primary" onclick="navTo('football')">⚽ 世界杯单场竞猜</button>
+      <button class="wc-cta-btn wc-cta-btn-outline" onclick="window.open('https://www.binance.com/en/trade/ATM_USDT','_blank')">💰 购买 ATM 代币</button>
+    </div>
+  </div>
+
+</div><!-- /wrap -->
+
+<div id="toast" class="toast"></div>
+
+<script src="/shared/common.js"></script>
+<script src="/shared/effects.js"></script>
+<script>
+initCommon('worldcup');
+
+// ===== 世界杯预测市场 =====
+const WC_MARKETS = [
+  { id:'wcs-1', title:'🏆 世界杯最终冠军', status:'live', time:'截止决赛 7/19', type:'multi', options:[{l:'🇧🇷 巴西',pct:28},{l:'🇫🇷 法国',pct:22},{l:'🇦🇷 阿根廷',pct:18},{l:'其他',pct:32}], vol:'$2.4M', preds:'18,412', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-2', title:'⚽ 金靴奖 — 最终进球王', status:'live', time:'截止决赛 7/19', type:'multi', options:[{l:'🇫🇷 姆巴佩',pct:28},{l:'🇳🇴 哈兰德',pct:22},{l:'🇧🇷 维尼修斯',pct:16},{l:'其他',pct:34}], vol:'$980K', preds:'7,200', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-3', title:'🌍 决赛洲际对决 — 欧洲 vs 南美', status:'hot', time:'截止决赛 7/19', type:'binary', yesPct:68, noPct:32, vol:'$760K', preds:'9,300', img:'https://images.unsplash.com/photo-1624280157150-4d1ed8632989?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-4', title:'😲 亚洲球队首次冲入八强', status:'hot', time:'截止八强', type:'binary', yesPct:42, noPct:58, vol:'$540K', preds:'6,100', img:'https://images.unsplash.com/photo-1504305754058-2f08ccd89a0a?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-5', title:'🔢 全程总进球数 > 200 球', status:'hot', time:'截止决赛', type:'binary', yesPct:55, noPct:45, vol:'$320K', preds:'4,800', img:'https://images.unsplash.com/photo-1640693316735-3fe5ee2de856?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-6', title:'🇲🇦 摩洛哥再次冲击四强', status:'hot', time:'截止四强', type:'binary', yesPct:38, noPct:62, vol:'$420K', preds:'5,600', img:'https://images.unsplash.com/photo-1631478854728-b4a5479d1d36?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-7', title:'🏟️ 决赛举办地 — MetLife Stadium', status:'soon', time:'截止决赛', type:'binary', yesPct:72, noPct:28, vol:'$180K', preds:'2,400', img:'https://images.unsplash.com/photo-1518905332052-b6cfda20ee45?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-8', title:'🔴⚪ 马竞球员入选最佳阵容', status:'soon', time:'截止决赛', type:'binary', yesPct:35, noPct:65, vol:'$240K', preds:'3,100', img:'https://images.unsplash.com/photo-1572208688162-51fb77c32b45?w=400&h=250&fit=crop&crop=top' },
+];
+
+function renderWcMarket(m) {
+  const sc = m.status === 'live' ? 'live' : m.status === 'hot' ? 'hot' : 'soon';
+  const sl = m.status === 'live' ? '🔴 进行中' : m.status === 'hot' ? '🔥 热门' : '⏳ 即将';
+  let contentHtml = '';
+  if (m.type === 'binary') {
+    contentHtml = `
+      <div style="display:flex;gap:8px;margin:10px 0;">
+        <div style="flex:1;background:rgba(16,185,129,.08);border:1px solid rgba(16,185,129,.2);border-radius:8px;padding:8px;text-align:center;cursor:pointer;" onclick="addToSlip('${m.id}','yes',1.65)">
+          <div style="font-size:11px;color:var(--text-dim);">是</div>
+          <div style="font-size:16px;font-weight:800;color:#10b981;">${m.yesPct}%</div>
+          <div style="font-size:11px;color:#10b981;">@ 1.65</div>
+        </div>
+        <div style="flex:1;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:8px;padding:8px;text-align:center;cursor:pointer;" onclick="addToSlip('${m.id}','no',2.20)">
+          <div style="font-size:11px;color:var(--text-dim);">否</div>
+          <div style="font-size:16px;font-weight:800;color:#f87171;">${m.noPct}%</div>
+          <div style="font-size:11px;color:#f87171;">@ 2.20</div>
+        </div>
+      </div>`;
+  } else {
+    contentHtml = m.options.map(o => `
+      <div style="display:flex;align-items:center;gap:8px;margin:6px 0;cursor:pointer;" onclick="addToSlip('${m.id}','${o.l}',3.50)">
+        <div style="flex:1;font-size:12px;font-weight:600;color:var(--text);">${o.l}</div>
+        <div style="width:100px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;">
+          <div style="height:100%;width:${o.pct}%;background:var(--accent);border-radius:3px;"></div>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:var(--accent);min-width:36px;text-align:right;">${o.pct}%</div>
+      </div>`).join('');
+  }
+  return `<div class="mc-pro" style="cursor:default;">
+    <div class="mc-pro-banner" style="background-image:url('${m.img}')">
+      <div class="mc-pro-banner-overlay"></div>
+      <div class="mc-pro-badge mc-pro-badge-${sc}">${sl}</div>
+      <div class="mc-pro-time">${m.time}</div>
+    </div>
+    <div class="mc-pro-body">
+      <div class="mc-pro-title">${m.title}</div>
+      ${contentHtml}
+      <div class="mc-pro-footer"><span>💰 ${m.vol}</span><span>👥 ${m.preds} 人参与</span></div>
+    </div>
+  </div>`;
+}
+
+document.getElementById('wcMarketsGrid').innerHTML = WC_MARKETS.map(renderWcMarket).join('');
+
+// ===== 小组积分榜 =====
+const WC_GROUPS = [
+  { name:'A组', teams:[
+    { flag:'🇩🇪', name:'德国', w:2, d:0, l:0, gf:7, ga:1, pts:6, status:'q' },
+    { flag:'🇲🇽', name:'墨西哥', w:1, d:1, l:0, gf:3, ga:2, pts:4, status:'c' },
+    { flag:'🇺🇿', name:'乌兹别克', w:0, d:1, l:1, gf:1, ga:3, pts:1, status:'n' },
+    { flag:'🇨🇷', name:'哥斯达黎加', w:0, d:0, l:2, gf:1, ga:6, pts:0, status:'e' },
+  ]},
+  { name:'B组', teams:[
+    { flag:'🇪🇸', name:'西班牙', w:2, d:0, l:0, gf:5, ga:0, pts:6, status:'q' },
+    { flag:'🇳🇱', name:'荷兰', w:1, d:0, l:1, gf:3, ga:3, pts:3, status:'c' },
+    { flag:'🇨🇦', name:'加拿大', w:1, d:0, l:1, gf:2, ga:3, pts:3, status:'c' },
+    { flag:'🇪🇨', name:'厄瓜多尔', w:0, d:0, l:2, gf:1, ga:5, pts:0, status:'e' },
+  ]},
+  { name:'C组', teams:[
+    { flag:'🇺🇸', name:'美国', w:1, d:1, l:0, gf:3, ga:1, pts:4, status:'c' },
+    { flag:'🇵🇹', name:'葡萄牙', w:1, d:1, l:0, gf:4, ga:2, pts:4, status:'c' },
+    { flag:'🇷🇸', name:'塞尔维亚', w:1, d:0, l:1, gf:2, ga:3, pts:3, status:'c' },
+    { flag:'🇬🇭', name:'加纳', w:0, d:0, l:2, gf:0, ga:3, pts:0, status:'e' },
+  ]},
+  { name:'D组', teams:[
+    { flag:'🇫🇷', name:'法国', w:2, d:0, l:0, gf:5, ga:1, pts:6, status:'q' },
+    { flag:'🇧🇷', name:'巴西', w:2, d:0, l:0, gf:6, ga:1, pts:6, status:'q' },
+    { flag:'🇲🇦', name:'摩洛哥', w:0, d:1, l:1, gf:1, ga:3, pts:1, status:'n' },
+    { flag:'🇨🇮', name:'科特迪瓦', w:0, d:1, l:1, gf:2, ga:4, pts:1, status:'n' },
+  ]},
+  { name:'E组', teams:[
+    { flag:'🇦🇷', name:'阿根廷', w:2, d:0, l:0, gf:4, ga:1, pts:6, status:'q' },
+    { flag:'🇯🇵', name:'日本', w:1, d:0, l:1, gf:2, ga:2, pts:3, status:'c' },
+    { flag:'🇵🇱', name:'波兰', w:1, d:0, l:1, gf:2, ga:3, pts:3, status:'c' },
+    { flag:'🇩🇰', name:'丹麦', w:0, d:0, l:2, gf:1, ga:4, pts:0, status:'e' },
+  ]},
+  { name:'F组', teams:[
+    { flag:'🇧🇪', name:'比利时', w:2, d:0, l:0, gf:4, ga:0, pts:6, status:'q' },
+    { flag:'🏴󠁧󠁢󠁥󠁮󠁧󠁿', name:'英格兰', w:1, d:1, l:0, gf:3, ga:1, pts:4, status:'c' },
+    { flag:'🇦🇺', name:'澳大利亚', w:0, d:1, l:1, gf:1, ga:2, pts:1, status:'c' },
+    { flag:'🇸🇦', name:'沙特', w:0, d:0, l:2, gf:0, ga:5, pts:0, status:'e' },
+  ]},
+];
+
+const statusIcon = { q:'🟢', c:'🟡', n:'🟡', e:'🔴' };
+const statusClass = { q:'wc-qualified', c:'wc-contention', n:'wc-contention', e:'wc-eliminated' };
+
+document.getElementById('wcGroupsGrid').innerHTML = WC_GROUPS.map(g => `
+  <div class="wc-group-card">
+    <div class="wc-group-head">${g.name}</div>
+    <table class="wc-group-table">
+      <thead><tr>
+        <th style="text-align:left;">球队</th>
+        <th>场</th><th>胜</th><th>平</th><th>负</th><th>球差</th><th>积分</th>
+      </tr></thead>
+      <tbody>${g.teams.map(t => `<tr>
+        <td><div class="wc-team-name"><span class="wc-team-flag">${t.flag}</span><span class="${statusClass[t.status]}">${t.name}</span></div></td>
+        <td>${t.w+t.d+t.l}</td><td>${t.w}</td><td>${t.d}</td><td>${t.l}</td>
+        <td>${t.gf-t.ga>0?'+':''}${t.gf-t.ga}</td>
+        <td style="font-weight:800;color:var(--accent);">${t.pts}</td>
+      </tr>`).join('')}</tbody>
+    </table>
+  </div>
+`).join('');
+
+// ATM live price
+document.getElementById('wcUserCount').textContent = '42,800';
+(async () => {
+  try {
+    const r = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=ATMUSDT');
+    const d = await r.json();
+    if (d.price) {
+      document.getElementById('wcAtmPrice').textContent = '$' + parseFloat(d.price).toFixed(3);
+    }
+  } catch(e) {}
+})();
+
+// Ticker
+const tickerEl = document.getElementById('tickerTrack');
+if (tickerEl) {
+  const items = [
+    { user:'0x3cD4', action:'买入', market:'🏆 WC冠军 — 巴西', amount:'$5,000', type:'yes' },
+    { user:'0xF82a', action:'买入', market:'⚽ 金靴 — 姆巴佩', amount:'$2,200', type:'yes' },
+    { user:'0xC71e', action:'买入', market:'🌍 欧洲vs南美决赛', amount:'$2,900', type:'yes' },
+    { user:'0x9eF0', action:'买入', market:'🏆 WC冠军 — 阿根廷', amount:'$4,500', type:'yes' },
+    { user:'0x4dD7', action:'买入', market:'😲 亚洲队进八强', amount:'$920', type:'yes' },
+    { user:'0x7f6E', action:'买入', market:'🔢 进球数 > 200', amount:'$2,300', type:'yes' },
+    { user:'0xA23b', action:'卖出', market:'🇩🇪 德国 WC 夺冠', amount:'$1,100', type:'no' },
+    { user:'0xD44f', action:'买入', market:'⚡ ATM > $5 本月', amount:'$1,950', type:'yes' },
+  ];
+  const html = items.map(t =>
+    `<span class="ticker-item">
+      <span class="ti-dot ${t.type==='yes'?'ti-green':'ti-red'}"></span>
+      <span class="ti-user">${t.user}</span> ${t.action} <b>${t.market}</b>
+      <span class="ti-amount ${t.type==='yes'?'green':'red'}">${t.amount}</span>
+    </span>`
+  ).join('');
+  tickerEl.innerHTML = html + html;
+}
+
+// addToSlip stub
+function addToSlip(mId, choice, odds) { toast('请先连接钱包参与预测'); }
+</script>
+</body>
+</html>

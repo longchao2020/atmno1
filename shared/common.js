@@ -16,6 +16,7 @@ const I18N = {
     'nav.docs': '文件',
     'cat.trending': '熱門',
     'cat.football': '足球',
+    'cat.worldcup': '世界盃',
     'cat.basketball': '籃球',
     'cat.snooker': '斯諾克',
     'cat.events': '時事預測',
@@ -235,6 +236,7 @@ const I18N = {
     'nav.docs': 'Docs',
     'cat.trending': 'Trending',
     'cat.football': 'Football',
+    'cat.worldcup': 'World Cup',
     'cat.basketball': 'Basketball',
     'cat.snooker': 'Snooker',
     'cat.events': 'Events',
@@ -455,6 +457,7 @@ const I18N = {
     'nav.docs': '文档',
     'cat.trending': '热门',
     'cat.football': '足球',
+    'cat.worldcup': '世界杯',
     'cat.basketball': '篮球',
     'cat.snooker': '斯诺克',
     'cat.events': '时事预测',
@@ -2102,6 +2105,7 @@ function navTo(target) {
     'myBets': '/mybets',
     'live': '/football',
     'atm': '/atm',
+    'worldcup': '/worldcup',
   };
   if (target === 'contracts') { toggleModal('contractsModal', true); return; }
   if (target === 'docs') { toggleModal('docsModal', true); return; }
@@ -2133,6 +2137,7 @@ const NAV_CATS = [
   { id:'home', icon:'🏠', key:'nav.home', route:'home' },
   { id:'trending', icon:'🔥', key:'cat.trending' },
   { id:'football', icon:'⚽', key:'cat.football' },
+  { id:'worldcup', icon:'🏆', key:'cat.worldcup', route:'worldcup' },
   { id:'basketball', icon:'🏀', key:'cat.basketball' },
   { id:'events', icon:'📰', key:'cat.events' },
   { id:'crypto', icon:'🪙', key:'cat.crypto' },
@@ -2267,8 +2272,8 @@ function buildHeader(activeCat) {
 function buildMobileNav(activeCat) {
   const items = [
     { id:'home',     nav:'home',     icon:'🏠', key:'nav.home' },
-    { id:'trending', nav:'trending', icon:'🔥', key:'cat.trending' },
     { id:'football', nav:'football', icon:'⚽', key:'cat.football' },
+    { id:'worldcup', nav:'worldcup', icon:'🏆', key:'cat.worldcup' },
     { id:'atm',      nav:'atm',      icon:'⚡', key:'cat.atm' },
     { id:'more',     nav:'more',     icon:'☰',  key:'nav.more' },
   ];
@@ -2314,6 +2319,13 @@ function createMobileDrawer() {
         <button class="mob-more-action" onclick="toggleThemeBtn();closeMobileMore()">
           <span class="mob-more-action-icon">🎨</span><span>切换主题</span>
         </button>
+      </div>
+      <div class="mob-more-divider"></div>
+      <div class="mob-more-lang-row">
+        <span class="mob-more-lang-label">🌐</span>
+        <button class="mob-lang-pill${currentLang==='zh-CN'?' active':''}" onclick="setLang('zh-CN');closeMobileMore()">简体</button>
+        <button class="mob-lang-pill${currentLang==='zh-TW'?' active':''}" onclick="setLang('zh-TW');closeMobileMore()">繁體</button>
+        <button class="mob-lang-pill${currentLang==='en'?' active':''}" onclick="setLang('en');closeMobileMore()">EN</button>
       </div>
     </div>`;
   document.body.appendChild(wrapper);

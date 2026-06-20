@@ -14,7 +14,7 @@
 <meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
 <meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
-<link rel="stylesheet" href="/shared/style.css?v=40" />
+<link rel="stylesheet" href="/shared/style.css?v=42" />
 <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.2/dist/ethers.umd.min.js"></script>
 </head>
 <body>
@@ -298,31 +298,6 @@
       <div class="pick-magazine" id="homeFootball"></div>
     </div>
 
-    <!-- ★ ATM 代币入口卡 (精简版，详情见 /atm) -->
-    <div class="home-section atm-entry-card" onclick="navTo('atm')" style="cursor:pointer;">
-      <div class="atm-entry-inner">
-        <div class="atm-entry-left">
-          <div class="atm-entry-logo">
-            <div style="width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,#ce1126,#003087);display:flex;align-items:center;justify-content:center;font-weight:900;color:#fff;font-size:14px;flex-shrink:0;">ATM</div>
-          </div>
-          <div class="atm-entry-info">
-            <div class="atm-entry-name">🔴 ATM 代币 <span class="atm-entry-badge"><span class="atm-live-dot" style="width:5px;height:5px;"></span>实时</span></div>
-            <div class="atm-entry-sub">Atletico Madrid Fan Token · Socios.com · Chiliz Chain</div>
-          </div>
-        </div>
-        <div class="atm-entry-price-block">
-          <div class="atm-entry-price" id="atmPrice">—</div>
-          <div class="atm-entry-chg apc-up" id="atmChange">—</div>
-        </div>
-        <div class="atm-entry-stats">
-          <div class="atm-entry-stat"><span class="aes-label">市值</span><span class="aes-val" id="atmMktCap">—</span></div>
-          <div class="atm-entry-stat"><span class="aes-label">24H 量</span><span class="aes-val" id="atmVolUSDT">—</span></div>
-          <div class="atm-entry-stat"><span class="aes-label">ATH</span><span class="aes-val" style="color:#d97706;">$58.46</span></div>
-        </div>
-        <div class="atm-entry-arrow">查看详情 →</div>
-      </div>
-    </div>
-
     <!-- ★ 编辑精选 — 大图视觉区 -->
     <div class="home-featured" id="homeFeatured"></div>
 
@@ -511,29 +486,27 @@ const CAT_GRADIENTS = {
 
 // 编辑精选 — 左侧4张轮播Banner + 右侧4个固定卡片
 const BANNER_SLIDES = [
-  { id:'football-1', catKey:'football', badge:'🏆 2026世界杯', title:'2026世界杯 — 谁将举起大力神杯？', img:'https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=800&h=500&fit=crop', odds:[{l:'巴西',v:'3.50'},{l:'阿根廷',v:'4.00'},{l:'法国',v:'5.00'}], vol:'$1.2M', preds:'8,412', time:'2026年6月–7月' },
-  { id:'basketball-1', catKey:'basketball', badge:'🏀 NBA 总决赛', title:'2025-26 NBA总冠军 — 谁能夺冠？', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=500&fit=crop', odds:[{l:'凯尔特人',v:'3.20'},{l:'雷霆',v:'4.50'},{l:'掘金',v:'5.50'}], vol:'$1.8M', preds:'9,800', time:'2026年6月' },
-  { id:'crypto-2', catKey:'crypto', badge:'🪙 ETH 展望', title:'ETH能否在2026年突破$10,000？', img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=800&h=500&fit=crop', odds:[{l:'是',v:'2.60'},{l:'否',v:'1.60'}], vol:'$1.5M', preds:'11,000', time:'2026年12月' },
-  { id:'events-2', catKey:'events', badge:'📰 AI 前沿', title:'AI 能否在2026年通过图灵测试？', img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=500&fit=crop', odds:[{l:'是',v:'2.40'},{l:'否',v:'1.65'}], vol:'$560K', preds:'7,800', time:'2026年12月' },
+  { id:'football-1', catKey:'football', badge:'🔥 世界杯 · 进行中', title:'2026世界杯小组赛激战 — 谁能冲出重围？', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&h=500&fit=crop&crop=top', odds:[{l:'巴西',v:'3.20'},{l:'法国',v:'3.80'},{l:'阿根廷',v:'4.50'}], vol:'$2.4M', preds:'18,600', time:'进行中 · 截止8强' },
+  { id:'basketball-1', catKey:'basketball', badge:'🏀 NBA 总决赛', title:'2025-26 NBA总决赛 — 史诗对决，谁主沉浮？', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=500&fit=crop', odds:[{l:'雷霆',v:'2.80'},{l:'凯尔特人',v:'3.50'},{l:'掘金',v:'6.00'}], vol:'$1.8M', preds:'9,800', time:'2026年6月' },
+  { id:'football-2', catKey:'football', badge:'⚽ 世界杯金靴', title:'世界杯金靴争夺 — 姆巴佩、哈兰德、维尼修斯谁能封王？', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=800&h=500&fit=crop&crop=top', odds:[{l:'姆巴佩',v:'2.90'},{l:'哈兰德',v:'3.40'},{l:'维尼修斯',v:'4.20'}], vol:'$980K', preds:'7,200', time:'进行中 · 截止决赛' },
+  { id:'crypto-2', catKey:'crypto', badge:'⚡ ATM 代币', title:'ATM代币 — 世界杯热度能否推至历史新高？', img:'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=500&fit=crop', odds:[{l:'$5以上',v:'2.10'},{l:'$3–$5',v:'3.00'},{l:'$3以下',v:'4.50'}], vol:'$1.1M', preds:'9,400', time:'2026年7月' },
 ];
 const SIDE_CARDS = [
-  { id:'crypto-1', catKey:'crypto', badge:'🪙 加密货币', title:'BTC 2026年底价格区间', img:'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&h=400&fit=crop', vol:'$3.2M', preds:'22,000', time:'2026年12月' },
-  { id:'events-2', catKey:'events', badge:'📰 时事预测', title:'AI 通过图灵测试？', img:'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=400&fit=crop', vol:'$560K', preds:'7,800', time:'2026年12月' },
-
-  { id:'football-3', catKey:'football', badge:'⚽ 传奇', title:'梅西参加世界杯？', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&h=400&fit=crop', vol:'$890K', preds:'12,100', time:'2026年6月' },
+  { id:'football-3', catKey:'football', badge:'⚽ 热门 · 世界杯', title:'马科斯·莱奥 能否入选最佳阵容？', img:'https://images.unsplash.com/photo-1624280157150-4d1ed8632989?w=600&h=400&fit=crop&crop=top', vol:'$890K', preds:'12,100', time:'进行中' },
+  { id:'crypto-1', catKey:'crypto', badge:'₿ 加密货币', title:'BTC 在世界杯期间能否突破 $130K？', img:'https://images.unsplash.com/photo-1622630998477-20aa696ecb05?w=600&h=400&fit=crop', vol:'$3.2M', preds:'22,000', time:'2026年7月' },
+  { id:'events-1', catKey:'events', badge:'🤖 AI 前沿', title:'GPT-5 年内正式发布？', img:'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop', vol:'$560K', preds:'7,800', time:'2026年12月' },
 ];
 const FEATURED = BANNER_SLIDES;
 
-// 概率剧变 — 24h 变化最大
+// 概率剧变 — 24h 变化最大（世界杯期间热点）
 const MOVERS = [
-  { id:'crypto-1', title:'BTC 价格区间', change:'+5.2%', from:'59.8% → 65.0%', vol:'$3.2M', dir:'up', catKey:'crypto' },
-  { id:'football-2', title:'世界杯金靴 — 姆巴佩', change:'+3.8%', from:'24.2% → 28.0%', vol:'$680K', dir:'up', catKey:'football' },
-  { id:'crypto-3', title:'SOL 市值超越 ETH', change:'-4.1%', from:'22.1% → 18.0%', vol:'$340K', dir:'down', catKey:'crypto' },
-  { id:'basketball-1', title:'NBA 总决赛 — 凯尔特人', change:'+2.5%', from:'28.5% → 31.0%', vol:'$1.8M', dir:'up', catKey:'basketball' },
-  { id:'events-3', title:'联储 2026 年降息', change:'+4.0%', from:'68.0% → 72.0%', vol:'$420K', dir:'up', catKey:'events' },
-  { id:'basketball-3', title:'湖人进季后赛', change:'-3.2%', from:'61.2% → 58.0%', vol:'$310K', dir:'down', catKey:'basketball' },
-  { id:'events-2', title:'AI 通过图灵测试', change:'+6.1%', from:'36.9% → 42.0%', vol:'$560K', dir:'up', catKey:'events' },
-
+  { id:'football-1', title:'WC冠军 — 巴西赔率飙升', change:'+8.4%', from:'19.6% → 28.0%', vol:'$2.4M', dir:'up', catKey:'football' },
+  { id:'football-2', title:'姆巴佩 世界杯金靴', change:'+5.2%', from:'22.8% → 28.0%', vol:'$980K', dir:'up', catKey:'football' },
+  { id:'basketball-1', title:'NBA总决赛 — 雷霆', change:'+6.1%', from:'21.9% → 28.0%', vol:'$1.8M', dir:'up', catKey:'basketball' },
+  { id:'crypto-1', title:'ATM 代币 WC催化', change:'+9.3%', from:'30.7% → 40.0%', vol:'$1.1M', dir:'up', catKey:'crypto' },
+  { id:'events-3', title:'美联储 7月降息', change:'+4.0%', from:'68.0% → 72.0%', vol:'$420K', dir:'up', catKey:'events' },
+  { id:'football-3', title:'法国小组出线', change:'-5.8%', from:'88.8% → 83.0%', vol:'$440K', dir:'down', catKey:'football' },
+  { id:'crypto-2', title:'ETH 突破 $5,000', change:'+3.7%', from:'34.3% → 38.0%', vol:'$1.5M', dir:'up', catKey:'crypto' },
 ];
 
 // 分类入口 — 使用渐变背景
@@ -547,16 +520,16 @@ const CAT_ENTRIES = [
 // 各分类精选（每类 2-4 个，图文混排）
 const CAT_PICKS = {
   football: [
-    { id:'football-1', title:'2026世界杯 — 冠军', status:'live', time:'2026年6月', type:'multi', options:[{l:'巴西',pct:28},{l:'阿根廷',pct:22},{l:'法国',pct:18}], vol:'$1.2M', preds:'8,412', img:'https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=600&h=400&fit=crop' },
-    { id:'football-2', title:'2026世界杯金靴奖', status:'live', time:'2026年7月', type:'multi', options:[{l:'姆巴佩',pct:25},{l:'哈兰德',pct:20},{l:'维尼修斯',pct:18}], vol:'$680K', preds:'5,430', img:'https://images.unsplash.com/photo-1553778263-73a83bab9b0c?w=600&h=400&fit=crop' },
-    { id:'football-3', title:'梅西会参加2026世界杯吗？', status:'hot', time:'2026年6月', type:'binary', yesPct:35, noPct:65, vol:'$890K', preds:'12,100', img:'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?w=600&h=400&fit=crop' },
-    { id:'football-4', title:'2025-26 英超冠军', status:'soon', time:'2026年5月', type:'multi', options:[{l:'阿森纳',pct:35},{l:'曼城',pct:30},{l:'利物浦',pct:20}], vol:'$920K', preds:'6,102', img:'https://images.unsplash.com/photo-1522778119026-d647f0596c20?w=600&h=400&fit=crop' },
+    { id:'football-1', title:'2026世界杯 — 最终冠军', status:'live', time:'进行中', type:'multi', options:[{l:'巴西',pct:28},{l:'法国',pct:22},{l:'阿根廷',pct:18}], vol:'$2.4M', preds:'18,412', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&h=400&fit=crop&crop=top' },
+    { id:'football-2', title:'2026世界杯金靴奖 — 谁称王', status:'live', time:'进行中', type:'multi', options:[{l:'姆巴佩',pct:28},{l:'哈兰德',pct:22},{l:'维尼修斯',pct:18}], vol:'$980K', preds:'7,200', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=600&h=400&fit=crop&crop=top' },
+    { id:'football-5', title:'摩洛哥能否再次冲击四强？', status:'hot', time:'进行中', type:'binary', yesPct:42, noPct:58, vol:'$540K', preds:'6,800', img:'https://images.unsplash.com/photo-1504305754058-2f08ccd89a0a?w=600&h=400&fit=crop&crop=top' },
+    { id:'football-6', title:'WC决赛 — 欧洲 vs 南美？', status:'hot', time:'2026年7月', type:'binary', yesPct:68, noPct:32, vol:'$760K', preds:'9,300', img:'https://images.unsplash.com/photo-1624280157150-4d1ed8632989?w=600&h=400&fit=crop&crop=top' },
   ],
   basketball: [
-    { id:'basketball-1', title:'2025-26 NBA总冠军', status:'hot', time:'2026年6月', type:'multi', options:[{l:'凯尔特人',pct:28},{l:'雷霆',pct:22},{l:'掘金',pct:18}], vol:'$1.8M', preds:'9,800', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=400&fit=crop' },
-    { id:'basketball-2', title:'2025-26 NBA MVP', status:'soon', time:'2026年5月', type:'multi', options:[{l:'SGA',pct:30},{l:'约基奇',pct:25},{l:'字母哥',pct:18}], vol:'$920K', preds:'6,500', img:'https://images.unsplash.com/photo-1504450758481-7338bbe75005?w=600&h=400&fit=crop' },
-    { id:'basketball-3', title:'湖人能否进入季后赛？', status:'hot', time:'2026年4月', type:'binary', yesPct:58, noPct:42, vol:'$310K', preds:'2,789', img:'https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=600&h=400&fit=crop' },
-    { id:'basketball-4', title:'会有球队赢 70+ 场吗？', status:'soon', time:'2026年4月', type:'binary', yesPct:12, noPct:88, vol:'$95K', preds:'1,102', img:'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?w=600&h=400&fit=crop' },
+    { id:'basketball-1', title:'2025-26 NBA总冠军 — 总决赛进行中', status:'live', time:'2026年6月', type:'multi', options:[{l:'雷霆',pct:38},{l:'凯尔特人',pct:32},{l:'掘金',pct:18}], vol:'$1.8M', preds:'9,800', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=600&h=400&fit=crop' },
+    { id:'basketball-2', title:'SGA 能否拿下总决赛 FMVP？', status:'hot', time:'2026年6月', type:'binary', yesPct:62, noPct:38, vol:'$920K', preds:'6,500', img:'https://images.unsplash.com/photo-1504450758481-7338bbe75005?w=600&h=400&fit=crop' },
+    { id:'basketball-3', title:'总决赛是否打满 7 场？', status:'hot', time:'2026年6月', type:'binary', yesPct:45, noPct:55, vol:'$310K', preds:'4,200', img:'https://images.unsplash.com/photo-1574623452334-1e0ac2b3ccb4?w=600&h=400&fit=crop' },
+    { id:'basketball-4', title:'总决赛得分王 — 谁拿最多分', status:'hot', time:'2026年6月', type:'multi', options:[{l:'SGA',pct:35},{l:'约基奇',pct:28},{l:'布朗',pct:20}], vol:'$480K', preds:'3,800', img:'https://images.unsplash.com/photo-1577471488278-16eec37ffcc2?w=600&h=400&fit=crop' },
   ],
   crypto: [
     { id:'crypto-1', title:'BTC 2026年底价格区间', status:'hot', time:'2026年12月', type:'multi', options:[{l:'$150K+',pct:28},{l:'$100K-$150K',pct:35},{l:'$60K-$100K',pct:25}], vol:'$3.2M', preds:'22,000', img:'https://images.unsplash.com/photo-1642104704074-907c0698cbd9?w=600&h=400&fit=crop' },
@@ -576,18 +549,79 @@ const CAT_PICKS = {
 };
 
 // 实时交易动态
-const TICKER_DATA = [
-  { user:'0x7a2B', action:'买入', market:'BTC $200K', amount:'$2,500', type:'yes' },
-  { user:'0xf19E', action:'卖出', market:'NBA 总决赛', amount:'$1,200', type:'no' },
-  { user:'0x3cD4', action:'买入', market:'世界杯冠军', amount:'$5,000', type:'yes' },
-  { user:'0x8bA1', action:'买入', market:'ETH > $10K', amount:'$800', type:'no' },
-  { user:'0xd52F', action:'买入', market:'美国大选 2028', amount:'$3,200', type:'yes' },
-  { user:'0x1eC9', action:'卖出', market:'奥斯卡最佳影片', amount:'$600', type:'yes' },
-  { user:'0xa47B', action:'买入', market:'联储降息', amount:'$1,800', type:'yes' },
-  { user:'0x6fD2', action:'买入', market:'SOL vs ETH', amount:'$950', type:'no' },
-  { user:'0x2bE8', action:'买入', market:'欧冠冠军', amount:'$4,100', type:'yes' },
-  { user:'0x9cA3', action:'卖出', market:'BTC 市值占比', amount:'$2,200', type:'no' },
+const TICKER_DATA_RAW = [
+  // 世界杯 2026 小组赛 / 淘汰赛
+  { user:'0x3cD4', action:'买入', market:'🏆 世界杯冠军 — 巴西', amount:'$5,000', type:'yes' },
+  { user:'0xF82a', action:'买入', market:'⚽ 姆巴佩 世界杯金球', amount:'$2,200', type:'yes' },
+  { user:'0xB34c', action:'卖出', market:'🇦🇷 阿根廷 冲出小组赛', amount:'$1,500', type:'no' },
+  { user:'0x9cA3', action:'买入', market:'🏅 小组赛 西班牙头名出线', amount:'$2,100', type:'yes' },
+  { user:'0xC71e', action:'买入', market:'⚽ 16强 葡萄牙晋级', amount:'$2,900', type:'yes' },
+  { user:'0xE15d', action:'买入', market:'🏆 世界杯冠军 — 法国', amount:'$2,700', type:'yes' },
+  { user:'0xd52F', action:'买入', market:'🌍 WC 进球王 维尼修斯', amount:'$1,650', type:'yes' },
+  { user:'0x2bE8', action:'买入', market:'🥅 哈兰德 世界杯进 8 球+', amount:'$3,300', type:'yes' },
+  { user:'0x9eF0', action:'买入', market:'🏆 世界杯冠军 — 阿根廷', amount:'$4,500', type:'yes' },
+  { user:'0x38A5', action:'买入', market:'🏴󠁧󠁢󠁥󠁮󠁧󠁿 八强 英格兰出线', amount:'$3,100', type:'yes' },
+  { user:'0x4dD7', action:'买入', market:'⚽ WC 最佳 11 人 — 姆巴佩', amount:'$920', type:'yes' },
+  { user:'0xB90d', action:'买入', market:'😲 小组赛最大爆冷胜', amount:'$870', type:'yes' },
+  { user:'0x5aD9', action:'买入', market:'🌐 WC 决赛 观看 22亿+', amount:'$760', type:'yes' },
+  { user:'0x7f6E', action:'买入', market:'🔮 WC 全程进球数 > 200', amount:'$2,300', type:'yes' },
+  { user:'0xA23b', action:'卖出', market:'🇩🇪 德国 WC 小组出局', amount:'$1,100', type:'no' },
+  { user:'0x6bD1', action:'买入', market:'🇳🇱 荷兰 WC 四强', amount:'$1,880', type:'yes' },
+  { user:'0x9aC2', action:'买入', market:'⚽ 日本 冲击八强', amount:'$1,420', type:'yes' },
+  { user:'0x3eF5', action:'卖出', market:'🤖 意大利 WC 小组淘汰', amount:'$990', type:'no' },
+  { user:'0x8dA3', action:'买入', market:'🏆 WC 决赛 欧洲 vs 南美', amount:'$3,700', type:'yes' },
+  { user:'0x2bC0', action:'买入', market:'🎯 首场比赛进球数 > 3', amount:'$1,200', type:'yes' },
+  // 加密货币
+  { user:'0x7a2B', action:'买入', market:'₿ BTC 年底突破 $150K', amount:'$3,800', type:'yes' },
+  { user:'0x1eC9', action:'买入', market:'⚡ ETH 突破 $5,000', amount:'$4,200', type:'yes' },
+  { user:'0x4fA1', action:'卖出', market:'📊 BTC 主导率 > 65%', amount:'$1,200', type:'no' },
+  { user:'0x8bA1', action:'买入', market:'💎 SOL 年内突破 $400', amount:'$880', type:'yes' },
+  { user:'0x6bC8', action:'卖出', market:'🌕 BTC 年内新ATH', amount:'$5,500', type:'no' },
+  { user:'0x7c3F', action:'买入', market:'💰 ETH ETF 净流入 $10B', amount:'$2,400', type:'yes' },
+  { user:'0xC82b', action:'卖出', market:'🪙 XRP 重回 $3', amount:'$1,750', type:'no' },
+  { user:'0x1fE2', action:'买入', market:'📈 CHZ 代币年内翻3倍', amount:'$2,050', type:'yes' },
+  { user:'0xD44f', action:'买入', market:'⚡ ATM 代币 $5 以上', amount:'$1,950', type:'yes' },
+  { user:'0xf19E', action:'买入', market:'🔥 ATM 年内冲 $10', amount:'$3,600', type:'yes' },
+  { user:'0xE03c', action:'买入', market:'💸 BTC 减半后半年涨幅 > 50%', amount:'$4,800', type:'yes' },
+  { user:'0x5bE9', action:'买入', market:'🪙 PEPE 市值进 Top20', amount:'$640', type:'yes' },
+  { user:'0x0cF1', action:'卖出', market:'💹 DeFi TVL 超 $200B', amount:'$1,380', type:'no' },
+  { user:'0x7eA4', action:'买入', market:'⛓️ CHZ 年内突破 $0.5', amount:'$2,100', type:'yes' },
+  { user:'0xB1d2', action:'买入', market:'📊 ETH/BTC 汇率回 0.05', amount:'$1,660', type:'yes' },
+  // 篮球 NBA
+  { user:'0x0bB2', action:'买入', market:'🏀 NBA 总冠军 — 雷霆', amount:'$2,900', type:'yes' },
+  { user:'0x4aC3', action:'买入', market:'🏀 NBA MVP — SGA', amount:'$1,750', type:'yes' },
+  { user:'0xD58e', action:'卖出', market:'🏀 凯尔特人 卫冕冠军', amount:'$2,200', type:'no' },
+  { user:'0x9bF1', action:'买入', market:'🏀 总决赛 G7 决胜局', amount:'$890', type:'yes' },
+  { user:'0x6cA0', action:'买入', market:'🏀 SGA 总决赛 FMVP', amount:'$1,340', type:'yes' },
+  // 时事预测
+  { user:'0xa47B', action:'买入', market:'📉 美联储 7月降息', amount:'$1,800', type:'yes' },
+  { user:'0x6fD2', action:'卖出', market:'🤖 GPT-5 年底前发布', amount:'$950', type:'no' },
+  { user:'0x2c1A', action:'买入', market:'📱 苹果 AI 专属芯片量产', amount:'$630', type:'yes' },
+  { user:'0x8eB5', action:'买入', market:'🛩️ Musk 成首个登火星人类', amount:'$410', type:'yes' },
+  { user:'0x3fC7', action:'买入', market:'📰 AI 年内通过图灵测试', amount:'$1,550', type:'yes' },
+  { user:'0xA12d', action:'卖出', market:'🌐 全球利率年内全降', amount:'$780', type:'no' },
+  { user:'0x5eD9', action:'买入', market:'💊 GLP-1 超越心脏病市场', amount:'$2,800', type:'yes' },
+  { user:'0x7gH3', action:'买入', market:'🚀 SpaceX 星际飞船轨道飞行', amount:'$1,100', type:'yes' },
+  { user:'0xC34a', action:'卖出', market:'📺 Netflix 再涨订阅费', amount:'$560', type:'no' },
+  { user:'0x2dB8', action:'买入', market:'🏆 WC主办城市 — 纽约决赛', amount:'$1,920', type:'yes' },
+  // 马德里竞技 / ATM 专属
+  { user:'0xF50c', action:'买入', market:'🔴⚪ 马竞 夺得 LaLiga 冠军', amount:'$2,600', type:'yes' },
+  { user:'0x1aE2', action:'买入', market:'⚡ ATM 代币 WC期间涨幅', amount:'$3,200', type:'yes' },
+  { user:'0x6bD4', action:'买入', market:'🔴⚪ 马竞 进入欧冠八强', amount:'$1,870', type:'yes' },
+  { user:'0x9cC5', action:'卖出', market:'ATM 代币持有人 > 50万', amount:'$720', type:'no' },
+  { user:'0xD73f', action:'买入', market:'⚡ CHZ/ATM 交易对上线', amount:'$1,440', type:'yes' },
+  // 随机金额 / 多样性补充
+  { user:'0x4eF6', action:'买入', market:'🌍 南美洲球队 WC冠军', amount:'$4,100', type:'yes' },
+  { user:'0x8aB7', action:'买入', market:'⚽ WC 总进球 200+', amount:'$980', type:'yes' },
+  { user:'0x2cC8', action:'卖出', market:'🇺🇸 美国 WC 8强', amount:'$1,650', type:'no' },
+  { user:'0x5dD9', action:'买入', market:'🇲🇦 摩洛哥 WC 四强', amount:'$2,450', type:'yes' },
+  { user:'0x7eE0', action:'买入', market:'📊 BTC 挖矿难度创新高', amount:'$830', type:'yes' },
+  { user:'0x1fF1', action:'买入', market:'💰 全球稳定币市值 $1T', amount:'$1,760', type:'yes' },
+  { user:'0x9gG2', action:'卖出', market:'🤖 AI 取代 10% 白领工作', amount:'$2,300', type:'no' },
+  { user:'0x3hH3', action:'买入', market:'🏀 NBA 季后赛平均收视创新高', amount:'$550', type:'yes' },
 ];
+// 每次加载随机顺序，减少重复感
+const TICKER_DATA = TICKER_DATA_RAW.slice().sort(() => Math.random() - 0.5);
 
 // ============================================================
 // 渲染函数
@@ -649,13 +683,15 @@ function renderHome() {
     const dots = BANNER_SLIDES.map((_, i) =>
       `<button class="featured-dot${i === 0 ? ' active' : ''}" data-dot="${i}" onclick="goToFeaturedSlide(${i})"></button>`
     ).join('');
-    // 组装：左侧carousel + 右侧固定side
+    // 组装：左侧carousel + 右侧固定side（dots在carousel内部，移动端不错位）
     feat.innerHTML = `
       <div class="featured-layout">
-        <div class="featured-carousel">${slides}</div>
+        <div class="featured-carousel">
+          ${slides}
+          <div class="featured-dots">${dots}</div>
+        </div>
         <div class="home-featured-side">${sideHtml}</div>
       </div>
-      <div class="featured-dots">${dots}</div>
     `;
     // Carousel logic — 只控制左侧 banner
     window._featIdx = 0;

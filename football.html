@@ -14,7 +14,7 @@
 <meta name="twitter:title" content="ATMNO.1 · 全球首选的WEB3预测平台" />
 <meta name="twitter:description" content="去中心化预测市场，覆盖体育、加密货币、时事、文娱等多个领域。" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
-<link rel="stylesheet" href="/shared/style.css?v=39" />
+<link rel="stylesheet" href="/shared/style.css?v=42" />
 <style>
   .cat-hero { border: 1px solid rgba(38,208,124,.2); }
   .cat-hero-badge { background: rgba(38,208,124,.15); color: #26d07c; border: 1px solid rgba(38,208,124,.3); }
@@ -78,8 +78,14 @@
 
     <!-- World Cup sub-section (active by default) -->
     <div id="footballWorldcup" class="football-sub active">
-      <div class="section-title">
-        <h2 data-i18n="matches.title">FIFA World Cup 2026 · Group Stage</h2>
+      <!-- 世界杯专题预测市场（可随时竞猜，贯穿全程）-->
+      <div class="section-title" style="margin-bottom:10px;">
+        <h2>🔥 世界杯专题预测 · 可竞猜</h2>
+        <a onclick="navTo('worldcup')" style="font-size:12px;color:var(--accent);cursor:pointer;font-weight:700;">专题页 →</a>
+      </div>
+      <div class="market-grid-pro" id="wcSpecialGrid"></div>
+      <div class="section-title" style="margin-top:24px;margin-bottom:10px;">
+        <h2 data-i18n="matches.title">FIFA World Cup 2026 · 赛程</h2>
         <div class="filters">
           <span class="chip" data-filter="all" onclick="setFilter('all')" data-i18n="matches.all">All</span>
           <span class="chip" data-filter="today" onclick="setFilter('today')" data-i18n="matches.today">Today</span>
@@ -330,11 +336,30 @@ const ODDS_API_URL = 'https://api.the-odds-api.com/v4/sports/soccer_fifa_world_c
 // Global matches array (populated by loadMatches())
 let matches = [];
 
-// Fallback mock data when API fails
+// 世界杯专题预测市场（贯穿全程可竞猜）
+const WC_SPECIAL_MARKETS = [
+  { id:'wcs-1', title:'🏆 世界杯最终冠军', status:'live', time:'截止决赛', type:'multi', options:[{l:'巴西',pct:28},{l:'法国',pct:22},{l:'阿根廷',pct:18},{l:'其他',pct:32}], vol:'$2.4M', preds:'18,412', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-2', title:'⚽ 金靴奖 — 谁是最终进球王', status:'live', time:'截止决赛', type:'multi', options:[{l:'姆巴佩',pct:28},{l:'哈兰德',pct:22},{l:'维尼修斯',pct:16},{l:'其他',pct:34}], vol:'$980K', preds:'7,200', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-3', title:'🌍 决赛洲际对决 — 欧洲 vs 南美？', status:'hot', time:'截止决赛', type:'binary', yesPct:68, noPct:32, vol:'$760K', preds:'9,300', img:'https://images.unsplash.com/photo-1624280157150-4d1ed8632989?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-4', title:'😲 本届最大冷门 — 亚洲球队进八强？', status:'hot', time:'截止八强', type:'binary', yesPct:42, noPct:58, vol:'$540K', preds:'6,100', img:'https://images.unsplash.com/photo-1504305754058-2f08ccd89a0a?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-5', title:'🔢 全程总进球数 > 200 球？', status:'hot', time:'截止决赛', type:'binary', yesPct:55, noPct:45, vol:'$320K', preds:'4,800', img:'https://images.unsplash.com/photo-1640693316735-3fe5ee2de856?w=400&h=250&fit=crop&crop=top' },
+  { id:'wcs-6', title:'🇲🇦 摩洛哥再次冲击四强？', status:'hot', time:'截止四强', type:'binary', yesPct:38, noPct:62, vol:'$420K', preds:'5,600', img:'https://images.unsplash.com/photo-1631478854728-b4a5479d1d36?w=400&h=250&fit=crop&crop=top' },
+];
+
+// Fallback mock data — 使用即将到来的比赛日期（小组赛第3轮 + 16强）
 const FALLBACK_MATCHES = [
-  { id: 'mock-1', league: 'Group A', home: '墨西哥', away: '乌兹别克', hf: '🇲🇽', af: '🇺🇿', time: '06-11 19:00', live: false, odds: { h: 1.60, d: 3.80, a: 5.50 }, _mock: true },
-  { id: 'mock-2', league: 'Group B', home: '加拿大', away: '厄瓜多尔', hf: '🇨🇦', af: '🇪🇨', time: '06-12 22:00', live: false, odds: { h: 2.20, d: 3.20, a: 3.10 }, _mock: true },
-  { id: 'mock-3', league: 'Group C', home: '美国',   away: '塞尔维亚', hf: '🇺🇸', af: '🇷🇸', time: '06-13 01:00', live: false, odds: { h: 1.95, d: 3.40, a: 3.80 }, _mock: true },
+  { id: 'mock-1', league: 'Group D · 第3轮', home: '巴西',   away: '科特迪瓦', hf: '🇧🇷', af: '🇨🇮', time: '06-23 03:00', live: false, matchStatus:'upcoming', odds: { h: 1.30, d: 5.00, a: 9.00 }, _mock: true },
+  { id: 'mock-2', league: 'Group D · 第3轮', home: '塞尔维亚', away: '厄瓜多尔', hf: '🇷🇸', af: '🇪🇨', time: '06-23 03:00', live: false, matchStatus:'upcoming', odds: { h: 2.10, d: 3.20, a: 3.40 }, _mock: true },
+  { id: 'mock-3', league: 'Group E · 第3轮', home: '法国',   away: '摩洛哥', hf: '🇫🇷', af: '🇲🇦', time: '06-23 23:00', live: false, matchStatus:'upcoming', odds: { h: 1.80, d: 3.60, a: 4.50 }, _mock: true },
+  { id: 'mock-4', league: 'Group E · 第3轮', home: '日本',   away: '丹麦',   hf: '🇯🇵', af: '🇩🇰', time: '06-23 23:00', live: false, matchStatus:'upcoming', odds: { h: 2.80, d: 3.20, a: 2.50 }, _mock: true },
+  { id: 'mock-5', league: 'Group F · 第3轮', home: '阿根廷', away: '波兰',   hf: '🇦🇷', af: '🇵🇱', time: '06-24 03:00', live: false, matchStatus:'upcoming', odds: { h: 1.45, d: 4.20, a: 7.00 }, _mock: true },
+  { id: 'mock-6', league: 'Group F · 第3轮', home: '澳大利亚', away: '沙特', hf: '🇦🇺', af: '🇸🇦', time: '06-24 03:00', live: false, matchStatus:'upcoming', odds: { h: 2.00, d: 3.30, a: 3.60 }, _mock: true },
+  { id: 'mock-7', league: 'Group G · 第3轮', home: '葡萄牙', away: '韩国',   hf: '🇵🇹', af: '🇰🇷', time: '06-24 23:00', live: false, matchStatus:'upcoming', odds: { h: 1.55, d: 4.00, a: 6.00 }, _mock: true },
+  { id: 'mock-8', league: 'Group G · 第3轮', home: '乌拉圭', away: '加纳',   hf: '🇺🇾', af: '🇬🇭', time: '06-24 23:00', live: false, matchStatus:'upcoming', odds: { h: 1.75, d: 3.50, a: 4.80 }, _mock: true },
+  { id: 'mock-9', league: 'Group H · 第3轮', home: '西班牙', away: '加拿大', hf: '🇪🇸', af: '🇨🇦', time: '06-25 03:00', live: false, matchStatus:'upcoming', odds: { h: 1.40, d: 4.50, a: 8.00 }, _mock: true },
+  { id: 'mock-10',league: 'Group H · 第3轮', home: '英格兰', away: '美国',   hf: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', af: '🇺🇸', time: '06-25 03:00', live: false, matchStatus:'upcoming', odds: { h: 1.70, d: 3.60, a: 4.80 }, _mock: true },
+  { id: 'mock-11',league: 'Group A · 第3轮', home: '德国',   away: '哥斯达黎加',hf:'🇩🇪', af:'🇨🇷', time: '06-22 03:00', live: false, matchStatus:'upcoming', odds: { h: 1.25, d: 5.50, a: 10.0 }, _mock: true },
+  { id: 'mock-12',league: 'Group C · 第3轮', home: '荷兰',   away: '墨西哥', hf: '🇳🇱', af: '🇲🇽', time: '06-22 23:00', live: false, matchStatus:'upcoming', odds: { h: 1.60, d: 3.80, a: 5.50 }, _mock: true },
 ];
 
 // ============================================================
@@ -837,6 +862,7 @@ renderLeagueGrid('eplGrid', LEAGUE_MARKETS.epl);
 renderLeagueGrid('laligaGrid', LEAGUE_MARKETS.laliga);
 renderLeagueGrid('serieaGrid', LEAGUE_MARKETS.seriea);
 renderLeagueGrid('bundesligaGrid', LEAGUE_MARKETS.bundesliga);
+renderLeagueGrid('wcSpecialGrid', WC_SPECIAL_MARKETS);
 
 // ============================================================
 // Initialization

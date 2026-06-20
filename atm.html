@@ -6,7 +6,7 @@
 <title>ATM 代币 · Atletico Madrid Fan Token · ATMNO.1</title>
 <meta name="description" content="Atletico Madrid Fan Token (ATM) 实时价格、数据分析、代币用途与马德里竞技俱乐部信息。ATMNO.1 — 我们相信 ATM 将成为 NO.1。" />
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%25' stop-color='%236d28d9'/><stop offset='100%25' stop-color='%238b5cf6'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='url(%23g)'/><text x='50' y='68' font-size='58' text-anchor='middle' fill='%23fbbf24'>&#x265B;</text></svg>" type="image/svg+xml">
-<link rel="stylesheet" href="/shared/style.css?v=39" />
+<link rel="stylesheet" href="/shared/style.css?v=42" />
 <style>
 /* ===== ATM PAGE LOCAL STYLES ===== */
 
@@ -200,7 +200,7 @@
   margin-bottom: 24px;
 }
 @media (max-width: 900px) { .atm-utility-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .atm-utility-grid { grid-template-columns: 1fr; } }
+/* 手机端保持2列 */
 
 .atm-util-card {
   background: var(--card); border: 1px solid var(--border); border-radius: 16px;
@@ -248,7 +248,7 @@
   margin-bottom: 24px;
 }
 @media (max-width: 900px) { .atm-buy-steps { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 480px) { .atm-buy-steps { grid-template-columns: 1fr; } }
+/* 手机端保持2列 */
 .atm-tl-grid { }
 @media (max-width: 700px) { .atm-tl-grid { grid-template-columns: 1fr !important; } }
 
@@ -271,7 +271,15 @@
   margin-bottom: 24px;
 }
 @media (max-width: 800px) { .atm-ex-grid { grid-template-columns: repeat(3, 1fr); } }
-@media (max-width: 480px) { .atm-ex-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) {
+  .atm-ex-grid { grid-template-columns: repeat(2, 1fr); }
+  /* 5个交易所：最后一个居中 */
+  .atm-ex-item:last-child {
+    grid-column: 1 / -1;
+    width: calc(50% - 5px);
+    margin: 0 auto;
+  }
+}
 
 .atm-ex-item {
   background: var(--card); border: 1px solid var(--border); border-radius: 14px;
@@ -772,38 +780,40 @@
       <span class="atm-section-tag">Timeline</span>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;" class="atm-tl-grid">
+      <!-- 倒叙：最新在前 — 左列 -->
       <div class="atm-timeline">
         <div class="atm-tl-item">
-          <div class="atm-tl-date">2020 年</div>
-          <div class="atm-tl-title">🚀 ATM 代币发行</div>
-          <div class="atm-tl-desc">Socios.com 与马德里竞技合作，发行 ATM 球迷代币，成为首批顶级球队代币之一</div>
+          <div class="atm-tl-date">2026 年（当前）</div>
+          <div class="atm-tl-title">🌍 世界杯助推复苏</div>
+          <div class="atm-tl-desc">2026 FIFA 世界杯带动足球相关代币热度，ATM 从低点大幅反弹，ATMNO.1 平台同步上线</div>
         </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-date">2021年5月16日</div>
-          <div class="atm-tl-title">🏆 历史最高价 $58.46</div>
-          <div class="atm-tl-desc">受加密市场牛市与球迷代币热潮驱动，ATM 创下 $58.46 的历史最高价，市值突破 5 亿美元</div>
-        </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-date">2021 — 2023</div>
-          <div class="atm-tl-title">📉 市场调整期</div>
-          <div class="atm-tl-desc">随加密熊市到来，ATM 进入长期调整，但俱乐部持续举办持币者专属活动维持社区活跃</div>
-        </div>
-      </div>
-      <div class="atm-timeline">
         <div class="atm-tl-item">
           <div class="atm-tl-date">2024 年</div>
           <div class="atm-tl-title">⛓️ 迁移至 Chiliz Chain</div>
           <div class="atm-tl-desc">ATM 迁移至 Chiliz 专属体育公链，提升交易速度与用途扩展性，开放 DeFi 应用场景</div>
         </div>
         <div class="atm-tl-item">
+          <div class="atm-tl-date">2021年5月16日</div>
+          <div class="atm-tl-title">🏆 历史最高价 $58.46</div>
+          <div class="atm-tl-desc">受加密市场牛市与球迷代币热潮驱动，ATM 创下 $58.46 的历史最高价，市值突破 5 亿美元</div>
+        </div>
+      </div>
+      <!-- 倒叙：最新在前 — 右列 -->
+      <div class="atm-timeline">
+        <div class="atm-tl-item">
           <div class="atm-tl-date">2026年2月6日</div>
           <div class="atm-tl-title">📍 历史最低价 $0.75</div>
-          <div class="atm-tl-desc">市场低谷期，ATM 触及 $0.75 的历史最低点，随后随世界杯热度上升开始反弹</div>
+          <div class="atm-tl-desc">市场低谷期，ATM 触及 $0.75 的历史最低点，随后随世界杯热度上升开始强劲反弹</div>
         </div>
         <div class="atm-tl-item">
-          <div class="atm-tl-date">2026 年（当前）</div>
-          <div class="atm-tl-title">🌍 世界杯助推复苏</div>
-          <div class="atm-tl-desc">2026 FIFA 世界杯带动足球相关代币热度，ATM 从低点大幅反弹，ATMNO.1 平台同步上线</div>
+          <div class="atm-tl-date">2021 — 2023</div>
+          <div class="atm-tl-title">📉 市场调整期</div>
+          <div class="atm-tl-desc">随加密熊市到来，ATM 进入长期调整，但俱乐部持续举办持币者专属活动维持社区活跃</div>
+        </div>
+        <div class="atm-tl-item">
+          <div class="atm-tl-date">2020 年</div>
+          <div class="atm-tl-title">🚀 ATM 代币发行</div>
+          <div class="atm-tl-desc">Socios.com 与马德里竞技合作，发行 ATM 球迷代币，成为首批顶级球队代币之一</div>
         </div>
       </div>
     </div>
