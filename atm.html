@@ -366,6 +366,8 @@
   transition: transform .3s var(--ease-out-expo), box-shadow .3s;
   box-shadow: 0 4px 24px rgba(0,0,0,.2);
 }
+@media (max-width: 900px) { .atm-eco-card { aspect-ratio: 4/3; } }
+@media (max-width: 480px) { .atm-eco-card { aspect-ratio: 16/9; } }
 .atm-eco-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
 .atm-eco-bg {
   position: absolute; inset: 0; z-index: 0;
@@ -725,25 +727,6 @@
     </div>
   </div>
 
-  <!-- ===== SOCIOS / CHILIZ BANNER ===== -->
-  <div class="atm-socios-banner">
-    <div>
-      <div class="atm-socios-title">🔗 Socios.com × Chiliz Chain</div>
-      <div class="atm-socios-sub">ATM 代币由 Socios.com 发行，运行于 Chiliz Chain 专属体育公链。Socios 是全球领先的球迷代币平台，已与 PSG、巴萨、尤文、AC 米兰等 100+ 顶级俱乐部合作，为球迷提供真正的俱乐部参与感。</div>
-      <a class="atm-socios-link" href="https://www.socios.com/atletico-madrid/" target="_blank">🔗 访问 Socios ATM 页面 →</a>
-    </div>
-    <div class="atm-socios-stats">
-      <div class="atm-socios-stat">
-        <div class="atm-socios-stat-val">100+</div>
-        <div class="atm-socios-stat-lbl">合作俱乐部</div>
-      </div>
-      <div class="atm-socios-stat">
-        <div class="atm-socios-stat-val">CHZ</div>
-        <div class="atm-socios-stat-lbl">底层链代币</div>
-      </div>
-    </div>
-  </div>
-
   <!-- ===== ATM ECOSYSTEM ===== -->
   <div class="atm-page-section" style="margin-top:32px;">
     <div class="atm-section-head">
@@ -777,7 +760,7 @@
       </div>
 
       <!-- ATM支付 -->
-      <div class="atm-eco-card" onclick="void(0)">
+      <div class="atm-eco-card" onclick="window.open('https://apps.apple.com/app/atm/id6738609552','_blank')">
         <div class="atm-eco-bg" style="background:linear-gradient(135deg,#1a1a3e 0%,#0d2660 40%,#1e3a6e 100%);"></div>
         <div class="atm-eco-overlay" style="background:linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,20,.2) 50%, transparent 100%);"></div>
         <!-- App mockup overlay -->
@@ -807,8 +790,8 @@
         <div class="atm-eco-body">
           <div class="atm-eco-badge" style="background:rgba(168,85,247,.3);border-color:rgba(168,85,247,.4);">📱 App</div>
           <div class="atm-eco-name">ATM 支付</div>
-          <div class="atm-eco-desc">ATM 多功能应用端，涵盖量化交易、全球商城、理财中心与链上支付，即将登陆 App Store。</div>
-          <div class="atm-eco-link">即将上线</div>
+          <div class="atm-eco-desc">ATM 多功能应用端，涵盖量化交易、全球商城、理财中心与链上支付，已正式登陆 App Store。</div>
+          <div class="atm-eco-link">立即体验 →</div>
         </div>
       </div>
 
@@ -836,6 +819,25 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- ===== SOCIOS / CHILIZ BANNER ===== -->
+  <div class="atm-socios-banner">
+    <div>
+      <div class="atm-socios-title">🔗 Socios.com × Chiliz Chain</div>
+      <div class="atm-socios-sub">ATM 代币由 Socios.com 发行，运行于 Chiliz Chain 专属体育公链。Socios 是全球领先的球迷代币平台，已与 PSG、巴萨、尤文、AC 米兰等 100+ 顶级俱乐部合作，为球迷提供真正的俱乐部参与感。</div>
+      <a class="atm-socios-link" href="https://www.socios.com/atletico-madrid/" target="_blank">🔗 访问 Socios ATM 页面 →</a>
+    </div>
+    <div class="atm-socios-stats">
+      <div class="atm-socios-stat">
+        <div class="atm-socios-stat-val">100+</div>
+        <div class="atm-socios-stat-lbl">合作俱乐部</div>
+      </div>
+      <div class="atm-socios-stat">
+        <div class="atm-socios-stat-val">CHZ</div>
+        <div class="atm-socios-stat-lbl">底层链代币</div>
+      </div>
     </div>
   </div>
 
