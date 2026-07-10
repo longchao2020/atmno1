@@ -3715,7 +3715,15 @@
 
   /* 移动端布局修复 */
   @media (max-width: 780px) {
-    .wrap, .wrap.wrap-single { padding: 14px 12px 80px; }
+    .wrap, .wrap.wrap-single {
+      padding: 14px 12px 80px;
+      /* 取消 BFC overflow:hidden，让子元素 border-radius 不被裁剪 */
+      overflow: visible;
+    }
+    /* grid item 强制不超出列宽 — 修复 cat-hero 右侧无圆角/边距问题 */
+    .wrap > div:first-child { min-width: 0; }
+    /* cat-hero 自身保留 overflow:hidden 确保背景圆角正常显示 */
+    .cat-hero { overflow: hidden; max-width: 100%; }
   }
   @media (max-width: 380px) {
     .star-players-grid { gap: 8px; }
