@@ -1185,30 +1185,15 @@ function applyI18n() {
 
 function setLang(lang) {
   if (!I18N[lang] || lang === currentLang) return;
-  // Show loading overlay
+  // Show full-page loading overlay
+  const langNames = { 'zh-TW': '繁體中文', 'zh-CN': '简体中文', 'en': 'English' };
   const overlay = document.createElement('div');
   overlay.className = 'lang-loading-overlay';
-  overlay.innerHTML = '<div class="lang-spinner"></div><div class="lang-text">切换语言中...</div>';
+  overlay.innerHTML = `<div class="lang-spinner"></div><div class="lang-text">切换至 ${langNames[lang] || lang}…</div>`;
   document.body.appendChild(overlay);
-
-  setTimeout(() => {
-    currentLang = lang;
-    try { localStorage.setItem('atmno1_lang', lang); } catch (e) {}
-    applyI18n();
-    // Update active pill
-    document.querySelectorAll('.pm-lang-pill').forEach(p => {
-      p.classList.toggle('active', p.getAttribute('data-lang') === lang);
-    });
-    // 重新渲染動態內容（其中包含 t() 呼叫）
-    if (typeof renderMatches === 'function') renderMatches();
-    if (typeof renderSlip === 'function') renderSlip();
-    if (typeof renderMyBets === 'function') renderMyBets();
-    if (typeof refreshDataSourceChip === 'function') refreshDataSourceChip();
-    // Fade out
-    overlay.style.transition = 'opacity .3s ease';
-    overlay.style.opacity = '0';
-    setTimeout(() => overlay.remove(), 300);
-  }, 1200);
+  // Save language then reload — guarantees 100% page translation
+  try { localStorage.setItem('atmno1_lang', lang); } catch (e) {}
+  setTimeout(() => { location.reload(); }, 700);
 }
 
 // ============================================================

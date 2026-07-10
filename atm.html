@@ -388,11 +388,15 @@
 @media (max-width: 900px) { .atm-eco-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .atm-eco-grid { grid-template-columns: 1fr; } }
 @media (max-width: 480px) {
-  /* 手机端隐藏卡片内装饰层，防止与文字叠压 */
-  .atm-eco-deco { display: none !important; }
-  /* 加深底部遮罩，确保文字清晰 */
+  /* 手机端：改为 4:3 比例，更高，装饰层保留但缩小 */
+  .atm-eco-deco {
+    transform: scale(0.65) !important;
+    transform-origin: top center !important;
+    padding-bottom: 55% !important;  /* 给文字腾出下方空间 */
+  }
+  /* 加强底部渐变，文字区域清晰 */
   .atm-eco-overlay {
-    background: linear-gradient(to top, rgba(0,0,0,.95) 0%, rgba(0,0,0,.65) 45%, rgba(0,0,0,.15) 100%) !important;
+    background: linear-gradient(to top, rgba(0,0,0,.92) 0%, rgba(0,0,0,.6) 40%, rgba(0,0,0,.1) 100%) !important;
   }
   .atm-eco-body { padding: 14px; }
   .atm-eco-desc { font-size: 11px !important; }
@@ -405,7 +409,7 @@
   transition: transform .35s var(--ease-out-expo), box-shadow .35s, border-color .35s;
 }
 @media (max-width: 900px) { .atm-eco-card { aspect-ratio: 4/3; } }
-@media (max-width: 480px) { .atm-eco-card { aspect-ratio: 16/9; } }
+@media (max-width: 480px) { .atm-eco-card { aspect-ratio: 4/3; } }
 .atm-eco-card:hover { transform: translateY(-8px) scale(1.025); box-shadow: 0 24px 60px rgba(0,0,0,.5); border-color: rgba(255,255,255,.25); }
 .atm-eco-bg {
   position: absolute; inset: 0; z-index: 0;

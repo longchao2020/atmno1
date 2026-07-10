@@ -981,7 +981,17 @@
   }
   .wrap.wrap-single { grid-template-columns: 1fr; }
   @media (max-width: 1380px) { .wrap { padding: 24px 32px 40px; } }
-  @media (max-width: 960px) { .wrap { grid-template-columns: 1fr; padding: 18px 16px 80px; gap: 14px; } }
+  @media (max-width: 960px) {
+    .wrap { grid-template-columns: 1fr; padding: 18px 16px 80px; gap: 14px; }
+    /* 防止任何内容溢出右侧 */
+    body { overflow-x: hidden; }
+    /* section-title 右侧 filter 允许 shrink */
+    .section-title { gap: 8px; }
+    .section-title .filters { overflow-x: auto; scrollbar-width: none; flex-shrink: 0; max-width: 50%; }
+    /* mc-pro cards 宽度受限 */
+    .market-grid-pro { overflow: hidden; }
+    .mc-pro { min-width: 0; }
+  }
 
   /* Matches */
   .page-section { display: none; }
