@@ -353,6 +353,51 @@
 .atm-socios-stat-val { font-size: 22px; font-weight: 900; color: #fff; }
 .atm-socios-stat-lbl { font-size: 10px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: .5px; margin-top: 2px; }
 
+/* ===== ATM ECOSYSTEM ===== */
+.atm-eco-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 16px;
+}
+@media (max-width: 900px) { .atm-eco-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .atm-eco-grid { grid-template-columns: 1fr; } }
+.atm-eco-card {
+  position: relative; border-radius: 18px; overflow: hidden;
+  aspect-ratio: 3/4; cursor: pointer;
+  border: 1px solid rgba(255,255,255,.08);
+  transition: transform .3s var(--ease-out-expo), box-shadow .3s;
+  box-shadow: 0 4px 24px rgba(0,0,0,.2);
+}
+.atm-eco-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 48px rgba(0,0,0,.4); }
+.atm-eco-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-size: cover; background-position: center;
+  transition: transform .4s var(--ease-out-expo);
+}
+.atm-eco-card:hover .atm-eco-bg { transform: scale(1.06); }
+.atm-eco-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.3) 50%, transparent 100%);
+}
+.atm-eco-body {
+  position: absolute; bottom: 0; left: 0; right: 0; z-index: 2;
+  padding: 16px;
+}
+.atm-eco-badge {
+  display: inline-block; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px;
+  font-size: 10px; font-weight: 800; letter-spacing: .5px; text-transform: uppercase;
+  background: rgba(255,255,255,.15); backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,.2); color: #fff;
+}
+.atm-eco-name { font-size: 18px; font-weight: 900; color: #fff; margin-bottom: 6px; letter-spacing: -.3px; }
+.atm-eco-desc { font-size: 11px; color: rgba(255,255,255,.6); line-height: 1.5; margin-bottom: 10px; }
+.atm-eco-link {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; font-weight: 700; color: rgba(255,255,255,.8);
+  border: 1px solid rgba(255,255,255,.25); border-radius: 6px;
+  padding: 4px 10px; backdrop-filter: blur(4px);
+  transition: all .2s;
+}
+.atm-eco-card:hover .atm-eco-link { background: rgba(255,255,255,.15); color: #fff; }
+
 /* ===== PREDICTION CTA ===== */
 .atm-predict-cta {
   border-radius: 20px; padding: 32px;
@@ -696,6 +741,101 @@
         <div class="atm-socios-stat-val">CHZ</div>
         <div class="atm-socios-stat-lbl">底层链代币</div>
       </div>
+    </div>
+  </div>
+
+  <!-- ===== ATM ECOSYSTEM ===== -->
+  <div class="atm-page-section" style="margin-top:32px;">
+    <div class="atm-section-head">
+      <h2>🌐 ATM 生态</h2>
+      <span class="atm-section-tag">Ecosystem</span>
+    </div>
+    <div class="atm-eco-grid">
+
+      <!-- ATM预测 -->
+      <div class="atm-eco-card" onclick="window.open('https://predicts.atmbank.vip','_blank')">
+        <div class="atm-eco-bg" style="background-image:url('https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&h=800&fit=crop&crop=top');"></div>
+        <div class="atm-eco-overlay"></div>
+        <div class="atm-eco-body">
+          <div class="atm-eco-badge">⚽ 已上线</div>
+          <div class="atm-eco-name">ATM 预测</div>
+          <div class="atm-eco-desc">全球首家 Web3 足球预测市场，持有 ATM 竞猜世界杯、欧冠等顶级赛事，链上透明结算。</div>
+          <div class="atm-eco-link">进入平台 →</div>
+        </div>
+      </div>
+
+      <!-- ATM Bank -->
+      <div class="atm-eco-card" onclick="window.open('https://atmbank.vip','_blank')">
+        <div class="atm-eco-bg" style="background-image:url('https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&h=800&fit=crop');"></div>
+        <div class="atm-eco-overlay" style="background:linear-gradient(to top, rgba(10,40,80,.92) 0%, rgba(10,40,80,.4) 50%, transparent 100%);"></div>
+        <div class="atm-eco-body">
+          <div class="atm-eco-badge" style="background:rgba(59,130,246,.3);border-color:rgba(59,130,246,.4);">🏦 银行</div>
+          <div class="atm-eco-name">ATM Bank</div>
+          <div class="atm-eco-desc">ATM 生态金融基础设施，支持 ATM 存储、质押增值与 DeFi 收益，打通 Web3 资产管理通道。</div>
+          <div class="atm-eco-link">了解更多 →</div>
+        </div>
+      </div>
+
+      <!-- ATM支付 -->
+      <div class="atm-eco-card" onclick="void(0)">
+        <div class="atm-eco-bg" style="background:linear-gradient(135deg,#1a1a3e 0%,#0d2660 40%,#1e3a6e 100%);"></div>
+        <div class="atm-eco-overlay" style="background:linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,20,.2) 50%, transparent 100%);"></div>
+        <!-- App mockup overlay -->
+        <div style="position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;padding:20px 12px 60px;">
+          <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:16px 12px;width:100%;backdrop-filter:blur(8px);">
+            <div style="font-size:10px;color:rgba(255,255,255,.5);text-align:center;margin-bottom:10px;font-weight:700;letter-spacing:.5px;">ATM APP</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+              <div style="background:rgba(59,130,246,.2);border-radius:10px;padding:8px 6px;text-align:center;">
+                <div style="font-size:16px;">📊</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:700;">量化交易</div>
+              </div>
+              <div style="background:rgba(16,185,129,.2);border-radius:10px;padding:8px 6px;text-align:center;">
+                <div style="font-size:16px;">🛒</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:700;">全球商城</div>
+              </div>
+              <div style="background:rgba(251,146,60,.2);border-radius:10px;padding:8px 6px;text-align:center;">
+                <div style="font-size:16px;">💰</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:700;">理财中心</div>
+              </div>
+              <div style="background:rgba(168,85,247,.2);border-radius:10px;padding:8px 6px;text-align:center;">
+                <div style="font-size:16px;">💳</div>
+                <div style="font-size:9px;color:rgba(255,255,255,.7);margin-top:3px;font-weight:700;">ATM支付</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="atm-eco-body">
+          <div class="atm-eco-badge" style="background:rgba(168,85,247,.3);border-color:rgba(168,85,247,.4);">📱 App</div>
+          <div class="atm-eco-name">ATM 支付</div>
+          <div class="atm-eco-desc">ATM 多功能应用端，涵盖量化交易、全球商城、理财中心与链上支付，即将登陆 App Store。</div>
+          <div class="atm-eco-link">即将上线</div>
+        </div>
+      </div>
+
+      <!-- ATM.FUN -->
+      <div class="atm-eco-card" onclick="window.open('https://atm.fun','_blank')">
+        <div class="atm-eco-bg" style="background:linear-gradient(135deg,#1a0a00 0%,#3d1a00 40%,#2a1000 100%);"></div>
+        <div class="atm-eco-overlay" style="background:linear-gradient(to top, rgba(0,0,0,.9) 0%, rgba(30,10,0,.4) 50%, transparent 100%);"></div>
+        <!-- Gold decoration -->
+        <div style="position:absolute;inset:0;z-index:1;display:flex;align-items:center;justify-content:center;padding-bottom:70px;">
+          <div style="text-align:center;">
+            <div style="font-size:52px;filter:drop-shadow(0 0 20px rgba(255,200,0,.5));">🃏</div>
+            <div style="font-size:28px;font-weight:900;color:#d4af37;letter-spacing:2px;margin-top:8px;text-shadow:0 0 20px rgba(212,175,55,.5);">ATM.FUN</div>
+            <div style="display:flex;gap:8px;justify-content:center;margin-top:10px;">
+              <span style="font-size:20px;">🎰</span>
+              <span style="font-size:20px;">🎲</span>
+              <span style="font-size:20px;">⚽</span>
+            </div>
+          </div>
+        </div>
+        <div class="atm-eco-body">
+          <div class="atm-eco-badge" style="background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.4);color:#d4af37;">🎮 娱乐</div>
+          <div class="atm-eco-name">ATM.FUN</div>
+          <div class="atm-eco-desc">亚洲顶级 Web3 娱乐平台，真人游戏、电竞博彩与体育竞猜一体，持有 ATM 享受专属特权。</div>
+          <div class="atm-eco-link">进入娱乐场 →</div>
+        </div>
+      </div>
+
     </div>
   </div>
 
