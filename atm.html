@@ -263,6 +263,22 @@
   .atm-tl-grid-2col { grid-template-columns: 1fr; }
 }
 
+/* Single flat timeline — 2 col on PC, 1 col on mobile */
+.atm-tl-flat {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px 48px;
+}
+@media (max-width: 700px) {
+  .atm-tl-flat { grid-template-columns: 1fr; gap: 16px; }
+}
+.atm-tl-flat .atm-tl-item {
+  position: relative; padding-left: 28px;
+}
+.atm-tl-flat .atm-tl-dot {
+  left: 0; top: 18px;
+}
+
 /* ===== HOW TO BUY ===== */
 .atm-buy-steps {
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
@@ -292,13 +308,12 @@
 }
 @media (max-width: 800px) { .atm-ex-grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 480px) {
-  .atm-ex-grid { grid-template-columns: repeat(2, 1fr); }
-  /* 5个交易所：最后一个居中 */
-  .atm-ex-item:last-child {
-    grid-column: 1 / -1;
-    width: calc(50% - 5px);
-    margin: 0 auto;
-  }
+  .atm-ex-grid { grid-template-columns: repeat(6, 1fr); }
+  .atm-ex-item:nth-child(1) { grid-column: span 3; }
+  .atm-ex-item:nth-child(2) { grid-column: span 3; }
+  .atm-ex-item:nth-child(3) { grid-column: span 2; }
+  .atm-ex-item:nth-child(4) { grid-column: span 2; }
+  .atm-ex-item:nth-child(5) { grid-column: span 2; }
 }
 
 .atm-ex-item {
@@ -384,15 +399,17 @@
   aspect-ratio: 3/4; cursor: default;
   border: 1px solid rgba(255,255,255,.08);
   box-shadow: 0 4px 24px rgba(0,0,0,.2);
+  transition: transform .35s var(--ease-out-expo), box-shadow .35s, border-color .35s;
 }
 @media (max-width: 900px) { .atm-eco-card { aspect-ratio: 4/3; } }
 @media (max-width: 480px) { .atm-eco-card { aspect-ratio: 16/9; } }
+.atm-eco-card:hover { transform: translateY(-8px) scale(1.025); box-shadow: 0 24px 60px rgba(0,0,0,.5); border-color: rgba(255,255,255,.25); }
 .atm-eco-bg {
   position: absolute; inset: 0; z-index: 0;
   background-size: cover; background-position: center;
   transition: transform .4s var(--ease-out-expo);
 }
-/* no hover scale — cards are display-only */
+.atm-eco-card:hover .atm-eco-bg { transform: scale(1.07); }
 .atm-eco-overlay {
   position: absolute; inset: 0; z-index: 1;
   background: linear-gradient(to top, rgba(0,0,0,.88) 0%, rgba(0,0,0,.3) 50%, transparent 100%);
@@ -868,15 +885,15 @@
         <div class="atm-ex-pair">ATM/USDT</div>
         <div class="atm-ex-badge">最高流动性</div>
       </a>
-      <a class="atm-ex-item" href="https://bingx.com/" target="_blank">
-        <div class="atm-ex-logo">🔵</div>
-        <div class="atm-ex-name">BingX</div>
-        <div class="atm-ex-pair">ATM/USDT</div>
-        <div class="atm-ex-badge">现货可买</div>
-      </a>
       <a class="atm-ex-item" href="https://www.bitget.com/" target="_blank">
         <div class="atm-ex-logo">🟢</div>
         <div class="atm-ex-name">Bitget</div>
+        <div class="atm-ex-pair">ATM/USDT</div>
+        <div class="atm-ex-badge">现货可买</div>
+      </a>
+      <a class="atm-ex-item" href="https://bingx.com/" target="_blank">
+        <div class="atm-ex-logo">🔵</div>
+        <div class="atm-ex-name">BingX</div>
         <div class="atm-ex-pair">ATM/USDT</div>
         <div class="atm-ex-badge">现货可买</div>
       </a>
@@ -935,92 +952,85 @@
       <h2>📅 ATM 代币大事记</h2>
       <span class="atm-section-tag">Timeline</span>
     </div>
-    <!-- 单列连贯时间轴，倒叙（最新在前），PC 双列布局 -->
-    <div class="atm-tl-grid-2col">
-      <!-- 左列 (奇数项) -->
-      <div class="atm-tl-wrap">
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot hot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2026年6月 · 当前</div>
-            <div class="atm-tl-title">🌍 2026世界杯 × ATMNO.1 上线</div>
-            <div class="atm-tl-desc">FIFA 世界杯美加墨联合主办，全球足球热度空前。ATMNO.1 预测平台正式上线，ATM 从低点反弹超 200%，生态持续扩张</div>
-          </div>
-        </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2025年下半年</div>
-            <div class="atm-tl-title">📱 ATM App 正式上架</div>
-            <div class="atm-tl-desc">ATM 多功能 App 登陆 App Store，涵盖量化交易、ATM 全球商城、ATM 理财中心与链上支付，生态版图全面打开</div>
-          </div>
-        </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2024年</div>
-            <div class="atm-tl-title">⛓️ 迁移至 Chiliz Chain</div>
-            <div class="atm-tl-desc">ATM 正式迁移至 Chiliz 专属体育公链，交易速度大幅提升，DeFi 应用场景全面开放，质押与流动性挖矿上线</div>
-          </div>
-        </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2021年5月16日</div>
-            <div class="atm-tl-title">🏆 历史最高 $58.46</div>
-            <div class="atm-tl-desc">牛市叠加球迷代币热潮，ATM 创下 $58.46 历史最高价，市值突破 5 亿美元，全球持币者逾 80 万</div>
-          </div>
-        </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2020年</div>
-            <div class="atm-tl-title">🚀 ATM 代币正式发行</div>
-            <div class="atm-tl-desc">Socios.com 与马德里竞技战略合作，ATM 球迷代币正式发行，成为全球首批顶级球队 Fan Token 之一</div>
-          </div>
+    <div class="atm-tl-flat">
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot hot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2026年6月 · 当前</div>
+          <div class="atm-tl-title">🌍 2026世界杯 × ATMNO.1 上线</div>
+          <div class="atm-tl-desc">FIFA 世界杯美加墨联合主办，ATMNO.1 预测平台正式上线，ATM 从低点反弹超 200%</div>
         </div>
       </div>
-      <!-- 右列 (偶数项) -->
-      <div class="atm-tl-wrap">
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot hot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2026年上半年</div>
-            <div class="atm-tl-title">🏦 ATM Bank 上线 · 生态扩张</div>
-            <div class="atm-tl-desc">ATM Bank 正式上线，提供存储、质押增值与 DeFi 收益服务。ATM 生态形成「预测 + 支付 + Bank + 娱乐」四大矩阵</div>
-          </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot hot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2026年上半年</div>
+          <div class="atm-tl-title">🏦 ATM Bank · 四大生态矩阵成形</div>
+          <div class="atm-tl-desc">ATM Bank 上线，生态形成「预测 + 支付 + Bank + 娱乐」四大矩阵，持币者权益全面升级</div>
         </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2026年2月6日</div>
-            <div class="atm-tl-title">📍 历史最低 $0.75</div>
-            <div class="atm-tl-desc">加密市场持续低迷叠加熊市尾声，ATM 触及 $0.75 历史最低点，随后世界杯利好消息推动强劲反弹</div>
-          </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2026年2月6日</div>
+          <div class="atm-tl-title">📍 历史最低 $0.75</div>
+          <div class="atm-tl-desc">熊市尾声 ATM 触及 $0.75 历史最低点，随后世界杯利好推动强劲反弹</div>
         </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2023年</div>
-            <div class="atm-tl-title">🔗 Socios 生态整合升级</div>
-            <div class="atm-tl-desc">Socios.com 推出全新持币者福利体系，ATM 持有者获更衣室参观、球员见面会等独家体验，社区规模持续增长</div>
-          </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2025年下半年</div>
+          <div class="atm-tl-title">📱 ATM App 正式上架 App Store</div>
+          <div class="atm-tl-desc">ATM 多功能 App 上线，涵盖量化交易、全球商城、理财中心与链上支付</div>
         </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2021 — 2022</div>
-            <div class="atm-tl-title">📉 加密熊市调整期</div>
-            <div class="atm-tl-desc">随全球加密熊市到来，ATM 进入深度调整，但马德里竞技持续举办持币者专属投票活动，社区保持高度活跃</div>
-          </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2024年</div>
+          <div class="atm-tl-title">⛓️ 迁移至 Chiliz Chain</div>
+          <div class="atm-tl-desc">ATM 迁至 Chiliz 专属体育公链，DeFi 质押与流动性挖矿全面开放</div>
         </div>
-        <div class="atm-tl-item">
-          <div class="atm-tl-dot"></div>
-          <div class="atm-tl-card">
-            <div class="atm-tl-date">2021年3月</div>
-            <div class="atm-tl-title">⚽ 马竞夺得西甲冠军</div>
-            <div class="atm-tl-desc">马德里竞技时隔 11 年再度夺得西甲联赛冠军，ATM 代币随俱乐部荣誉暴涨，球迷代币模式获全球广泛关注</div>
-          </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2023年</div>
+          <div class="atm-tl-title">🔗 Socios 持币者福利体系升级</div>
+          <div class="atm-tl-desc">Socios.com 推出新持币者权益，ATM 持有者获更衣室参观、球员见面会等独家体验</div>
+        </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2021 — 2022</div>
+          <div class="atm-tl-title">📉 加密熊市调整期</div>
+          <div class="atm-tl-desc">随全球加密熊市 ATM 深度调整，马德里竞技持续举办持币者专属投票维持社区活跃</div>
+        </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2021年5月16日</div>
+          <div class="atm-tl-title">🏆 历史最高 $58.46</div>
+          <div class="atm-tl-desc">牛市叠加球迷代币热潮，ATM 创 $58.46 历史最高，市值突破 5 亿美元</div>
+        </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2021年3月</div>
+          <div class="atm-tl-title">⚽ 马竞夺得西甲冠军</div>
+          <div class="atm-tl-desc">马德里竞技时隔 11 年再夺西甲冠军，ATM 随俱乐部荣誉暴涨，球迷代币模式获全球关注</div>
+        </div>
+      </div>
+      <div class="atm-tl-item">
+        <div class="atm-tl-dot"></div>
+        <div class="atm-tl-card">
+          <div class="atm-tl-date">2020年</div>
+          <div class="atm-tl-title">🚀 ATM 代币正式发行</div>
+          <div class="atm-tl-desc">Socios.com × 马德里竞技战略合作，ATM 发行，成全球首批顶级球队 Fan Token 之一</div>
         </div>
       </div>
     </div>

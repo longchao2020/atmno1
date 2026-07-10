@@ -486,7 +486,7 @@ const CAT_GRADIENTS = {
 
 // 编辑精选 — 左侧4张轮播Banner + 右侧4个固定卡片
 const BANNER_SLIDES = [
-  { id:'football-1', catKey:'football', badge:'🔥 世界杯 · 进行中', title:'2026世界杯小组赛激战 — 谁能冲出重围？', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&h=500&fit=crop&crop=top', odds:[{l:'巴西',v:'3.20'},{l:'法国',v:'3.80'},{l:'阿根廷',v:'4.50'}], vol:'$2.4M', preds:'18,600', time:'进行中 · 截止8强' },
+  { id:'football-1', catKey:'football', badge:'🔥 世界杯 · 八强进行中', title:'2026世界杯八强战 — 法国一骑绝尘，谁能挑战？', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=800&h=500&fit=crop&crop=top', odds:[{l:'法国',v:'2.80'},{l:'西班牙',v:'3.20'},{l:'阿根廷',v:'3.80'}], vol:'$4.2M', preds:'32,800', time:'进行中 · 截止7月19日决赛' },
   { id:'basketball-1', catKey:'basketball', badge:'🏀 NBA 总决赛', title:'2025-26 NBA总决赛 — 史诗对决，谁主沉浮？', img:'https://images.unsplash.com/photo-1546519638-68e109498ffc?w=800&h=500&fit=crop', odds:[{l:'雷霆',v:'2.80'},{l:'凯尔特人',v:'3.50'},{l:'掘金',v:'6.00'}], vol:'$1.8M', preds:'9,800', time:'2026年6月' },
   { id:'football-2', catKey:'football', badge:'⚽ 世界杯金靴', title:'世界杯金靴争夺 — 姆巴佩、哈兰德、维尼修斯谁能封王？', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=800&h=500&fit=crop&crop=top', odds:[{l:'姆巴佩',v:'2.90'},{l:'哈兰德',v:'3.40'},{l:'维尼修斯',v:'4.20'}], vol:'$980K', preds:'7,200', time:'进行中 · 截止决赛' },
   { id:'crypto-2', catKey:'crypto', badge:'⚡ ATM 代币', title:'ATM代币 — 世界杯热度能否推至历史新高？', img:'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&h=500&fit=crop', odds:[{l:'$5以上',v:'2.10'},{l:'$3–$5',v:'3.00'},{l:'$3以下',v:'4.50'}], vol:'$1.1M', preds:'9,400', time:'2026年7月' },
@@ -520,6 +520,8 @@ const CAT_ENTRIES = [
 // 各分类精选（每类 2-4 个，图文混排）
 const CAT_PICKS = {
   football: [
+    { id:'wc-qf-1', badge:'⚔️ 八强 · 今日', title:'西班牙 vs 比利时 — 谁晋级四强？', status:'live', yes:58, no:42, vol:'$890K', preds:'11,200' },
+    { id:'wc-qf-2', badge:'⚔️ 八强 · 明日', title:'挪威 vs 英格兰 — 黑马能否续写神话？', status:'hot', yes:44, no:56, vol:'$650K', preds:'8,400' },
     { id:'football-1', title:'2026世界杯 — 最终冠军', status:'live', time:'进行中', type:'multi', options:[{l:'巴西',pct:28},{l:'法国',pct:22},{l:'阿根廷',pct:18}], vol:'$2.4M', preds:'18,412', img:'https://images.unsplash.com/photo-1560272564-c83b66b1ad12?w=600&h=400&fit=crop&crop=top' },
     { id:'football-2', title:'2026世界杯金靴奖 — 谁称王', status:'live', time:'进行中', type:'multi', options:[{l:'姆巴佩',pct:28},{l:'哈兰德',pct:22},{l:'维尼修斯',pct:18}], vol:'$980K', preds:'7,200', img:'https://images.unsplash.com/photo-1488474739786-757973c2dff6?w=600&h=400&fit=crop&crop=top' },
     { id:'football-5', title:'摩洛哥能否再次冲击四强？', status:'hot', time:'进行中', type:'binary', yesPct:42, noPct:58, vol:'$540K', preds:'6,800', img:'https://images.unsplash.com/photo-1504305754058-2f08ccd89a0a?w=600&h=400&fit=crop&crop=top' },

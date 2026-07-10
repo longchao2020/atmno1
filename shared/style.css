@@ -3223,11 +3223,8 @@
       flex-shrink: initial !important;
       scroll-snap-align: initial !important;
     }
-    /* 第5张卡片: 跨整行但保持与其他卡片相同尺寸 */
     .star-card:nth-child(5) {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: calc(50% - 5px);
+      display: none !important;
     }
   }
 
